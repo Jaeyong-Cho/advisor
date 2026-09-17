@@ -1,0 +1,52 @@
+# Grill Impact Level and Uncertainty
+
+## Mode
+**MUST ASK** the user once, before round 1: **Fast** mode (skip Low, Medium impact questions, state the decision and move on) or **Default** mode (ask every question, whatever its impact level). No answer given -> **Default**, since asking is the safe default and skipping is the opt-in. Carry the choice for the rest of the session — don't re-ask each round.
+
+**MUST MARK** each question's impact level. 
+
+### Low Level (0)
+- Constant value
+- Configuration value
+- Local variable / internal logic
+- Function implementation
+- Single-module internal structure
+- Single-module data structure
+- Easy to change things... 
+
+### Medium Level (1)
+- Multi-function logic
+- Multi-file change
+- Module internal behavior
+- Module interface
+- Shared data structure
+
+### High Level (2)
+- Database schema
+- Cross-service logic
+- API contract
+- Data migration
+- External library / service integration
+- Protocol / file format
+- Deployment architecture
+- System architecture
+- Cross-system contract
+- Platform / OS / hardware dependency
+- External organization / vendor contract
+- Production-scale breaking change
+- Hard to change things...
+
+## Uncertainty
+**MUST MARK** each question's uncertainty.
+- High: Can not known until execute and see the result
+- Low: Obviously know the expected result
+
+For every High uncertainty question, recommend the smallest experiment (spike, prototype, one-off script, manual probe) that would turn it into Low uncertainty before committing to an answer.
+
+## Action
+- **Default mode** — ask every question and confirm, whatever the impact/uncertainty combination below. High uncertainty still gets an assertion-point mark and a recommended experiment.
+- **Fast mode**:
+  - Low, Medium impact level + Low uncertainty = Skip the question; just show the decisions.
+  - Low, Medium impact level + High uncertainty = Skip the question; just show the decisions. Mark to add assertion point (like assert in c++ or something). Recommend an experiment.
+  - High impact level + Low uncertainty = Ask question and confirm.
+  - High impact level + High uncertainty = Ask question and confirm. Mark to add assertion point. Recommend an experiment.
