@@ -92,6 +92,7 @@ Read the relevant principles first. Then select one or more actions that fit the
 | [Write Code](../write-code/SKILL.md) | A bounded implementation can begin because the goal, affected flow, and verification path are clear. |
 | [TDD Bug Fix](../tdd/SKILL.md) | A bug has a clear, cheap local test path, or a failing or regression test is required. |
 | [No Comments](../no-comments/SKILL.md) | A specified code scope or diff has comments, suppressions, or warnings whose value and enforceability need review. |
+| [Review](../review/SKILL.md) | A completed implementation or diff needs a strict maintainability and structural-quality review. |
 | [Friction](../friction/SKILL.md) | A code, design, tool, environment, or verification friction is found and needs immediate durable recording. |
 | [Maintain Verification Skill](../maintain-verification-skill/SKILL.md) | An existing verification skill or feature map must stay accurate as the application changes. |
 | [To Context](../to-context/SKILL.md) | A session's relevant state, decisions, evidence, limits, and open questions must remain usable later. |
