@@ -20,7 +20,7 @@ In Chill Mode, code understanding is required before review and change.
 
 1. **Set the question and starting point.** State what you are reviewing or which symptom you are tracing, then begin at its call site or entry function.
 2. **Understand the function's abstract contract.** Identify responsibility, inputs, outputs, side effects, error conditions, and callers. Do not read internals when this level answers the question.
-3. **Read only unanswered functions line by line.** When actual behavior differs from the contract or you cannot explain cause, impact, or state change, understand every line in order. Check how conditions, state changes, external calls, and error handling affect the result.
+3. **Read only unanswered functions line by line.** When actual behavior differs from the contract or you cannot explain cause, impact, or state change, use [Understand Function](../understand-func/SKILL.md) to trace its conditions, state changes, external calls, error handling, and result in order.
 4. **Repeat for lower functions when necessary.** Start each important callee with its contract, then descend into its implementation only when needed.
 5. **Confirm that you reached the root cause.** Explain the condition and path producing the symptom, its cause, and why the prior contract or validation did not prevent it. Do not treat a symptom-hiding workaround as a cause fix.
 6. **Review and improve discovered smells.** Record every smell discovered in Chill Mode with [Record and Resolve Friction](../record-and-resolve-friction/SKILL.md). Review the cause and impact after understanding the code, improve confirmed problems while preserving behavior, and verify with [Closed Working Loop](../closed-working-loop/SKILL.md).
