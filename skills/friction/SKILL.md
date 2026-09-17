@@ -1,6 +1,6 @@
 ---
 name: friction
-description: Evaluate a potential engineering friction against relevant principles, then append it to the open backlog only after user confirmation.
+description: Evaluate a potential engineering friction against relevant principles, then record it in the backlog only after user confirmation.
 disable-model-invocation: true
 ---
 
@@ -22,9 +22,9 @@ Use this skill when you notice a possible code smell, design concern, missing va
    - Use [Minimize Reader Load](../minimize-reader-load/SKILL.md), [Deep Module](../deep-module/SKILL.md), or [Boundary Discipline](../boundary-discipline/SKILL.md) for structure and interface concerns.
    - Use [Build the Lever](../build-the-lever/SKILL.md) for repeated manual work.
 3. Propose the candidate to the user. State the evidence, the principle-based judgment, the impact, and the smallest next Chill Mode action. Ask whether to add it to `FRICTION.md`.
-4. Append an entry to the end of `FRICTION.md` at the repository root only after the user confirms. Do not reorder or rewrite existing open entries.
-5. State the current disposition: `open`, `deferred`, `blocked`, or `not-actionable`. Record why an item is deferred, blocked, or not actionable.
-6. Keep appending newly confirmed friction to the same file. When an item is processed, first record its outcome and verification evidence in the relevant task record, context, or change. Then remove that entry from `FRICTION.md` so the file contains only remaining work.
+4. Append an entry to the end of `FRICTION.md` at the repository root only after the user confirms. Do not reorder entries or rewrite an entry unrelated to the current work.
+5. State the current disposition: `open`, `deferred`, `blocked`, `not-actionable`, or `done`. Record why an item is deferred, blocked, or not actionable.
+6. Keep appending newly confirmed friction to the same file. When an item is completed, retain it: change its heading and disposition to `done`, and add the outcome and verification evidence to that same entry. Do not delete completed friction.
 
 ## Proposal Format
 
@@ -54,12 +54,13 @@ Append only after confirmation:
 - **Impact:** <risk or cost if left unresolved>
 - **Evidence:** <observed behavior, error, reproduction, or reference>
 - **Next Chill action:** <smallest investigation or action>
-- **Disposition:** <open, deferred, blocked, or not-actionable>
+- **Disposition:** <open, deferred, blocked, not-actionable, or done>
+- **Outcome and verification:** <required when disposition is done>
 ```
 
 ## Done When
 
-The candidate has a principle-based judgment and the user has either confirmed it for `FRICTION.md` or declined to record it. A confirmed item remains in the backlog until its outcome and verification evidence exist elsewhere; then remove it from the open backlog.
+The candidate has a principle-based judgment and the user has either confirmed it for `FRICTION.md` or declined to record it. A completed item remains in `FRICTION.md` with disposition `done`, its outcome, and its verification evidence.
 
 ## Avoid
 
@@ -67,4 +68,4 @@ The candidate has a principle-based judgment and the user has either confirmed i
 - Calling unfamiliar code a smell before understanding its responsibility and constraints.
 - Treating a workaround as proof of the underlying problem without investigating it.
 - Appending an item without user confirmation.
-- Removing a confirmed friction item before its review outcome and verification evidence are recorded.
+- Deleting completed friction instead of marking it `done` with its outcome and verification evidence.

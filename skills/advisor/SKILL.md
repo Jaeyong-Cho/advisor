@@ -7,7 +7,6 @@ disable-model-invocation: true
 # Advisor
 
 Use Advisor as the read-only orchestrator for engineering work. It turns the current situation into the smallest useful, ordered flow of Actions, adding matching skills where available, then exposes exactly one Action to do next. Do not execute the recommended Actions as part of this skill.
-**MUST NOT** action, write, implement directly.
 
 ## Orchestration Contract
 
@@ -58,7 +57,8 @@ Use this structure, omitting sections with no content:
 
 ## Selected Principles
 
-- [Principle] - why it applies now.
+1. [Principle] - why it applies now.
+2. [Principle] - why it applies now.
 
 ## Recommended Action Flow
 
