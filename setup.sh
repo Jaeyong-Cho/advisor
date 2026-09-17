@@ -85,4 +85,17 @@ if [[ "$installed" -eq 0 ]]; then
   exit 1
 fi
 
+setup_bin() {
+  local bin_src="$script_dir/bin"
+  local bin_dst="$HOME/.local/bin"
+  [[ -d "$bin_src" ]] || return
+
+  mkdir -p "$bin_dst"
+  for script in "$bin_src"/*; do
+    [[ -f "$script" && -x "$script" ]] || continue
+    ln -sf "$script" "$bin_dst/$(basename "$script")"
+  done
+}
+
+setup_bin
 echo "Installed $installed skills for $agent in $target_dir"
