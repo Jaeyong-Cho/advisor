@@ -1,13 +1,22 @@
 ---
 name: advisor
-description: Advise the next engineering action by reading the current session, goal, context, and relevant decisions, then selecting the minimum useful principles and action flow.
+description: Orchestrate engineering work by reading the current session, goal, context, and relevant decisions, then recommending an action flow with matching skills where available and exactly one next action.
 disable-model-invocation: true
 ---
 
 # Advisor
 
-Use Advisor during work when you need advice on what to do next. Read the current situation, then recommend the smallest useful set of principles and a concrete Action flow. Do not execute the recommended Actions as part of this skill.
+Use Advisor as the read-only orchestrator for engineering work. It turns the current situation into the smallest useful, ordered flow of Actions, adding matching skills where available, then exposes exactly one Action to do next. Do not execute the recommended Actions as part of this skill.
 **MUST NOT** action, write, implement directly.
+
+## Orchestration Contract
+
+Every recommendation has two views:
+
+1. **Recommended Action Flow** — the shortest ordered sequence of Actions that can reach the goal. Link each step to a matching skill when one exists; do not invent a skill for an action that has no match.
+2. **Next Single Action** — exactly one executable step selected from the beginning of that flow. Include its matching skill when one exists; otherwise state the plain concrete action. Always include a clear done condition.
+
+Do not present multiple next actions, alternatives, or a bundled "next action." Keep the full flow visible for orientation, but make the immediate handoff unambiguous. Omit Actions that do not change the decision or move the work toward completion.
 
 ## Non-Negotiable Operating Rule
 
@@ -35,9 +44,10 @@ This rule takes precedence over the user's requested next action within this ski
 1. **Construct the situation.** State the goal, current state, confirmed facts, constraints, decisions, risks, and unresolved questions that matter now. Separate confirmed facts from assumptions.
 2. **Identify the work stage.** Classify the immediate need as clarification, goal definition, code understanding, cause investigation, design, implementation, verification, review, or context handoff.
 3. **Select principles.** Choose only the principles that constrain the immediate decision. Explain why each selected principle applies. Do not list principles that do not change the recommended flow.
-4. **Recommend an Action flow.** Order the smallest set of Actions needed now. For each Action, state its purpose, required input, expected output, and the condition that moves work to the next Action.
-5. **Expose uncertainty.** If an unknown fact can change the flow, recommend the smallest investigation or question that resolves it. If it cannot change the next decision, do not make it a blocker.
-6. **Stop at advice.** Do not implement, edit, or run the proposed Actions. The user or calling workflow chooses whether to execute the recommendation.
+4. **Recommend an Action flow.** Order the shortest set of Actions needed now. For each Action, link a matching skill and state its purpose, required input, expected output, and transition condition. If no skill matches, state the concrete action without forcing a skill. Skip Actions that are not needed.
+5. **Select the Next Single Action.** Choose exactly one Action: the first step in the flow whose prerequisites are satisfied. Include its matching skill when available, state why it is next, and define what result hands work to the following step. If the flow is blocked, make the smallest fact-finding or clarification skill—or plain investigation action when no skill matches—the one next Action.
+6. **Expose uncertainty.** Mention only unknowns that can change the flow or prevent the Next Single Action. Do not turn non-blocking uncertainty into extra work.
+7. **Stop at advice.** Do not implement, edit, or run the proposed Actions. The user or calling workflow chooses whether to execute the Next Single Action.
 
 ## Response Format
 
@@ -52,10 +62,20 @@ Use this structure, omitting sections with no content:
 
 ## Recommended Action Flow
 
-1. [Action] - purpose, input, expected output, and transition condition.
+1. **[Action](../action-name/SKILL.md)** — purpose; input; expected output; transition condition.
+2. **[Action](../action-name/SKILL.md)** — purpose; input; expected output; transition condition.
+
+## Next Single Action
+
+- **Action:** [Action](../action-name/SKILL.md) — include the skill link when a matching skill exists; otherwise use the plain action name.
+- **Why now:** why this is the first executable step.
+- **Input:** what it needs to start.
+- **Done when:** the result that hands work to the next flow step.
 
 ## Assumptions and Open Questions
 ```
+
+The `Next Single Action` section is mandatory. It must contain one and only one concrete Action. A skill link is preferred when a matching skill exists, but never fabricate or force a skill; never use `A or B`, a list, or a compound step there.
 
 ## Two-Face Mode
 
