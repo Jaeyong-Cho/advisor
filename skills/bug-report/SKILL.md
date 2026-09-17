@@ -10,7 +10,7 @@ Preserve a bug-investigation session as a report that lets another engineer veri
 
 ## When to Use
 
-Use this action when a reported or reproduced bug needs a root-cause investigation record before a fix. Use [Fix Root Causes](../fix-root-causes/SKILL.md) to guide the investigation and [Technical Writing](../technical-writing/SKILL.md) to write the report.
+Use this action when a reported or reproduced bug needs a root-cause investigation record before a fix. Use [Fix Root Causes](../fix-root-causes/SKILL.md) to guide the investigation and [Technical Writing](../technical-writing/SKILL.md) to write the report. The completed report is an input to [TDD Bug Fix](../tdd/SKILL.md): its reproduced scenario, causal boundary, and verification criteria define the smallest useful failing regression test.
 
 Do not use this action for a known, trivial fix that needs no separate investigation record.
 
@@ -22,8 +22,9 @@ Do not use this action for a known, trivial fix that needs no separate investiga
 4. Record every material observation in traversal order: location and symbol, input or state, line-level behavior, resulting state or output, and the evidence that supports it. Label hypotheses as hypotheses until observation disproves alternatives.
 5. State the causal chain from triggering condition to defect. Identify the responsible code, state, contract, validation, or domain rule; explain why existing behavior allowed it; and distinguish the root cause from contributing conditions and visible symptoms.
 6. Inspect comparable paths only when they share the proposed cause. Record scope, result, and any follow-up required.
-7. Recommend the smallest root-cause fix and the verification that would falsify or confirm it. Do not change production code as part of this action unless the caller explicitly includes the fix.
-8. Write the report to `bug-reports/{NN}-{slug}.md`. Create `bug-reports/` when it does not exist. Choose the next available numeric prefix without renaming existing reports.
+7. Prepare a TDD handoff. Identify the test target, fixture or input, expected assertion, and failing-before signal that express the report's reproduction and root cause without reproducing implementation details. If a focused failing test is impractical, record why and name the closest executable regression check.
+8. Recommend the smallest root-cause fix and the verification that would falsify or confirm it. Do not change production code as part of this action unless the caller explicitly includes the fix.
+9. Write the report to `bug-reports/{NN}-{slug}.md`. Create `bug-reports/` when it does not exist. Choose the next available numeric prefix without renaming existing reports.
 
 ## Report Format
 
@@ -61,6 +62,14 @@ Do not use this action for a known, trivial fix that needs no separate investiga
 
 <Scope inspected and result.>
 
+## TDD Handoff
+
+- **Test target:**
+- **Reproduction expressed as a test:**
+- **Expected assertion:**
+- **Failing-before signal:**
+- **Fallback when a focused test is impractical:**
+
 ## Recommended Fix and Verification
 
 - **Smallest responsible change:**
@@ -72,7 +81,7 @@ Use precise paths, symbols, line numbers when they carry evidence, commands, inp
 
 ## Done When
 
-The report makes the symptom, reproduction status, investigated path, causal evidence, root cause or unresolved uncertainty, fix scope, and verification criteria independently reviewable.
+The report makes the symptom, reproduction status, investigated path, causal evidence, root cause or unresolved uncertainty, TDD handoff, fix scope, and verification criteria independently reviewable.
 
 ## Avoid
 
