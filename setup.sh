@@ -16,6 +16,8 @@ Agent directories:
 
 The second argument overrides the selected agent directory.
 SKILLS_DIR also overrides the selected agent directory when no second argument is given.
+
+For Pi runtime packages and configuration, run ./install-pi.sh separately.
 USAGE
 }
 
@@ -88,7 +90,7 @@ fi
 setup_bin() {
   local bin_src="$script_dir/bin"
   local bin_dst="$HOME/.local/bin"
-  [[ -d "$bin_src" ]] || return
+  [[ -d "$bin_src" ]] || return 0
 
   mkdir -p "$bin_dst"
   for script in "$bin_src"/*; do
@@ -98,4 +100,7 @@ setup_bin() {
 }
 
 setup_bin
+
+# Keep the skill-copy command independent from Pi package installation.
+# Run ./install-pi.sh separately when configuring the Pi runtime.
 echo "Installed $installed skills for $agent in $target_dir"
