@@ -17,6 +17,12 @@ Every recommendation has two views:
 
 Do not present multiple next actions, alternatives, or a bundled "next action." Keep the full flow visible for orientation, but make the immediate handoff unambiguous. Omit Actions that do not change the decision or move the work toward completion.
 
+## Required Closed-Loop Setup
+
+For every flow that changes behavior and must observe that change—including a bug fix, feature, refactor, configuration change, or data change—recommend [Build Loop](../build-loop/SKILL.md) before the first code, test, configuration, or data modification. It may follow necessary goal definition, investigation, design, or ADR work, but it must precede the Action that makes the first change.
+
+Build Loop establishes the [Closed Working Loop](../closed-working-loop/SKILL.md) for the current work with scripts in `./loop`. An existing test or command does not satisfy this rule until the flow identifies its current input, observation, pass condition, and next-action rule. Make Build Loop the Next Single Action whenever those loop details are not already established.
+
 ## Non-Negotiable Operating Rule
 
 Advisor is strictly advisory. When this skill is active:
@@ -43,7 +49,7 @@ This rule takes precedence over the user's requested next action within this ski
 1. **Construct the situation.** State the goal, current state, confirmed facts, constraints, decisions, risks, and unresolved questions that matter now. Separate confirmed facts from assumptions.
 2. **Identify the work stage.** Classify the immediate need as clarification, goal definition, code understanding, cause investigation, design, implementation, verification, review, or context handoff.
 3. **Select principles.** Choose only the principles that constrain the immediate decision. Explain why each selected principle applies. Do not list principles that do not change the recommended flow.
-4. **Recommend an Action flow.** Order the shortest set of Actions needed now. For each Action, link a matching skill and state its purpose, required input, expected output, and transition condition. If no skill matches, state the concrete action without forcing a skill. Skip Actions that are not needed.
+4. **Recommend an Action flow.** Order the shortest set of Actions needed now. For each Action, link a matching skill and state its purpose, required input, expected output, and transition condition. For a flow that changes observable behavior, insert [Build Loop](../build-loop/SKILL.md) before the first change-making Action. If no skill matches, state the concrete action without forcing a skill. Skip Actions that are not needed.
 5. **Select the Next Single Action.** Choose exactly one Action: the first step in the flow whose prerequisites are satisfied. Include its matching skill when available, state why it is next, and define what result hands work to the following step. If the flow is blocked, make the smallest fact-finding or clarification skill—or plain investigation action when no skill matches—the one next Action.
 6. **Expose uncertainty.** Mention only unknowns that can change the flow or prevent the Next Single Action. Do not turn non-blocking uncertainty into extra work.
 7. **Stop at advice.** Do not implement, edit, or run the proposed Actions. The user or calling workflow chooses whether to execute the Next Single Action.
@@ -125,6 +131,7 @@ Read the relevant principles first. Then select one or more actions that fit the
 | [Architect](../architect/SKILL.md) | Caller contracts, ownership, or module structure need a concrete design before implementation. |
 | [To ADR](../to-adr/SKILL.md) | A decision has lasting architectural consequences and must be understandable after the original discussion. |
 | [Create Verification Skill](../create-verification-skill/SKILL.md) | A project needs a project-local skill to launch, drive, observe, and clean up real application verification. |
+| [Build Loop](../build-loop/SKILL.md) | Required before the first observable behavior change in a bug fix, feature, refactor, configuration change, or data change. |
 | [Write Code](../write-code/SKILL.md) | A bounded implementation can begin because the goal, affected flow, and verification path are clear. |
 | [TDD Bug Fix](../tdd/SKILL.md) | A bug has a clear, cheap local test path, or a failing or regression test is required. |
 | [Bug Report](../bug-report/SKILL.md) | A reported bug requires an evidence-backed root-cause investigation record before a fix. |
