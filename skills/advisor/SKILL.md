@@ -87,6 +87,7 @@ Read the relevant principles first. Then select one or more actions that fit the
 | [To Goal](../to-goal/SKILL.md) | A request needs a concrete goal, current-state evidence, completion criteria, and a next action before implementation. |
 | [Why](../why/SKILL.md) | The motivation, constraints, tradeoffs, or history behind code or a design decision must be understood before changing it. |
 | [How](../how/SKILL.md) | A code flow, subsystem, ownership boundary, or placement decision needs an architectural explanation before a safe change. |
+| [Architect](../architect/SKILL.md) | Caller contracts, ownership, or module structure need a concrete design before implementation. |
 | [To ADR](../to-adr/SKILL.md) | A decision has lasting architectural consequences and must be understandable after the original discussion. |
 | [Create Verification Skill](../create-verification-skill/SKILL.md) | A project needs a project-local skill to launch, drive, observe, and clean up real application verification. |
 | [Write Code](../write-code/SKILL.md) | A bounded implementation can begin because the goal, affected flow, and verification path are clear. |
