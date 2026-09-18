@@ -19,37 +19,11 @@ Do not present multiple next actions, alternatives, or a bundled "next action." 
 
 ## Goal Gate
 
-Goal definition comes before every other Advisor decision. Before selecting Chill Mode or Madmax Mode, exploring the repository, asking the mode question, or running any Action, read `GOAL.md` when it exists.
+Goal definition comes before every other Advisor decision. Before exploring the repository or running any Action, read `GOAL.md` when it exists.
 
 A Goal is ready only when it states the current state, expected state, gap, constraints and assumptions, completion criteria, and next action for the current request. It must reflect shared understanding with the user.
 
-When `GOAL.md` is missing, incomplete, stale for the current request, or not based on shared understanding, the Recommended Action Flow begins with [Grill Me](../grill-me/SKILL.md), regardless of the eventual operating mode. Make **Grill Me** the Next Single Action and conduct its user interview directly. Do not choose an operating mode or start other work first. After Grill Me reaches user-confirmed shared understanding, run [To Goal](../to-goal/SKILL.md) to write or update `GOAL.md`; only then continue the normal Advisor flow.
-
-## Operating Mode Selection
-
-Select the mode only after the Goal Gate is satisfied and before exploring the repository or running a non-goal Action.
-
-1. Recommend **Chill Mode** for a bug fix, root-cause investigation, Bug Report, review, or friction resolution. State the relevant evidence: these flows need causal understanding, careful verification, or durable maintainability judgment.
-2. If the user has already selected a mode for the current flow, preserve it without asking again.
-3. Otherwise recommend a mode from the current evidence before asking. Recommend **Chill Mode** when the target is unfamiliar, the behavior or root cause is uncertain, the change has broad or durable impact, rollback is costly, or useful feedback is slow or expensive. Recommend **Madmax Mode** when the goal and responsible scope are clear, changes are narrow and reversible, a fast deterministic loop exists, and speed is an explicit priority.
-4. Use the structured **AskQuestion** tool to ask the user to select **Chill Mode** or **Madmax Mode**. Put the recommended mode first and state the specific evidence behind the recommendation. The user may choose either mode.
-5. State the recommendation, evidence, and selected mode in the current situation, then use the selected mode to choose the Action flow.
-
-## Chill Mode Understanding
-
-Chill Mode is a teach-through workflow. The user must understand every Action, meaningful progress event, and code or configuration change before Advisor advances the flow.
-
-1. Before performing an Action, explain in plain language why it is needed now, what it will inspect or change, the affected behavior and paths when known, and how its result will be judged.
-2. Before a code, configuration, or data modification, explain the intended behavior change and the smallest relevant code flow or interface. Link the affected files when they are known.
-3. After an Action completes, explain the evidence, what actually changed, how the changed code works in the surrounding flow, what the verification showed, and why the next Action follows. Link changed files or evidence when available.
-4. Before performing an Action, ask for and receive the user's explicit confirmation of that one explained Action. Do not treat silence, an earlier confirmation, or confirmation of a different Action as approval.
-5. Do not hide progress behind a completion label or advance from one Action to the next without this explanation and confirmation. If the user asks for clarification, signals uncertainty, or declines the Action, resolve it or revise the flow before continuing the dependent work.
-
-Madmax Mode may keep these explanations brief. Chill Mode must retain them even when the Action is routine.
-
-## Madmax Review Rule
-
-In Madmax Mode, do not add, recommend, or run the [Review](../review/SKILL.md) Action. Do not introduce a separate code-quality, maintainability, or post-change review as a final stage or blocker. Keep the verification that proves the requested goal, including any acceptance check already required by Build Loop, but omit discretionary review work. When the requested work is itself a review, recommend Chill Mode instead.
+When `GOAL.md` is missing, incomplete, stale for the current request, or not based on shared understanding, the Recommended Action Flow begins with [Grill Me](../grill-me/SKILL.md). Make **Grill Me** the Next Single Action and conduct its user interview directly. Do not start other work first. After Grill Me reaches user-confirmed shared understanding, run [To Goal](../to-goal/SKILL.md) to write or update `GOAL.md`; only then continue the normal Advisor flow.
 
 ## Required Understand First
 
@@ -78,15 +52,14 @@ Advisor performs the selected work directly. When this skill is active:
 
 ## Advice Workflow
 
-1. **Pass the Goal Gate.** When the Goal is not ready, recommend and conduct Grill Me directly as the sole Next Single Action. After user-confirmed shared understanding, run To Goal to record `GOAL.md`. Do not select a mode or advise on other work until the Goal is ready.
-2. **Select the operating mode.** Apply Operating Mode Selection after the Goal Gate and before any repository exploration or non-goal Action.
-3. **Construct the situation.** State the goal, current state, confirmed facts, constraints, decisions, risks, and unresolved questions that matter now. Separate confirmed facts from assumptions.
-4. **Identify the work stage.** Classify the immediate need as clarification, goal definition, code understanding, cause investigation, design, implementation, verification, review, or context handoff.
-5. **Select principles.** Choose only the principles that constrain the immediate decision. Explain why each selected principle applies. Do not list principles that do not change the recommended flow.
-6. **Recommend an Action flow.** Order the shortest set of Actions needed now. For each Action, link a matching skill and state its purpose, required input, expected output, code or behavior impact when relevant, and transition condition. In Chill Mode, apply Chill Mode Understanding before performing every Action. In Madmax Mode, apply the Madmax Review Rule. For a flow that changes observable behavior, insert [Build Loop](../build-loop/SKILL.md) before the first change-making Action. Apply the selected mode when choosing scope and depth. If no skill matches, state the concrete action without forcing a skill. Skip Actions that are not needed.
-7. **Perform the Next Single Action.** Choose exactly one Action: the first step in the flow whose prerequisites are satisfied. In Chill Mode, explain the Action and its code or behavior impact, then obtain explicit confirmation before performing it. Conduct Grill Me directly when it is the action. If the flow is blocked, perform the smallest fact-finding or clarification action—or plain investigation action when no skill matches.
-8. **Expose uncertainty.** Mention only unknowns that can change the flow or prevent the Next Single Action. Do not turn non-blocking uncertainty into extra work.
-9. **Synthesize the completed Action.** After the Action completes, report the evidence and update the flow. In Chill Mode, explain the progress, applied code or configuration change, relevant code flow, and verification before performing the next Action. Perform only the next Action whose prerequisites are satisfied.
+1. **Pass the Goal Gate.** When the Goal is not ready, recommend and conduct Grill Me directly as the sole Next Single Action. After user-confirmed shared understanding, run To Goal to record `GOAL.md`. Do not advise on other work until the Goal is ready.
+2. **Construct the situation.** State the goal, current state, confirmed facts, constraints, decisions, risks, and unresolved questions that matter now. Separate confirmed facts from assumptions.
+3. **Identify the work stage.** Classify the immediate need as clarification, goal definition, code understanding, cause investigation, design, implementation, verification, review, or context handoff.
+4. **Select principles.** Choose only the principles that constrain the immediate decision. Explain why each selected principle applies. Do not list principles that do not change the recommended flow.
+5. **Recommend an Action flow.** Order the shortest set of Actions needed now. For each Action, link a matching skill and state its purpose, required input, expected output, code or behavior impact when relevant, and transition condition. For a flow that changes observable behavior, insert [Build Loop](../build-loop/SKILL.md) before the first change-making Action. If no skill matches, state the concrete action without forcing a skill. Skip Actions that are not needed.
+6. **Perform the Next Single Action.** Choose exactly one Action: the first step in the flow whose prerequisites are satisfied. Conduct Grill Me directly when it is the action. If the flow is blocked, perform the smallest fact-finding or clarification action—or plain investigation action when no skill matches.
+7. **Expose uncertainty.** Mention only unknowns that can change the flow or prevent the Next Single Action. Do not turn non-blocking uncertainty into extra work.
+8. **Synthesize the completed Action.** After the Action completes, report the evidence and update the flow. Perform only the next Action whose prerequisites are satisfied.
 
 ## Response Format
 
@@ -94,12 +67,6 @@ Use this structure, omitting sections with no content:
 
 ```md
 ## Current Situation
-
-## Operating Mode
-
-- **Mode:** Chill Mode or Madmax Mode.
-- **Recommendation:** recommended mode and the evidence behind it.
-- **Selection:** user-selected.
 
 ## Selected Principles
 
@@ -115,28 +82,14 @@ Use this structure, omitting sections with no content:
 
 - **Action:** [Action](../action-name/SKILL.md) — include the skill link when a matching skill exists; otherwise use the plain action name.
 - **Why now:** why this is the first executable step.
-- **Mode:** the selected mode and its relevant constraint.
 - **Input:** what it needs to start.
 - **Code or behavior impact:** intended affected behavior and paths, when relevant.
 - **Done when:** the result that hands work to the next flow step.
-- **Confirmation:** in Chill Mode, the exact user confirmation required before this Action runs.
-
-## Chill Explanation
-
-- **What happens now:** plain-language purpose of the current Action.
-- **Code or behavior:** the relevant flow, intended change, and affected paths.
-- **How it will be judged:** expected evidence and acceptance condition.
-- **Progress:** after an Action completes, what changed and why the next Action follows.
 
 ## Assumptions and Open Questions
 ```
 
 The `Next Single Action` section is mandatory. It must contain one and only one concrete Action. A skill link is preferred when a matching skill exists, but never fabricate or force a skill; never use `A or B`, a list, or a compound step there.
-
-## Mode Behavior
-
-- **Madmax Mode.** Reach the requested goal through the smallest viable path. Keep the scope narrow, avoid work that does not unblock the goal, and defer non-blocking improvement through Friction. Do not run the Review Action or add a discretionary review pass. Build Loop and verification required to prove the requested goal still apply.
-- **Chill Mode.** Teach through the work as it proceeds: explain every Action, progress event, code or configuration change, and verification result in plain language. Let the user trace the affected behavior and code flow through linked files and evidence, then obtain explicit confirmation for each single Action before it runs. Understand the target before changing it, investigate causes and boundaries, and address maintainability, edge cases, and verification depth needed for a durable result. Recommend it for bug fixes, reviews, and friction resolution.
 
 ## Principles and Actions
 
