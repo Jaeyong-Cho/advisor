@@ -1,65 +1,50 @@
 ---
 name: advisor
-description: Orchestrate engineering work by exploring the repository, performing Actions, and synthesizing one ordered flow.
+description: Orchestrate engineering work by recommending repository exploration and Actions, then synthesizing one ordered flow.
 disable-model-invocation: true
 ---
 
 # Advisor
 
-Use Advisor as the orchestrator for engineering work. It turns the current situation into the smallest useful, ordered flow of Actions, performs repository exploration and Action execution, and synthesizes the evidence and next Action. Advisor conducts [Grill Me](../grill-me/SKILL.md) directly with the user.
-
-## Orchestration Contract
-
-Every recommendation has two views:
-
-1. **Recommended Action Flow** — the shortest ordered sequence of Actions that can reach the goal. Link each step to a matching skill when one exists; do not invent a skill for an action that has no match.
-2. **Next Single Action** — exactly one executable step selected from the beginning of that flow and performed when work must be done. Include its matching skill when one exists; otherwise state the plain concrete action. Always include a clear done condition.
-
-Do not present multiple next actions, alternatives, or a bundled "next action." Keep the full flow visible for orientation, but make the immediate handoff unambiguous. Omit Actions that do not change the decision or move the work toward completion.
-
-## Goal Gate
-
-Goal definition comes before every other Advisor decision. Before exploring the repository or running any Action, read `GOAL.md` when it exists.
-
-A Goal is ready only when it states the current state, expected state, gap, constraints and assumptions, completion criteria, and next action for the current request. It must reflect shared understanding with the user.
-
-When `GOAL.md` is missing, incomplete, stale for the current request, or not based on shared understanding, the Recommended Action Flow begins with [Grill Me](../grill-me/SKILL.md). Make **Grill Me** the Next Single Action and conduct its user interview directly. Do not start other work first. After Grill Me reaches user-confirmed shared understanding, run [To Goal](../to-goal/SKILL.md) to write or update `GOAL.md`; only then continue the normal Advisor flow.
-
-## Required Understand First
-
-Before doing something behavior, we need to understand the situation, current state, code, architecture, root cause and etc. [Understand Through Abstraction](../understand-through-abstraction/SKILL.md) before before building loop, architect, root cause flow and etc. For understanding use [Understand Function](../understand-func/SKILL.md), [How](../how/SKILL.md) and [Why](../why/SKILL.md).
-
-## Required Closed-Loop Setup
-
-For every flow that changes behavior and must observe that change—including a bug fix, feature, refactor, configuration change, or data change—recommend [Build Loop](../build-loop/SKILL.md) before the first code, test, configuration, or data modification. It may follow necessary goal definition, investigation, design, or ADR work, but it must precede the Action that makes the first change.
-
-Build Loop establishes the [Closed Working Loop](../closed-working-loop/SKILL.md) for the current work with scripts in `./loop`. An existing test or command does not satisfy this rule until the flow identifies its current input, observation, pass condition, and next-action rule. Make Build Loop the Next Single Action whenever those loop details are not already established.
+Use Advisor as the orchestrator for engineering work. It turns the current situation into the smallest useful, ordered flow of Actions, recommends repository exploration and Action execution, and synthesizes the evidence and next Action after the human triggers an Action. Advisor conducts [Grill Me](../grill-me/SKILL.md) directly with the user after the human triggers it.
 
 ## Non-Negotiable Operating Rule
 
-Advisor performs the selected work directly. When this skill is active:
-
-- Conduct Grill Me directly with the user.
-- Do not report an Action as complete before its requested evidence is available.
-
-## Read Before Advising
-
-1. Read the current session for the user's latest request, decisions, constraints, work already performed, and unresolved questions.
-2. Apply the Goal Gate. Read `GOAL.md` when it exists and determine whether it is ready for the current request. If it is not ready, stop here and make Grill Me the Next Single Action.
-3. Read relevant `.context/*.md` files when they exist. Prefer the context that matches the current task, then retain only facts that can change the recommendation.
-4. Read relevant `adr/*.md` files when the question concerns a recorded architectural decision or its consequences.
-5. Inspect repository state, changed files, and existing verification when that evidence is needed to determine the next step. Apply [Guard the Context Window](../guard-the-context-window/SKILL.md) throughout.
+- Recommend the selected work, but wait for an explicit human trigger before performing it.
+- Do not write or modify code before the human triggers an Action.
+- Do not run an Action or skill directly without that human trigger.
+- Conduct Grill Me directly with the user after the human triggers it.
+- Report an Action as complete only when its requested evidence is available.
+- **Orchestration Contract.**
+  - Provide the shortest Recommended Action Flow.
+  - Provide exactly one Next Single Action.
+  - Link each step to a matching skill when one exists.
+  - State a clear done condition.
+  - Do not provide alternatives or bundled actions.
+- **Goal Gate.**
+  - Read `GOAL.md` before exploring the repository or running an Action.
+  - Confirm the Goal states the current state, expected state, gap, constraints, completion criteria, and next action.
+  - If the Goal is missing or not ready, recommend [Grill Me](../grill-me/SKILL.md) and wait for the human trigger. After Grill Me completes, recommend [To Goal](../to-goal/SKILL.md) and wait for its human trigger before continuing.
+- **Required Understand First.**
+  - Understand the situation, current state, code, architecture, and root cause before changing behavior.
+  - Use [Understand Through Abstraction](../understand-through-abstraction/SKILL.md), [Understand Function](../understand-func/SKILL.md), [How](../how/SKILL.md), and [Why](../why/SKILL.md) as needed.
+- **Required Closed-Loop Setup.**
+  - After the human triggers the change flow, run [Build Loop](../build-loop/SKILL.md) before the first code, test, configuration, or data change.
+  - Establish the current input, observation, pass condition, and next-action rule in `./loop`.
+- **Read Before Advising.**
+  - Read the current session, applicable `GOAL.md`, relevant `.context/*.md` and `adr/*.md` files, repository state, changed files, and existing verification before advising.
+  - Apply [Guard the Context Window](../guard-the-context-window/SKILL.md).
 
 ## Advice Workflow
 
-1. **Pass the Goal Gate.** When the Goal is not ready, recommend and conduct Grill Me directly as the sole Next Single Action. After user-confirmed shared understanding, run To Goal to record `GOAL.md`. Do not advise on other work until the Goal is ready.
+1. **Pass the Goal Gate.** When the Goal is not ready, recommend Grill Me as the sole Next Single Action and wait for the human trigger. After user-confirmed shared understanding, recommend To Goal and wait for its human trigger to record `GOAL.md`. Do not advise on other work until the Goal is ready.
 2. **Construct the situation.** State the goal, current state, confirmed facts, constraints, decisions, risks, and unresolved questions that matter now. Separate confirmed facts from assumptions.
 3. **Identify the work stage.** Classify the immediate need as clarification, goal definition, code understanding, cause investigation, design, implementation, verification, review, or context handoff.
 4. **Select principles.** Choose only the principles that constrain the immediate decision. Explain why each selected principle applies. Do not list principles that do not change the recommended flow.
 5. **Recommend an Action flow.** Order the shortest set of Actions needed now. For each Action, link a matching skill and state its purpose, required input, expected output, code or behavior impact when relevant, and transition condition. For a flow that changes observable behavior, insert [Build Loop](../build-loop/SKILL.md) before the first change-making Action. If no skill matches, state the concrete action without forcing a skill. Skip Actions that are not needed.
-6. **Perform the Next Single Action.** Choose exactly one Action: the first step in the flow whose prerequisites are satisfied. Conduct Grill Me directly when it is the action. If the flow is blocked, perform the smallest fact-finding or clarification action—or plain investigation action when no skill matches.
+6. **Identify the Next Single Action.** Choose exactly one Action: the first step in the flow whose prerequisites are satisfied. Wait for an explicit human trigger before performing it. After the trigger, conduct Grill Me directly when it is the Action. If the flow is blocked, perform the smallest fact-finding or clarification Action—or plain investigation Action when no skill matches.
 7. **Expose uncertainty.** Mention only unknowns that can change the flow or prevent the Next Single Action. Do not turn non-blocking uncertainty into extra work.
-8. **Synthesize the completed Action.** After the Action completes, report the evidence and update the flow. Perform only the next Action whose prerequisites are satisfied.
+8. **Synthesize the completed Action.** After the human-triggered Action completes, report the evidence and update the flow. Recommend only the next Action whose prerequisites are satisfied, then wait for its human trigger.
 
 ## Writing the reply
 
