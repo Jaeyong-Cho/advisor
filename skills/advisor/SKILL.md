@@ -17,11 +17,21 @@ Every recommendation has two views:
 
 Do not present multiple next actions, alternatives, or a bundled "next action." Keep the full flow visible for orientation, but make the immediate handoff unambiguous. Omit Actions that do not change the decision or move the work toward completion.
 
+## Operating Mode Selection
+
+Select the mode before dispatching repository exploration or an Action.
+
+1. Recommend **Chill Mode** for a bug fix, root-cause investigation, Bug Report, review, or friction resolution. State the relevant evidence: these flows need causal understanding, careful verification, or durable maintainability judgment.
+2. If the user has already selected a mode for the current flow, preserve it without asking again.
+3. Otherwise recommend a mode from the current evidence before asking. Recommend **Chill Mode** when the target is unfamiliar, the behavior or root cause is uncertain, the change has broad or durable impact, rollback is costly, or useful feedback is slow or expensive. Recommend **Madmax Mode** when the goal and responsible scope are clear, changes are narrow and reversible, a fast deterministic loop exists, and speed is an explicit priority.
+4. Use the structured **AskQuestion** tool to ask the user to select **Chill Mode** or **Madmax Mode**. Put the recommended mode first and state the specific evidence behind the recommendation. The user may choose either mode.
+5. State the recommendation, evidence, and selected mode in the current situation, use the selected mode to choose the Action flow, and include it in every sub-agent task.
+
 ## Sub-Agent Delegation
 
 Delegate repository exploration and Action execution. Advisor may read the current conversation, goals, context, and delegated results to coordinate, but does not perform repository exploration, implementation, verification, or other Action work itself.
 
-1. Give each sub-agent one bounded task with the goal, relevant paths or scope, constraints, required skills, expected evidence, and done condition.
+1. Give each sub-agent one bounded task with the goal, selected mode, relevant paths or scope, constraints, required skills, expected evidence, and done condition.
 2. Dispatch a sub-agent for every repository exploration needed to choose a flow, such as tracing behavior, inspecting an unfamiliar subsystem, reproducing a failure, or finding a verification path.
 3. Dispatch a sub-agent for every Action that is being performed. The task must state whether it may modify files and the exact output or validation expected.
 4. Dispatch independent, non-overlapping tasks in parallel. Dispatch dependent work serially, and never let concurrent sub-agents edit or generate artifacts in the same scope.
@@ -58,13 +68,14 @@ Advisor delegates work instead of performing it directly. When this skill is act
 
 ## Advice Workflow
 
-1. **Construct the situation.** State the goal, current state, confirmed facts, constraints, decisions, risks, and unresolved questions that matter now. Separate confirmed facts from assumptions.
-2. **Identify the work stage.** Classify the immediate need as clarification, goal definition, code understanding, cause investigation, design, implementation, verification, review, or context handoff.
-3. **Select principles.** Choose only the principles that constrain the immediate decision. Explain why each selected principle applies. Do not list principles that do not change the recommended flow.
-4. **Recommend an Action flow.** Order the shortest set of Actions needed now. For each Action, link a matching skill and state its purpose, required input, expected output, and transition condition. For a flow that changes observable behavior, insert [Build Loop](../build-loop/SKILL.md) before the first change-making Action. If no skill matches, state the concrete action without forcing a skill. Skip Actions that are not needed.
-5. **Dispatch the Next Single Action.** Choose exactly one Action: the first step in the flow whose prerequisites are satisfied. Dispatch it to a sub-agent with the required input, scope, skill, output, validation, and done condition. If the flow is blocked, dispatch the smallest fact-finding or clarification skill—or plain investigation action when no skill matches.
-6. **Expose uncertainty.** Mention only unknowns that can change the flow or prevent the Next Single Action. Do not turn non-blocking uncertainty into extra work.
-7. **Synthesize delegated work.** After the sub-agent completes, report the evidence, update the flow, and dispatch only the next Action whose prerequisites are satisfied.
+1. **Select the operating mode.** Apply Operating Mode Selection before any repository exploration or Action dispatch.
+2. **Construct the situation.** State the goal, current state, confirmed facts, constraints, decisions, risks, and unresolved questions that matter now. Separate confirmed facts from assumptions.
+3. **Identify the work stage.** Classify the immediate need as clarification, goal definition, code understanding, cause investigation, design, implementation, verification, review, or context handoff.
+4. **Select principles.** Choose only the principles that constrain the immediate decision. Explain why each selected principle applies. Do not list principles that do not change the recommended flow.
+5. **Recommend an Action flow.** Order the shortest set of Actions needed now. For each Action, link a matching skill and state its purpose, required input, expected output, and transition condition. For a flow that changes observable behavior, insert [Build Loop](../build-loop/SKILL.md) before the first change-making Action. Apply the selected mode when choosing scope and depth. If no skill matches, state the concrete action without forcing a skill. Skip Actions that are not needed.
+6. **Dispatch the Next Single Action.** Choose exactly one Action: the first step in the flow whose prerequisites are satisfied. Dispatch it to a sub-agent with the selected mode, required input, scope, skill, output, validation, and done condition. If the flow is blocked, dispatch the smallest fact-finding or clarification skill—or plain investigation action when no skill matches.
+7. **Expose uncertainty.** Mention only unknowns that can change the flow or prevent the Next Single Action. Do not turn non-blocking uncertainty into extra work.
+8. **Synthesize delegated work.** After the sub-agent completes, report the evidence, update the flow, and dispatch only the next Action whose prerequisites are satisfied.
 
 ## Response Format
 
@@ -72,6 +83,12 @@ Use this structure, omitting sections with no content:
 
 ```md
 ## Current Situation
+
+## Operating Mode
+
+- **Mode:** Chill Mode or Madmax Mode.
+- **Recommendation:** recommended mode and the evidence behind it.
+- **Selection:** user-selected.
 
 ## Selected Principles
 
@@ -87,6 +104,7 @@ Use this structure, omitting sections with no content:
 
 - **Action:** [Action](../action-name/SKILL.md) — include the skill link when a matching skill exists; otherwise use the plain action name.
 - **Why now:** why this is the first executable step.
+- **Mode:** the selected mode and its relevant constraint.
 - **Input:** what it needs to start.
 - **Done when:** the result that hands work to the next flow step.
 - **Sub-agent task:** the bounded dispatched task, including scope and evidence required.
@@ -96,12 +114,10 @@ Use this structure, omitting sections with no content:
 
 The `Next Single Action` section is mandatory. It must contain one and only one concrete Action and its bounded sub-agent task. A skill link is preferred when a matching skill exists, but never fabricate or force a skill; never use `A or B`, a list, or a compound step there.
 
-## Two-Face Mode
+## Mode Behavior
 
-Development work has two modes.
-
-- **Madmax Mode.** Reach the goal as quickly as possible. Do not let obstacles that do not fully block the goal slow progress. Prioritize a happy-path result over design principles, clean code, test coverage, and edge cases so that the result creates room for later work.
-- **Chill Mode.** Understand the target code before review and change. Evaluate and improve code and design with an idealistic, critical eye. Record, review, and improve every code smell found while understanding. Use the room created in Madmax Mode to repair code, edge cases, and test coverage.
+- **Madmax Mode.** Reach the requested goal through the smallest viable path. Keep the scope narrow, avoid work that does not unblock the goal, and defer non-blocking improvement through Friction. Build Loop and required verification still apply.
+- **Chill Mode.** Understand the target before changing it, investigate causes and boundaries, and address maintainability, edge cases, and verification depth needed for a durable result. Recommend it for bug fixes, reviews, and friction resolution.
 
 ## Principles and Actions
 
