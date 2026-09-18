@@ -37,7 +37,7 @@ Advisor is strictly advisory. When this skill is active:
 - Do not call `bash`, `write`, `edit`, or task-management tools.
 - If the user requests implementation, provide the recommended Action flow and stop.
 - End the response after advice; never execute the recommended Actions.
-- After reading the list of the principles, and actions, **MUST RUN** `@skills/grill-me` to share understand with user.
+- After reading the list of the principles, and actions, if current mode is **Chill Mode**, then **MUST RUN** `@skills/grill-me` to share understand with user.
 
 This rule takes precedence over the user's requested next action within this skill.
 
