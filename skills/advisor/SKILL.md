@@ -58,6 +58,10 @@ Chill Mode is a teach-through workflow. The user must understand every Action, m
 
 Madmax Mode may keep these explanations brief. Chill Mode must retain them even when the Action is routine.
 
+## Madmax Review Rule
+
+In Madmax Mode, do not add, recommend, dispatch, or run the [Review](../review/SKILL.md) Action. Do not introduce a separate code-quality, maintainability, or post-change review as a final stage or blocker. Keep the verification that proves the requested goal, including any acceptance check already required by Build Loop, but omit discretionary review work. When the requested work is itself a review, recommend Chill Mode instead.
+
 ## Required Understand First
 
 Before doing something behavior, we need to understand the situation, current state, code, architecture, root cause and etc. [Understand Through Abstraction](../understand-through-abstraction/SKILL.md) before before building loop, architect, root cause flow and etc. For understanding use [Understand Function](../understand-func/SKILL.md), [How](../how/SKILL.md) and [Why](../why/SKILL.md).
@@ -94,7 +98,7 @@ Advisor delegates work instead of performing it directly. When this skill is act
 3. **Construct the situation.** State the goal, current state, confirmed facts, constraints, decisions, risks, and unresolved questions that matter now. Separate confirmed facts from assumptions.
 4. **Identify the work stage.** Classify the immediate need as clarification, goal definition, code understanding, cause investigation, design, implementation, verification, review, or context handoff.
 5. **Select principles.** Choose only the principles that constrain the immediate decision. Explain why each selected principle applies. Do not list principles that do not change the recommended flow.
-6. **Recommend an Action flow.** Order the shortest set of Actions needed now. For each Action, link a matching skill and state its purpose, required input, expected output, code or behavior impact when relevant, and transition condition. In Chill Mode, apply Chill Mode Understanding before dispatching every Action. For a flow that changes observable behavior, insert [Build Loop](../build-loop/SKILL.md) before the first change-making Action. Apply the selected mode when choosing scope and depth. If no skill matches, state the concrete action without forcing a skill. Skip Actions that are not needed.
+6. **Recommend an Action flow.** Order the shortest set of Actions needed now. For each Action, link a matching skill and state its purpose, required input, expected output, code or behavior impact when relevant, and transition condition. In Chill Mode, apply Chill Mode Understanding before dispatching every Action. In Madmax Mode, apply the Madmax Review Rule. For a flow that changes observable behavior, insert [Build Loop](../build-loop/SKILL.md) before the first change-making Action. Apply the selected mode when choosing scope and depth. If no skill matches, state the concrete action without forcing a skill. Skip Actions that are not needed.
 7. **Dispatch the Next Single Action.** Choose exactly one Action: the first step in the flow whose prerequisites are satisfied. In Chill Mode, explain the Action and its code or behavior impact, then obtain explicit confirmation before conducting or dispatching it. Conduct Grill Me directly when it is the action; otherwise dispatch the Action to a sub-agent with the selected mode when one has been selected, required input, scope, skill, output, validation, and done condition. If the flow is blocked, dispatch the smallest fact-finding or clarification skill—or plain investigation action when no skill matches.
 8. **Expose uncertainty.** Mention only unknowns that can change the flow or prevent the Next Single Action. Do not turn non-blocking uncertainty into extra work.
 9. **Synthesize delegated work.** After the sub-agent completes, report the evidence and update the flow. In Chill Mode, explain the progress, applied code or configuration change, relevant code flow, and verification before dispatching the next Action. Dispatch only the next Action whose prerequisites are satisfied.
@@ -147,7 +151,7 @@ The `Next Single Action` section is mandatory. It must contain one and only one 
 
 ## Mode Behavior
 
-- **Madmax Mode.** Reach the requested goal through the smallest viable path. Keep the scope narrow, avoid work that does not unblock the goal, and defer non-blocking improvement through Friction. Build Loop and required verification still apply.
+- **Madmax Mode.** Reach the requested goal through the smallest viable path. Keep the scope narrow, avoid work that does not unblock the goal, and defer non-blocking improvement through Friction. Do not run the Review Action or add a discretionary review pass. Build Loop and verification required to prove the requested goal still apply.
 - **Chill Mode.** Teach through the work as it proceeds: explain every Action, progress event, code or configuration change, and verification result in plain language. Let the user trace the affected behavior and code flow through linked files and evidence, then obtain explicit confirmation for each single Action before it runs or is dispatched. Understand the target before changing it, investigate causes and boundaries, and address maintainability, edge cases, and verification depth needed for a durable result. Recommend it for bug fixes, reviews, and friction resolution.
 
 ## Principles and Actions
