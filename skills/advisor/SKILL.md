@@ -87,45 +87,69 @@ Read the relevant principles first. Then select one or more actions that fit the
 
 ## Principles
 
-| Principle | When to read |
-| --- | --- |
-| [Define Goal](../define-goal/SKILL.md) | The expected outcome is unclear, you cannot explain the gap between current and expected state, or the definition of done is unknown. |
-| [Guard the Context Window](../guard-the-context-window/SKILL.md) | Long files, large output, screenshots, or repeated reading are expanding the working context. |
-| [Understand Through Abstraction](../understand-through-abstraction/SKILL.md) | Understanding a high-level flow, starting review or change, exploring unfamiliar code, or explaining unexpected behavior. |
-| [Fix Root Causes](../fix-root-causes/SKILL.md) | Fixing a bug, considering a symptom-only workaround, handling a repeated problem, or investigating a failure after restart. |
-| [First Principle Redesign](../first-principle-redesign/SKILL.md) | Reviewing an implementation or considering a structural design change. |
-| [Model the Domain](../model-the-domain/SKILL.md) | Writing stateful logic, repeated rule checks, coordinated flags, or repeated domain knowledge. |
-| [Boundary Discipline](../boundary-discipline/SKILL.md) | Implementing external-input validation, error handling, or framework integration. |
-| [Type System Discipline](../type-system-discipline/SKILL.md) | Designing or reviewing types and signatures in a statically typed language. |
-| [Deep Module](../deep-module/SKILL.md) | Designing or reviewing module boundaries and interfaces. |
-| [Subtract Before You Add](../subtract-before-you-add/SKILL.md) | Adding code or structure during feature work, modification, or refactoring. |
-| [Laziness Protocol](../laziness-protocol/SKILL.md) | Reviewing a refactor, change scope, new abstraction, layer, or value propagation. |
-| [Minimize Reader Load](../minimize-reader-load/SKILL.md) | Code is difficult to trace, has one-caller wrappers, pass-through layers, or widely shared mutable state. |
-| [Closed Working Loop](../closed-working-loop/SKILL.md) | Starting feature work, a fix, or refactoring without an execution path that can show progress or provide timely feedback. |
-| [Build the Lever](../build-the-lever/SKILL.md) | Repeating a change, analysis, or check, or when a result is hard to verify manually. |
-| [Record and Resolve Friction](../record-and-resolve-friction/SKILL.md) | You find friction such as a code, structure, or interface smell, edge-case concern, or workaround. |
-| [Encode Lessons in Structure](../encode-lessons-in-structure/SKILL.md) | The same instruction, review finding, test failure, or user correction repeats. |
-| [Technical Writing](../technical-writing/SKILL.md) | Writing or reviewing documentation, a README, design document, usage guide, PR description, or commit message. |
+**Core**
+
+- **[Define Goal](../define-goal/SKILL.md)**. The expected outcome is unclear, you cannot explain the gap between current and expected state, or the definition of done is unknown.
+- **[Guard the Context Window](../guard-the-context-window/SKILL.md)**. Long files, large output, screenshots, or repeated reading are expanding the working context.
+- **[Understand Through Abstraction](../understand-through-abstraction/SKILL.md)**. Understanding a high-level flow, starting review or change, exploring unfamiliar code, or explaining unexpected behavior.
+- **[Subtract Before You Add](../subtract-before-you-add/SKILL.md)**. Adding code or structure during feature work, modification, or refactoring.
+- **[Laziness Protocol](../laziness-protocol/SKILL.md)**. Reviewing a refactor, change scope, new abstraction, layer, or value propagation.
+- **[Minimize Reader Load](../minimize-reader-load/SKILL.md)**. Code is difficult to trace, has one-caller wrappers, pass-through layers, or widely shared mutable state.
+
+**Architecture**
+
+- **[First Principle Redesign](../first-principle-redesign/SKILL.md)**. Reviewing an implementation or considering a structural design change.
+- **[Model the Domain](../model-the-domain/SKILL.md)**. Writing stateful logic, repeated rule checks, coordinated flags, or repeated domain knowledge.
+- **[Boundary Discipline](../boundary-discipline/SKILL.md)**. Implementing external-input validation, error handling, or framework integration.
+- **[Type System Discipline](../type-system-discipline/SKILL.md)**. Designing or reviewing types and signatures in a statically typed language.
+- **[Deep Module](../deep-module/SKILL.md)**. Designing or reviewing module boundaries and interfaces.
+
+**Verification**
+
+- **[Fix Root Causes](../fix-root-causes/SKILL.md)**. Fixing a bug, considering a symptom-only workaround, handling a repeated problem, or investigating a failure after restart.
+- **[Closed Working Loop](../closed-working-loop/SKILL.md)**. Starting feature work, a fix, or refactoring without an execution path that can show progress or provide timely feedback.
+- **[Build the Lever](../build-the-lever/SKILL.md)**. Repeating a change, analysis, or check, or when a result is hard to verify manually.
+- **[Record and Resolve Friction](../record-and-resolve-friction/SKILL.md)**. You find friction such as a code, structure, or interface smell, edge-case concern, or workaround.
+- **[Encode Lessons in Structure](../encode-lessons-in-structure/SKILL.md)**. The same instruction, review finding, test failure, or user correction repeats.
+
+**Communication**
+
+- **[Technical Writing](../technical-writing/SKILL.md)**. Writing or reviewing documentation, a README, design document, usage guide, PR description, or commit message.
 
 ## Actions
 
-| Action | When to run |
-| --- | --- |
-| [Ask](../ask/SKILL.md) | A user needs a calibrated explanation, an unclear request needs clarification, or an answer should expand only as understanding requires. |
-| [Grill Me](../grill-me/SKILL.md) | A goal, design, or requirement needs shared understanding through a structured decision interview. |
-| [To Goal](../to-goal/SKILL.md) | A request needs a concrete goal, current-state evidence, completion criteria, and a next action before implementation. |
-| [Why](../why/SKILL.md) | The motivation, constraints, tradeoffs, or history behind code or a design decision must be understood before changing it. |
-| [How](../how/SKILL.md) | A code flow, subsystem, ownership boundary, or placement decision needs an architectural explanation before a safe change. |
-| [Understand Function](../understand-func/SKILL.md) | One function's actual behavior, branches, state changes, effects, or failures need focused causal analysis. |
-| [Architect](../architect/SKILL.md) | Caller contracts, ownership, or module structure need a concrete design before implementation. |
-| [To ADR](../to-adr/SKILL.md) | A decision has lasting architectural consequences and must be understandable after the original discussion. |
-| [Create Verification Skill](../create-verification-skill/SKILL.md) | A project needs a project-local skill to launch, drive, observe, and clean up real application verification. |
-| [Build Loop](../build-loop/SKILL.md) | Required before the first observable behavior change in a bug fix, feature, refactor, configuration change, or data change. |
-| [Write Code](../write-code/SKILL.md) | A bounded implementation can begin because the goal, affected flow, and verification path are clear. |
-| [TDD Bug Fix](../tdd/SKILL.md) | A bug has a clear, cheap local test path, or a failing or regression test is required. |
-| [Bug Report](../bug-report/SKILL.md) | A reported bug requires an evidence-backed root-cause investigation record before a fix. |
-| [No Comments](../no-comments/SKILL.md) | A specified code scope or diff has comments, suppressions, or warnings whose value and enforceability need review. |
-| [Review](../review/SKILL.md) | A completed implementation or diff needs a strict maintainability and structural-quality review. |
-| [Friction](../friction/SKILL.md) | A code, design, tool, environment, or verification friction is found and needs immediate durable recording. |
-| [Maintain Verification Skill](../maintain-verification-skill/SKILL.md) | An existing verification skill or feature map must stay accurate as the application changes. |
-| [To Context](../to-context/SKILL.md) | A session's relevant state, decisions, evidence, limits, and open questions must remain usable later. |
+**Clarification and Goals**
+
+- **[Ask](../ask/SKILL.md)**. A user needs a calibrated explanation, an unclear request needs clarification, or an answer should expand only as understanding requires.
+- **[Grill Me](../grill-me/SKILL.md)**. A goal, design, or requirement needs shared understanding through a structured decision interview.
+- **[To Goal](../to-goal/SKILL.md)**. A request needs a concrete goal, current-state evidence, completion criteria, and a next action before implementation.
+
+**Understanding**
+
+- **[Why](../why/SKILL.md)**. The motivation, constraints, tradeoffs, or history behind code or a design decision must be understood before changing it.
+- **[How](../how/SKILL.md)**. A code flow, subsystem, ownership boundary, or placement decision needs an architectural explanation before a safe change.
+- **[Understand Function](../understand-func/SKILL.md)**. One function's actual behavior, branches, state changes, effects, or failures need focused causal analysis.
+
+**Design**
+
+- **[Architect](../architect/SKILL.md)**. Caller contracts, ownership, or module structure need a concrete design before implementation.
+- **[To ADR](../to-adr/SKILL.md)**. A decision has lasting architectural consequences and must be understandable after the original discussion.
+
+**Implementation**
+
+- **[Build Loop](../build-loop/SKILL.md)**. Required before the first observable behavior change in a bug fix, feature, refactor, configuration change, or data change.
+- **[Write Code](../write-code/SKILL.md)**. A bounded implementation can begin because the goal, affected flow, and verification path are clear.
+- **[TDD Bug Fix](../tdd/SKILL.md)**. A bug has a clear, cheap local test path, or a failing or regression test is required.
+
+**Verification**
+
+- **[Create Verification Skill](../create-verification-skill/SKILL.md)**. A project needs a project-local skill to launch, drive, observe, and clean up real application verification.
+- **[No Comments](../no-comments/SKILL.md)**. A specified code scope or diff has comments, suppressions, or warnings whose value and enforceability need review.
+- **[Review](../review/SKILL.md)**. A completed implementation or diff needs a strict maintainability and structural-quality review.
+- **[Maintain Verification Skill](../maintain-verification-skill/SKILL.md)**. An existing verification skill or feature map must stay accurate as the application changes.
+
+**Reporting and Continuity**
+
+- **[Bug Report](../bug-report/SKILL.md)**. A reported bug requires an evidence-backed root-cause investigation record before a fix.
+- **[Friction](../friction/SKILL.md)**. A code, design, tool, environment, or verification friction is found and needs immediate durable recording.
+- **[To Context](../to-context/SKILL.md)**. A session's relevant state, decisions, evidence, limits, and open questions must remain usable later.
