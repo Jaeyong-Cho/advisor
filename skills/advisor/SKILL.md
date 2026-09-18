@@ -17,9 +17,17 @@ Every recommendation has two views:
 
 Do not present multiple next actions, alternatives, or a bundled "next action." Keep the full flow visible for orientation, but make the immediate handoff unambiguous. Omit Actions that do not change the decision or move the work toward completion.
 
+## Goal Gate
+
+Goal definition comes before every other Advisor decision. Before selecting Chill Mode or Madmax Mode, dispatching repository exploration, asking the mode question, or running any Action, read `GOAL.md` when it exists.
+
+A Goal is ready only when it states the current state, expected state, gap, constraints and assumptions, completion criteria, and next action for the current request. It must reflect shared understanding with the user.
+
+When `GOAL.md` is missing, incomplete, stale for the current request, or not based on shared understanding, the Recommended Action Flow begins with [Grill Me](../grill-me/SKILL.md), regardless of the eventual operating mode. Make **Grill Me** the Next Single Action and dispatch it to a sub-agent. Do not choose an operating mode or start other work first. After Grill Me reaches user-confirmed shared understanding, dispatch [To Goal](../to-goal/SKILL.md) to write or update `GOAL.md`; only then continue the normal Advisor flow.
+
 ## Operating Mode Selection
 
-Select the mode before dispatching repository exploration or an Action.
+Select the mode only after the Goal Gate is satisfied and before dispatching repository exploration or a non-goal Action.
 
 1. Recommend **Chill Mode** for a bug fix, root-cause investigation, Bug Report, review, or friction resolution. State the relevant evidence: these flows need causal understanding, careful verification, or durable maintainability judgment.
 2. If the user has already selected a mode for the current flow, preserve it without asking again.
@@ -61,21 +69,22 @@ Advisor delegates work instead of performing it directly. When this skill is act
 ## Read Before Advising
 
 1. Read the current session for the user's latest request, decisions, constraints, work already performed, and unresolved questions.
-2. Read `GOAL.md` when it exists to identify the expected result and completion criteria.
+2. Apply the Goal Gate. Read `GOAL.md` when it exists and determine whether it is ready for the current request. If it is not ready, stop here and make Grill Me the Next Single Action.
 3. Read relevant `.context/*.md` files when they exist. Prefer the context that matches the current task, then retain only facts that can change the recommendation.
 4. Read relevant `adr/*.md` files when the question concerns a recorded architectural decision or its consequences.
 5. Dispatch a sub-agent to inspect repository state, changed files, and existing verification when that evidence is needed to determine the next step. Apply [Guard the Context Window](../guard-the-context-window/SKILL.md) throughout.
 
 ## Advice Workflow
 
-1. **Select the operating mode.** Apply Operating Mode Selection before any repository exploration or Action dispatch.
-2. **Construct the situation.** State the goal, current state, confirmed facts, constraints, decisions, risks, and unresolved questions that matter now. Separate confirmed facts from assumptions.
-3. **Identify the work stage.** Classify the immediate need as clarification, goal definition, code understanding, cause investigation, design, implementation, verification, review, or context handoff.
-4. **Select principles.** Choose only the principles that constrain the immediate decision. Explain why each selected principle applies. Do not list principles that do not change the recommended flow.
-5. **Recommend an Action flow.** Order the shortest set of Actions needed now. For each Action, link a matching skill and state its purpose, required input, expected output, and transition condition. For a flow that changes observable behavior, insert [Build Loop](../build-loop/SKILL.md) before the first change-making Action. Apply the selected mode when choosing scope and depth. If no skill matches, state the concrete action without forcing a skill. Skip Actions that are not needed.
-6. **Dispatch the Next Single Action.** Choose exactly one Action: the first step in the flow whose prerequisites are satisfied. Dispatch it to a sub-agent with the selected mode, required input, scope, skill, output, validation, and done condition. If the flow is blocked, dispatch the smallest fact-finding or clarification skill—or plain investigation action when no skill matches.
-7. **Expose uncertainty.** Mention only unknowns that can change the flow or prevent the Next Single Action. Do not turn non-blocking uncertainty into extra work.
-8. **Synthesize delegated work.** After the sub-agent completes, report the evidence, update the flow, and dispatch only the next Action whose prerequisites are satisfied.
+1. **Pass the Goal Gate.** When the Goal is not ready, recommend and dispatch Grill Me as the sole Next Single Action. After user-confirmed shared understanding, dispatch To Goal to record `GOAL.md`. Do not select a mode or advise on other work until the Goal is ready.
+2. **Select the operating mode.** Apply Operating Mode Selection after the Goal Gate and before any repository exploration or non-goal Action dispatch.
+3. **Construct the situation.** State the goal, current state, confirmed facts, constraints, decisions, risks, and unresolved questions that matter now. Separate confirmed facts from assumptions.
+4. **Identify the work stage.** Classify the immediate need as clarification, goal definition, code understanding, cause investigation, design, implementation, verification, review, or context handoff.
+5. **Select principles.** Choose only the principles that constrain the immediate decision. Explain why each selected principle applies. Do not list principles that do not change the recommended flow.
+6. **Recommend an Action flow.** Order the shortest set of Actions needed now. For each Action, link a matching skill and state its purpose, required input, expected output, and transition condition. For a flow that changes observable behavior, insert [Build Loop](../build-loop/SKILL.md) before the first change-making Action. Apply the selected mode when choosing scope and depth. If no skill matches, state the concrete action without forcing a skill. Skip Actions that are not needed.
+7. **Dispatch the Next Single Action.** Choose exactly one Action: the first step in the flow whose prerequisites are satisfied. Dispatch it to a sub-agent with the selected mode when one has been selected, required input, scope, skill, output, validation, and done condition. If the flow is blocked, dispatch the smallest fact-finding or clarification skill—or plain investigation action when no skill matches.
+8. **Expose uncertainty.** Mention only unknowns that can change the flow or prevent the Next Single Action. Do not turn non-blocking uncertainty into extra work.
+9. **Synthesize delegated work.** After the sub-agent completes, report the evidence, update the flow, and dispatch only the next Action whose prerequisites are satisfied.
 
 ## Response Format
 
