@@ -10,41 +10,25 @@ Use Advisor as the orchestrator for engineering work. It turns the current situa
 
 ## Non-Negotiable Operating Rule
 
-- Recommend the selected work, but wait for an explicit human trigger before performing it.
+- Wait for an explicit human trigger before performing any Action.
 - Do not write or modify code before the human triggers an Action.
 - Do not run an Action or skill directly without that human trigger.
-- Conduct Grill Me directly with the user after the human triggers it.
 - Report an Action as complete only when its requested evidence is available.
-- **Orchestration Contract.**
+- Follow this workflow for every request:
   - Provide the shortest Recommended Action Flow.
   - Provide exactly one Next Single Action.
   - Link each step to a matching skill when one exists.
   - State a clear done condition.
   - Do not provide alternatives or bundled actions.
-- **Goal Gate.**
-  - Read `GOAL.md` before exploring the repository or running an Action.
-  - Confirm the Goal states the current state, expected state, gap, constraints, completion criteria, and next action.
-  - If the Goal is missing or not ready, recommend [Grill Me](../grill-me/SKILL.md) and wait for the human trigger. After Grill Me completes, recommend [To Goal](../to-goal/SKILL.md) and wait for its human trigger before continuing.
-- **Required Understand First.**
-  - Understand the situation, current state, code, architecture, and root cause before changing behavior.
-  - Use [Understand Through Abstraction](../understand-through-abstraction/SKILL.md), [Understand Function](../understand-func/SKILL.md), [How](../how/SKILL.md), and [Why](../why/SKILL.md) as needed.
-- **Required Closed-Loop Setup.**
-  - After the human triggers the change flow, run [Build Loop](../build-loop/SKILL.md) before the first code, test, configuration, or data change.
-  - Establish the current input, observation, pass condition, and next-action rule in `./loop`.
-- **Read Before Advising.**
-  - Read the current session, applicable `GOAL.md`, relevant `.context/*.md` and `adr/*.md` files, repository state, changed files, and existing verification before advising.
-  - Apply [Guard the Context Window](../guard-the-context-window/SKILL.md).
-
-## Advice Workflow
-
-1. **Pass the Goal Gate.** When the Goal is not ready, recommend Grill Me as the sole Next Single Action and wait for the human trigger. After user-confirmed shared understanding, recommend To Goal and wait for its human trigger to record `GOAL.md`. Do not advise on other work until the Goal is ready.
-2. **Construct the situation.** State the goal, current state, confirmed facts, constraints, decisions, risks, and unresolved questions that matter now. Separate confirmed facts from assumptions.
-3. **Identify the work stage.** Classify the immediate need as clarification, goal definition, code understanding, cause investigation, design, implementation, verification, review, or context handoff.
-4. **Select principles.** Choose only the principles that constrain the immediate decision. Explain why each selected principle applies. Do not list principles that do not change the recommended flow.
-5. **Recommend an Action flow.** Order the shortest set of Actions needed now. For each Action, link a matching skill and state its purpose, required input, expected output, code or behavior impact when relevant, and transition condition. For a flow that changes observable behavior, insert [Build Loop](../build-loop/SKILL.md) before the first change-making Action. If no skill matches, state the concrete action without forcing a skill. Skip Actions that are not needed.
-6. **Identify the Next Single Action.** Choose exactly one Action: the first step in the flow whose prerequisites are satisfied. Wait for an explicit human trigger before performing it. After the trigger, conduct Grill Me directly when it is the Action. If the flow is blocked, perform the smallest fact-finding or clarification Action—or plain investigation Action when no skill matches.
-7. **Expose uncertainty.** Mention only unknowns that can change the flow or prevent the Next Single Action. Do not turn non-blocking uncertainty into extra work.
-8. **Synthesize the completed Action.** After the human-triggered Action completes, report the evidence and update the flow. Recommend only the next Action whose prerequisites are satisfied, then wait for its human trigger.
+  1. **Read Before Advising.** Read the current session, relevant `.context/*.md` and `adr/*.md` files, repository state, changed files, and existing verification. Apply [Guard the Context Window](../guard-the-context-window/SKILL.md).
+  2. **Pass the Goal Gate.** Read `GOAL.md` before exploring the repository or running an Action. Confirm that it states the current state, expected state, gap, constraints, completion criteria, and next action. If the Goal is missing or not ready, recommend [Grill Me](../grill-me/SKILL.md) as the sole Next Single Action and wait for the human trigger. After user-confirmed shared understanding, recommend [To Goal](../to-goal/SKILL.md) and wait for its human trigger before continuing.
+  3. **Understand the situation.** State the goal, current state, confirmed facts, constraints, decisions, risks, and unresolved questions. Understand the code, architecture, and root cause before changing behavior. Use [Understand Through Abstraction](../understand-through-abstraction/SKILL.md), [Understand Function](../understand-func/SKILL.md), [How](../how/SKILL.md), and [Why](../why/SKILL.md) as needed.
+  4. **Identify the work stage.** Classify the immediate need as clarification, goal definition, code understanding, cause investigation, design, implementation, verification, review, or context handoff. Separate confirmed facts from assumptions.
+  5. **Select principles.** Choose only the principles that constrain the immediate decision. Explain why each selected principle applies. Do not list principles that do not change the recommended flow.
+  6. **Recommend the Action flow.** Order the shortest set of Actions needed now. For each Action, link a matching skill and state its purpose, required input, expected output, behavior impact when relevant, and transition condition. For a flow that changes observable behavior, include [Build Loop](../build-loop/SKILL.md) before the first change-making Action. After the human triggers the change flow, establish the current input, observation, pass condition, and next-action rule in `./loop`. If no skill matches, state the concrete Action without forcing a skill.
+  7. **Identify the Next Single Action.** Choose exactly one Action whose prerequisites are satisfied. Wait for its explicit human trigger. After the trigger, perform the Action. If the flow is blocked, perform the smallest fact-finding or clarification Action, or a plain investigation Action when no skill matches.
+  8. **Expose uncertainty.** Mention only unknowns that can change the flow or prevent the Next Single Action. Do not turn non-blocking uncertainty into extra work.
+  9. **Synthesize the completed Action.** After the human-triggered Action completes, report the evidence and update the flow. Recommend only the next Action whose prerequisites are satisfied, then wait for its human trigger.
 
 ## Writing the reply
 
