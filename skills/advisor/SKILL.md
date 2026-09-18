@@ -1,21 +1,32 @@
 ---
 name: advisor
-description: Orchestrate engineering work by reading the current session, goal, context, and relevant decisions, then recommending an action flow with matching skills where available and exactly one next action.
+description: Orchestrate engineering work by dispatching sub-agents for repository exploration and Actions, then synthesizing one ordered flow.
 disable-model-invocation: true
 ---
 
 # Advisor
 
-Use Advisor as the read-only orchestrator for engineering work. It turns the current situation into the smallest useful, ordered flow of Actions, adding matching skills where available, then exposes exactly one Action to do next. Do not execute the recommended Actions as part of this skill.
+Use Advisor as the delegation-first orchestrator for engineering work. It turns the current situation into the smallest useful, ordered flow of Actions, dispatches sub-agents for repository exploration and Action execution, then synthesizes the evidence and next Action.
 
 ## Orchestration Contract
 
 Every recommendation has two views:
 
 1. **Recommended Action Flow** — the shortest ordered sequence of Actions that can reach the goal. Link each step to a matching skill when one exists; do not invent a skill for an action that has no match.
-2. **Next Single Action** — exactly one executable step selected from the beginning of that flow. Include its matching skill when one exists; otherwise state the plain concrete action. Always include a clear done condition.
+2. **Next Single Action** — exactly one executable step selected from the beginning of that flow and dispatched to a sub-agent when work must be performed. Include its matching skill when one exists; otherwise state the plain concrete action. Always include a clear done condition.
 
 Do not present multiple next actions, alternatives, or a bundled "next action." Keep the full flow visible for orientation, but make the immediate handoff unambiguous. Omit Actions that do not change the decision or move the work toward completion.
+
+## Sub-Agent Delegation
+
+Delegate repository exploration and Action execution. Advisor may read the current conversation, goals, context, and delegated results to coordinate, but does not perform repository exploration, implementation, verification, or other Action work itself.
+
+1. Give each sub-agent one bounded task with the goal, relevant paths or scope, constraints, required skills, expected evidence, and done condition.
+2. Dispatch a sub-agent for every repository exploration needed to choose a flow, such as tracing behavior, inspecting an unfamiliar subsystem, reproducing a failure, or finding a verification path.
+3. Dispatch a sub-agent for every Action that is being performed. The task must state whether it may modify files and the exact output or validation expected.
+4. Dispatch independent, non-overlapping tasks in parallel. Dispatch dependent work serially, and never let concurrent sub-agents edit or generate artifacts in the same scope.
+5. Wait for each required result, assess its evidence, and synthesize it before selecting or dispatching the next dependent Action. If evidence invalidates the plan, revise the flow before continuing.
+6. Keep a sub-agent within the user's authorized scope. A delegated task does not authorize unrelated changes, external actions, or further scope expansion.
 
 ## Required Understand First
 
@@ -29,16 +40,13 @@ Build Loop establishes the [Closed Working Loop](../closed-working-loop/SKILL.md
 
 ## Non-Negotiable Operating Rule
 
-Advisor is strictly advisory. When this skill is active:
+Advisor delegates work instead of performing it directly. When this skill is active:
 
-- Do not implement, edit, write, delete, move, or rename anything.
-- Do not run commands or tools that can mutate state.
-- Use read-only inspection only when needed: `read`, `grep`, `find`, and `ls`.
-- Do not call `bash`, `write`, `edit`, or task-management tools.
-- If the user requests implementation, provide the recommended Action flow and stop.
-- End the response after advice; never execute the recommended Actions.
-
-**When user request to write, run skill or action, then follow the user's instruct** 
+- Do not implement, edit, write, delete, move, rename, or run task commands directly.
+- Use coordination tools to dispatch, wait for, and communicate with sub-agents.
+- Do not substitute a local repository scan for a sub-agent exploration task.
+- Do not dispatch concurrent mutations to overlapping files, directories, or generated artifacts.
+- Do not report an Action as complete before its sub-agent returns the requested evidence.
 
 ## Read Before Advising
 
@@ -46,7 +54,7 @@ Advisor is strictly advisory. When this skill is active:
 2. Read `GOAL.md` when it exists to identify the expected result and completion criteria.
 3. Read relevant `.context/*.md` files when they exist. Prefer the context that matches the current task, then retain only facts that can change the recommendation.
 4. Read relevant `adr/*.md` files when the question concerns a recorded architectural decision or its consequences.
-5. Inspect current repository state, changed files, and existing verification only when they are needed to determine the next step. Apply [Guard the Context Window](../guard-the-context-window/SKILL.md) throughout.
+5. Dispatch a sub-agent to inspect repository state, changed files, and existing verification when that evidence is needed to determine the next step. Apply [Guard the Context Window](../guard-the-context-window/SKILL.md) throughout.
 
 ## Advice Workflow
 
@@ -54,9 +62,9 @@ Advisor is strictly advisory. When this skill is active:
 2. **Identify the work stage.** Classify the immediate need as clarification, goal definition, code understanding, cause investigation, design, implementation, verification, review, or context handoff.
 3. **Select principles.** Choose only the principles that constrain the immediate decision. Explain why each selected principle applies. Do not list principles that do not change the recommended flow.
 4. **Recommend an Action flow.** Order the shortest set of Actions needed now. For each Action, link a matching skill and state its purpose, required input, expected output, and transition condition. For a flow that changes observable behavior, insert [Build Loop](../build-loop/SKILL.md) before the first change-making Action. If no skill matches, state the concrete action without forcing a skill. Skip Actions that are not needed.
-5. **Select the Next Single Action.** Choose exactly one Action: the first step in the flow whose prerequisites are satisfied. Include its matching skill when available, state why it is next, and define what result hands work to the following step. If the flow is blocked, make the smallest fact-finding or clarification skill—or plain investigation action when no skill matches—the one next Action.
+5. **Dispatch the Next Single Action.** Choose exactly one Action: the first step in the flow whose prerequisites are satisfied. Dispatch it to a sub-agent with the required input, scope, skill, output, validation, and done condition. If the flow is blocked, dispatch the smallest fact-finding or clarification skill—or plain investigation action when no skill matches.
 6. **Expose uncertainty.** Mention only unknowns that can change the flow or prevent the Next Single Action. Do not turn non-blocking uncertainty into extra work.
-7. **Stop at advice.** Do not implement, edit, or run the proposed Actions. The user or calling workflow chooses whether to execute the Next Single Action.
+7. **Synthesize delegated work.** After the sub-agent completes, report the evidence, update the flow, and dispatch only the next Action whose prerequisites are satisfied.
 
 ## Response Format
 
@@ -81,11 +89,12 @@ Use this structure, omitting sections with no content:
 - **Why now:** why this is the first executable step.
 - **Input:** what it needs to start.
 - **Done when:** the result that hands work to the next flow step.
+- **Sub-agent task:** the bounded dispatched task, including scope and evidence required.
 
 ## Assumptions and Open Questions
 ```
 
-The `Next Single Action` section is mandatory. It must contain one and only one concrete Action. A skill link is preferred when a matching skill exists, but never fabricate or force a skill; never use `A or B`, a list, or a compound step there.
+The `Next Single Action` section is mandatory. It must contain one and only one concrete Action and its bounded sub-agent task. A skill link is preferred when a matching skill exists, but never fabricate or force a skill; never use `A or B`, a list, or a compound step there.
 
 ## Two-Face Mode
 
