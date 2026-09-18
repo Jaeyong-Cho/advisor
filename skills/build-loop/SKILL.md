@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Build Loop
 
-Set up an ordered feedback loop before making a sequence of changes. The loop must make the target behavior observable, compare the result with an explicit expectation, and return an evaluation that makes the next change obvious. Create its scripts in `./loop`.
+Set up an ordered feedback loop before making a sequence of changes. The loop must make the target behavior observable, compare the result with an explicit expectation, and return feedback that selects the next code change. Create the loop in `./loop`.
 
 ## When to Use
 
@@ -18,23 +18,26 @@ Do not use this action for read-only research or documentation that has no behav
 
 1. State the smallest observable difference the loop must judge, its expected result, and the condition that disproves the current approach.
 2. Select one representative input, state, or scenario. Run it manually before changing code when practical and capture the baseline needed for comparison.
-3. Create or update `./loop`. Keep all setup scripts, generated data, charts, and error output there. Reserve `./loop/cache` for reusable intermediate data that would otherwise slow repeated feedback.
-4. Choose shell, Python, or TypeScript according to the target command, available runtime, and needed analysis. Create only the ordered executable stage scripts the loop needs. Each script owns one responsibility, such as preparing stable inputs, exercising behavior, collecting an observation, computing statistics, rendering a visual, or cleaning up.
-5. Execute the selected stage scripts in explicit numeric order: `01`, then `02`, and so on. The final stage evaluates the collected evidence, prints one final `PASS`, `FAIL`, or `ERROR` verdict, and returns a matching exit status. A behavior mismatch is `FAIL`; an unavailable dependency, invalid setup, or unusable observation is `ERROR`.
-6. Make the loop safe to rerun. Store reusable intermediate data in `./loop/cache` only when it materially shortens the next run. Reuse a cached result only when its input fingerprint, relevant environment, and producing stage still match; otherwise regenerate it. Add a cache-refresh control only when the work needs one, and choose its interface to fit the relevant stage. The same input must not duplicate data, retain stale output, or change the result.
-7. Make the result easy to judge. Always print the expected and actual outcome, the baseline delta when relevant, cache hits or rebuilds when they affect run time, and the path to generated evidence. For repeated or numeric observations, produce summary statistics. Generate a chart or interactive visual only when it makes a trend, distribution, comparison, or relationship easier to judge. On failure, print a concise error summary with the command, exit status, and relevant stack frames, and retain the full raw error output in `./loop/artifacts`.
-8. Run every stage in order twice before relying on the loop. Confirm that the final stage reaches the expected baseline verdict consistently and that its verdict can accept or reject the current hypothesis. Repair the setup when it produces an ambiguous result.
-9. Expose each stage's required inputs and generated evidence through its normal output or an interface suited to the task. The final stage exposes the ordered sequence, verdict meanings, exit-status contract, and evidence paths. Do not create a Markdown report or a separate loop specification.
+3. Create or update `./loop` and `./loop/README.md`. Keep all stage scripts, generated data, charts, and error output there. Reserve `./loop/cache` for reusable intermediate data that would otherwise slow repeated feedback.
+4. Write `./loop/README.md` as the current loop contract. Record the goal and acceptance criterion, the pipeline, every executable stage and its responsibility, and the data each stage needs or produces. Describe source-change targets, inputs or fixtures, required configuration or environment, baseline evidence, cache contents and invalidation, and artifact paths. Update it whenever the stage order or required data changes.
+5. Form this repeating pipeline: **code modification → rebuild → run → evaluate → feedback → next code modification**. The source edit is made in the target workspace; the ordered scripts rebuild, run, evaluate, and publish feedback for that edit. A non-compiling target still needs an equivalent preparation or validation stage in place of a rebuild. The feedback must identify either the next change to try or that the acceptance criterion is met.
+6. Choose shell, Python, or TypeScript according to the target command, available runtime, and needed analysis. Create only the ordered executable stage scripts the loop needs. Give rebuild, run, evaluation, and feedback explicit stage responsibilities; add preparation, observation, statistics, visualization, cleanup, or comparison stages only when useful. A stage can own more than one adjacent responsibility when separating it would make the loop less clear.
+7. Execute the selected stage scripts in explicit numeric order: `01`, then `02`, and so on. The evaluation stage prints one final `PASS`, `FAIL`, or `ERROR` verdict and returns a matching exit status. A behavior mismatch is `FAIL`; an unavailable dependency, invalid setup, or unusable observation is `ERROR`. The feedback stage preserves that verdict, points to the evidence, and states the next code-modification decision.
+8. Make the loop safe to rerun. Store reusable intermediate data in `./loop/cache` only when it materially shortens the next run. Reuse a cached result only when its input fingerprint, relevant environment, and producing stage still match; otherwise regenerate it. Add a cache-refresh control only when the work needs one, and choose its interface to fit the relevant stage. The same input must not duplicate data, retain stale output, or change the result.
+9. Make the result easy to judge. Always print the expected and actual outcome, the baseline delta when relevant, cache hits or rebuilds when they affect run time, and the path to generated evidence. For repeated or numeric observations, produce summary statistics. Generate a chart or interactive visual only when it makes a trend, distribution, comparison, or relationship easier to judge. On failure, print a concise error summary with the command, exit status, and relevant stack frames, and retain the full raw error output in `./loop/artifacts`.
+10. Run every stage in order twice before relying on the loop. Confirm that the evaluation and feedback consistently reach the expected baseline verdict and select an unambiguous next action. Repair the setup when it produces an ambiguous result.
+11. Expose each stage's required inputs and generated evidence through its normal output or an interface suited to the task. The README and feedback stage expose the ordered sequence, verdict meanings, exit-status contract, data paths, and next-change decision. Do not create an additional Markdown report or a separate loop specification.
 
 ## Output
 
 Create the setup in `./loop`:
 
 ```text
+./loop/README.md                       # purpose, pipeline, stages, and required data
 ./loop/01-<first-required-stage>.<sh|py|ts>
 ./loop/02-<next-required-stage>.<sh|py|ts>
 ...
-./loop/NN-<final-evaluate-stage>.<sh|py|ts>
+./loop/NN-<feedback-stage>.<sh|py|ts>
 ./loop/cache/                         # reusable intermediate data
 ./loop/artifacts/result.json
 ./loop/artifacts/summary.json          # when statistics help
@@ -42,7 +45,7 @@ Create the setup in `./loop`:
 ./loop/artifacts/error.log             # when execution fails
 ```
 
-Choose the number of stage scripts from the work. A loop can need only an exercise and evaluation stage, or it can need extra setup, observation, statistics, visualization, cleanup, or comparison stages. Keep numeric prefixes contiguous and make every stage script executable.
+Choose the number of stage scripts from the work. Every iteration includes rebuild, run, evaluation, and feedback responsibilities; they may be separate stages or combined only when that keeps the flow clearer. A loop can also need setup, observation, statistics, visualization, cleanup, or comparison stages. Keep numeric prefixes contiguous and make every stage script executable.
 
 Run the executable stages in numeric order:
 
@@ -50,14 +53,16 @@ Run the executable stages in numeric order:
 ./loop/01-<first-required-stage>
 ./loop/02-<next-required-stage>
 ...
-./loop/NN-<final-evaluate-stage>
+./loop/NN-<feedback-stage>
 ```
 
-When the loop needs arguments, a cache-refresh control, usage output, or another interface detail, choose it for the target work instead of prescribing a universal CLI option. The final stage exposes the ordered stage scripts, cache behavior, the `PASS` / `FAIL` / `ERROR` meanings, exit-status contract, and evidence paths through that chosen interface. The ordered stage scripts are the lever: together they perform setup, execution, observation, and evaluation. Do not require the operator to read a Markdown file or interpret raw logs to decide the verdict.
+The README must contain these sections, populated with the actual loop details: `Purpose`, `Acceptance criterion`, `Pipeline`, `Stages`, and `Required data`. In `Pipeline`, show the sequence from code modification through rebuild, run, evaluation, feedback, and the next modification. In `Stages`, map each numeric script to its responsibility, inputs, outputs, and failure behavior. In `Required data`, name the relevant source paths, fixtures or inputs, configuration or environment, baseline, cache, and artifacts.
+
+When the loop needs arguments, a cache-refresh control, usage output, or another interface detail, choose it for the target work instead of prescribing a universal CLI option. The feedback stage exposes the ordered stage scripts, cache behavior, the `PASS` / `FAIL` / `ERROR` meanings, exit-status contract, evidence paths, and next-change decision through that chosen interface. The ordered stage scripts are the lever: together they rebuild, execute, observe, evaluate, and return feedback. The README explains the loop; the feedback stage makes its outcome immediately decidable without interpreting raw logs.
 
 ## Done When
 
-The ordered stages run in sequence, the final stage returns a clear verdict and exit status, the loop safely reuses valid intermediates or rebuilds them through its chosen interface, a second run with the same input produces the same result, and the final stage surfaces useful statistics, visual, or error evidence.
+`./loop/README.md` explains the purpose, pipeline, stages, and required data. The ordered stages rebuild, run, evaluate, and return feedback for each code modification; the feedback identifies the next modification or completion. The evaluation stage returns a clear verdict and exit status, the loop safely reuses valid intermediates or rebuilds them through its chosen interface, a second run with the same input produces the same result, and the feedback surfaces useful statistics, visual, or error evidence.
 
 ## Avoid
 
@@ -68,4 +73,5 @@ The ordered stages run in sequence, the final stage returns a clear verdict and 
 - Building scripts that retain state or duplicate changes on a rerun.
 - Reusing cached intermediate data when its inputs, environment, or producing stage have changed.
 - Putting loop scripts or generated evidence outside `./loop` without a concrete reason.
-- Recording ordered stages without their inputs, observation, final verdict contract, or evidence paths.
+- Writing a README that omits the current stages, their data, or the next-change feedback path.
+- Stopping at evaluation without publishing feedback that drives the next code modification.
