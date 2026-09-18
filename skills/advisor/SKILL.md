@@ -61,35 +61,23 @@ Advisor performs the selected work directly. When this skill is active:
 7. **Expose uncertainty.** Mention only unknowns that can change the flow or prevent the Next Single Action. Do not turn non-blocking uncertainty into extra work.
 8. **Synthesize the completed Action.** After the Action completes, report the evidence and update the flow. Perform only the next Action whose prerequisites are satisfied.
 
-## Response Format
+## Writing the reply
 
-Use this structure, omitting sections with no content:
+Write the reply clean as you draft it. A cleanup pass after drafting does not remove these patterns.
 
-```md
-## Current Situation
+- **Short declarative sentences.** One thought per sentence, ended with a period.
+- **No long-dash character anywhere.** Write a file-list bullet as a sentence ("`main.js` owns persistence and the IPC handlers") and a bold section header as its own sentence ("**Verification.** End to end via CDP").
+- **A colon as a mid-sentence connector is also out** (unslop rule 14). A colon before a list is fine.
+- **Terse is not an excuse to drop content.** Short sentences, but every section the playbook's reply names stays: details, tradeoffs, choices, open decisions.
+- **Frame impact for the consumer and the maintainer.** Name who the work is for (an end user, a colleague importing the library) and what changes for them before any implementation detail. Then what the next engineer who owns this code inherits. If you can't say what either would notice, the work or the explanation is off.
+- **Never fabricate a link, citation, or transcript reference.** Link only artifacts you produced or read this session.
+- **Every claim carries its evidence or its label in the same sentence.** Measured, inferred, or guess. A prediction or an unseen cause is a guess. Never hand the human a check you could run.
 
-## Selected Principles
+Every playbook ends with a reply written this way, PR link as `https://github.com/<owner>/<repo>/pull/<number>`. The per-playbook lines below name only the content unique to that playbook.
 
-1. [Principle] - why it applies now.
-2. [Principle] - why it applies now.
+## Comments
 
-## Recommended Action Flow
-
-1. **[Action](../action-name/SKILL.md)** — purpose; input; expected output; transition condition.
-2. **[Action](../action-name/SKILL.md)** — purpose; input; expected output; transition condition.
-
-## Next Single Action
-
-- **Action:** [Action](../action-name/SKILL.md) — include the skill link when a matching skill exists; otherwise use the plain action name.
-- **Why now:** why this is the first executable step.
-- **Input:** what it needs to start.
-- **Code or behavior impact:** intended affected behavior and paths, when relevant.
-- **Done when:** the result that hands work to the next flow step.
-
-## Assumptions and Open Questions
-```
-
-The `Next Single Action` section is mandatory. It must contain one and only one concrete Action. A skill link is preferred when a matching skill exists, but never fabricate or force a skill; never use `A or B`, a list, or a compound step there.
+Comments follow the same rule as the reply. Write them clean as you go. Keep a comment only for a non-obvious *why* the code can't show. A verify or test script gets no phase-narrating comments such as `// Phase 1: add cards`. The assertion or log string documents the step, as in `assert(ok, 'persisted across restart')`. This applies to every file you produce, including the delegate's diff.
 
 ## Principles and Actions
 
