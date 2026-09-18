@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Advisor
 
-Use Advisor as the delegation-first orchestrator for engineering work. It turns the current situation into the smallest useful, ordered flow of Actions, dispatches sub-agents for repository exploration and Action execution, then synthesizes the evidence and next Action.
+Use Advisor as the delegation-first orchestrator for engineering work. It turns the current situation into the smallest useful, ordered flow of Actions, dispatches sub-agents for repository exploration and Action execution, and synthesizes the evidence and next Action. Advisor conducts [Grill Me](../grill-me/SKILL.md) directly with the user.
 
 ## Orchestration Contract
 
@@ -23,7 +23,7 @@ Goal definition comes before every other Advisor decision. Before selecting Chil
 
 A Goal is ready only when it states the current state, expected state, gap, constraints and assumptions, completion criteria, and next action for the current request. It must reflect shared understanding with the user.
 
-When `GOAL.md` is missing, incomplete, stale for the current request, or not based on shared understanding, the Recommended Action Flow begins with [Grill Me](../grill-me/SKILL.md), regardless of the eventual operating mode. Make **Grill Me** the Next Single Action and dispatch it to a sub-agent. Do not choose an operating mode or start other work first. After Grill Me reaches user-confirmed shared understanding, dispatch [To Goal](../to-goal/SKILL.md) to write or update `GOAL.md`; only then continue the normal Advisor flow.
+When `GOAL.md` is missing, incomplete, stale for the current request, or not based on shared understanding, the Recommended Action Flow begins with [Grill Me](../grill-me/SKILL.md), regardless of the eventual operating mode. Make **Grill Me** the Next Single Action and conduct its user interview directly; never dispatch Grill Me to a sub-agent. Do not choose an operating mode or start other work first. After Grill Me reaches user-confirmed shared understanding, dispatch [To Goal](../to-goal/SKILL.md) to write or update `GOAL.md`; only then continue the normal Advisor flow.
 
 ## Operating Mode Selection
 
@@ -37,7 +37,7 @@ Select the mode only after the Goal Gate is satisfied and before dispatching rep
 
 ## Sub-Agent Delegation
 
-Delegate repository exploration and Action execution. Advisor may read the current conversation, goals, context, and delegated results to coordinate, but does not perform repository exploration, implementation, verification, or other Action work itself.
+Delegate repository exploration and Action execution except [Grill Me](../grill-me/SKILL.md). Advisor conducts Grill Me directly because it is the live interview that establishes shared understanding with the user. Advisor may read the current conversation, goals, context, and delegated results to coordinate, but does not perform repository exploration, implementation, verification, or other Action work itself.
 
 1. Give each sub-agent one bounded task with the goal, selected mode, relevant paths or scope, constraints, required skills, expected evidence, and done condition.
 2. Dispatch a sub-agent for every repository exploration needed to choose a flow, such as tracing behavior, inspecting an unfamiliar subsystem, reproducing a failure, or finding a verification path.
@@ -60,6 +60,7 @@ Build Loop establishes the [Closed Working Loop](../closed-working-loop/SKILL.md
 
 Advisor delegates work instead of performing it directly. When this skill is active:
 
+- Conduct Grill Me directly with the user; never dispatch this interview to a sub-agent.
 - Do not implement, edit, write, delete, move, rename, or run task commands directly.
 - Use coordination tools to dispatch, wait for, and communicate with sub-agents.
 - Do not substitute a local repository scan for a sub-agent exploration task.
@@ -76,13 +77,13 @@ Advisor delegates work instead of performing it directly. When this skill is act
 
 ## Advice Workflow
 
-1. **Pass the Goal Gate.** When the Goal is not ready, recommend and dispatch Grill Me as the sole Next Single Action. After user-confirmed shared understanding, dispatch To Goal to record `GOAL.md`. Do not select a mode or advise on other work until the Goal is ready.
+1. **Pass the Goal Gate.** When the Goal is not ready, recommend and conduct Grill Me directly as the sole Next Single Action. After user-confirmed shared understanding, dispatch To Goal to record `GOAL.md`. Do not select a mode or advise on other work until the Goal is ready.
 2. **Select the operating mode.** Apply Operating Mode Selection after the Goal Gate and before any repository exploration or non-goal Action dispatch.
 3. **Construct the situation.** State the goal, current state, confirmed facts, constraints, decisions, risks, and unresolved questions that matter now. Separate confirmed facts from assumptions.
 4. **Identify the work stage.** Classify the immediate need as clarification, goal definition, code understanding, cause investigation, design, implementation, verification, review, or context handoff.
 5. **Select principles.** Choose only the principles that constrain the immediate decision. Explain why each selected principle applies. Do not list principles that do not change the recommended flow.
 6. **Recommend an Action flow.** Order the shortest set of Actions needed now. For each Action, link a matching skill and state its purpose, required input, expected output, and transition condition. For a flow that changes observable behavior, insert [Build Loop](../build-loop/SKILL.md) before the first change-making Action. Apply the selected mode when choosing scope and depth. If no skill matches, state the concrete action without forcing a skill. Skip Actions that are not needed.
-7. **Dispatch the Next Single Action.** Choose exactly one Action: the first step in the flow whose prerequisites are satisfied. Dispatch it to a sub-agent with the selected mode when one has been selected, required input, scope, skill, output, validation, and done condition. If the flow is blocked, dispatch the smallest fact-finding or clarification skill—or plain investigation action when no skill matches.
+7. **Dispatch the Next Single Action.** Choose exactly one Action: the first step in the flow whose prerequisites are satisfied. Conduct Grill Me directly when it is the action; otherwise dispatch the Action to a sub-agent with the selected mode when one has been selected, required input, scope, skill, output, validation, and done condition. If the flow is blocked, dispatch the smallest fact-finding or clarification skill—or plain investigation action when no skill matches.
 8. **Expose uncertainty.** Mention only unknowns that can change the flow or prevent the Next Single Action. Do not turn non-blocking uncertainty into extra work.
 9. **Synthesize delegated work.** After the sub-agent completes, report the evidence, update the flow, and dispatch only the next Action whose prerequisites are satisfied.
 
