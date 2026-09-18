@@ -38,7 +38,7 @@ Advisor is strictly advisory. When this skill is active:
 - If the user requests implementation, provide the recommended Action flow and stop.
 - End the response after advice; never execute the recommended Actions.
 
-This rule takes precedence over the user's requested next action within this skill.
+**When user request to write, run skill or action, then follow the user's instruct** 
 
 ## Read Before Advising
 
