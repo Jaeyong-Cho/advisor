@@ -67,6 +67,7 @@ Read the relevant principles first. Then select one or more actions that fit the
 
 **Architecture**
 
+- **[Abstraction Levels](../abstraction-levels/SKILL.md)**. Designing, implementing, or reviewing code that must separate intent, domain rules, and technical mechanisms.
 - **[First Principle Redesign](../first-principle-redesign/SKILL.md)**. Reviewing an implementation or considering a structural design change.
 - **[Model the Domain](../model-the-domain/SKILL.md)**. Writing stateful logic, repeated rule checks, coordinated flags, or repeated domain knowledge.
 - **[Boundary Discipline](../boundary-discipline/SKILL.md)**. Implementing external-input validation, error handling, or framework integration.
