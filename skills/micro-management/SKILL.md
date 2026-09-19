@@ -1,12 +1,12 @@
 ---
-name: pair-mode
-description: Collaborate with a human through one small, meaningful change at a time. Use when shared understanding must stay synchronized with implementation. Invoke as /pair-mode.
+name: micro-management
+description: Collaborate with a human through one small, meaningful change at a time. Use when shared understanding must stay synchronized with implementation. Invoke as /micro-management.
 disable-model-invocation: true
 ---
 
-# Pair Mode
+# Micro Management
 
-Use Pair Mode when the human wants to understand every meaningful change while work proceeds.
+Use Micro Management when the human wants to understand every meaningful change while work proceeds.
 The aim is shared understanding. Do not optimize for the fastest possible completion.
 Treat the human mental model as part of the system state. A change is complete only when the system evidence and the human's understanding are aligned.
 
