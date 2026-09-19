@@ -92,6 +92,7 @@ Read the relevant principles first. Then select one or more actions that fit the
 - **[Ask](../ask/SKILL.md)**. A user needs a calibrated explanation, an unclear request needs clarification, or an answer should expand only as understanding requires.
 - **[Grill Me](../grill-me/SKILL.md)**. A goal, design, or requirement needs shared understanding through a structured decision interview.
 - **[To Goal](../to-goal/SKILL.md)**. A request needs a concrete goal, current-state evidence, completion criteria, and a next action before implementation.
+- **[Wayfinder](../wayfinder/SKILL.md)**. A goal needs a task plan with explicit uncertainties, dependencies, and safe parallel work before implementation.
 
 **Understanding**
 
