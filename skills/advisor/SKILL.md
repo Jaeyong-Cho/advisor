@@ -114,6 +114,7 @@ Read the relevant principles first. Then select one or more actions that fit the
 
 **Verification**
 
+- **[Experiment](../experiment/SKILL.md)**. A consequential question cannot be answered by inspection and needs a minimal, reproducible run to produce evidence.
 - **[Create Verification Skill](../create-verification-skill/SKILL.md)**. A project needs a project-local skill to launch, drive, observe, and clean up real application verification.
 - **[No Comments](../no-comments/SKILL.md)**. A specified code scope or diff has comments, suppressions, or warnings whose value and enforceability need review.
 - **[Review](../review/SKILL.md)**. A completed implementation or diff needs a strict maintainability and structural-quality review.
