@@ -62,9 +62,11 @@ Read the relevant principles first. Then select one or more actions that fit the
 - **[Subtract Before You Add](../subtract-before-you-add/SKILL.md)**. Adding code or structure during feature work, modification, or refactoring.
 - **[Laziness Protocol](../laziness-protocol/SKILL.md)**. Reviewing a refactor, change scope, new abstraction, layer, or value propagation.
 - **[Minimize Reader Load](../minimize-reader-load/SKILL.md)**. Code is difficult to trace, has one-caller wrappers, pass-through layers, or widely shared mutable state.
+- **[Experience First](../principle-experience-first/SKILL.md)**. A product, UX, or feature-scope decision must prioritize the experience of end users and maintainers.
 
 **Architecture**
 
+- **[Foundational Thinking](../principle-foundational-thinking/SKILL.md)**. Choosing core types or data structures, sequencing foundations before features, or deciding whether concurrent actors can share state.
 - **[Abstraction Levels](../abstraction-levels/SKILL.md)**. Designing, implementing, or reviewing code that must separate intent, domain rules, and technical mechanisms.
 - **[First Principle Redesign](../first-principle-redesign/SKILL.md)**. Reviewing an implementation or considering a structural design change.
 - **[Model the Domain](../model-the-domain/SKILL.md)**. Writing stateful logic, repeated rule checks, coordinated flags, or repeated domain knowledge.
