@@ -10,7 +10,7 @@ Preserve a bug-investigation session as a report that lets another engineer veri
 
 ## When to Use
 
-Use this action when a reported or reproduced bug needs a root-cause investigation record before a fix. Use [Fix Root Causes](../fix-root-causes/SKILL.md) to guide the investigation and [Technical Writing](../technical-writing/SKILL.md) to write the report. The completed report is an input to [TDD Bug Fix](../tdd/SKILL.md): its reproduced scenario, causal boundary, and verification criteria define the smallest useful failing regression test.
+Use this action when a reported or reproduced bug needs a root-cause investigation record before a fix. Use [Fix Root Causes](../principle-fix-root-causes/SKILL.md) to guide the investigation and [Technical Writing](../principle-technical-writing/SKILL.md) to write the report. The completed report is an input to [TDD Bug Fix](../tdd/SKILL.md): its reproduced scenario, causal boundary, and verification criteria define the smallest useful failing regression test.
 
 Do not use this action for a known, trivial fix that needs no separate investigation record.
 

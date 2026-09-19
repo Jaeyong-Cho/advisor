@@ -10,7 +10,7 @@ Record a durable Architecture Decision Record for a decision that affects struct
 
 ## When to Use
 
-Use this action after a meaningful design decision is ready to record. Apply [First Principle Redesign](../first-principle-redesign/SKILL.md) to derive the decision from Why, What, and How. Use [Technical Writing](../technical-writing/SKILL.md) so the record is clear to future readers.
+Use this action after a meaningful design decision is ready to record. Apply [First Principle Redesign](../principle-first-principle-redesign/SKILL.md) to derive the decision from Why, What, and How. Use [Technical Writing](../principle-technical-writing/SKILL.md) so the record is clear to future readers.
 
 Do not create an ADR for a local implementation detail that is easy to change and has no lasting architectural consequence.
 

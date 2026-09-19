@@ -10,7 +10,7 @@ Set up an ordered feedback loop before making a sequence of changes. The loop mu
 
 ## When to Use
 
-Use this action when feature work, a bug fix, refactoring, or investigation needs a reliable execution path before changes begin. Apply [Closed Working Loop](../closed-working-loop/SKILL.md) to define the feedback cycle and [Build the Lever](../build-the-lever/SKILL.md) to make that cycle safe and cheap to rerun.
+Use this action when feature work, a bug fix, refactoring, or investigation needs a reliable execution path before changes begin. Apply [Closed Working Loop](../principle-closed-working-loop/SKILL.md) to define the feedback cycle and [Build the Lever](../principle-build-the-lever/SKILL.md) to make that cycle safe and cheap to rerun.
 
 Do not use this action for read-only research or documentation that has no behavior to observe.
 

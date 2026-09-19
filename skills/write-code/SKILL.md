@@ -10,7 +10,7 @@ Implement a bounded change that satisfies a defined goal, preserves required con
 
 ## When to Use
 
-Use this action after the goal, affected flow, and verification path are clear. Apply [Understand Through Abstraction](../understand-through-abstraction/SKILL.md) before changing unfamiliar code and [Closed Working Loop](../closed-working-loop/SKILL.md) throughout implementation.
+Use this action after the goal, affected flow, and verification path are clear. Apply [Understand Through Abstraction](../principle-understand-through-abstraction/SKILL.md) before changing unfamiliar code and [Closed Working Loop](../principle-closed-working-loop/SKILL.md) throughout implementation.
 
 ## Steps
 

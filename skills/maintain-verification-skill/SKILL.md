@@ -10,7 +10,7 @@ Keep a project-local verification skill and feature map accurate as the applicat
 
 ## When to Use
 
-Use this action for an existing verification skill that has Launch and Drive instructions and a feature map. Run [Create Verification Skill](../create-verification-skill/SKILL.md) when no such skill exists. Apply [Record and Resolve Friction](../record-and-resolve-friction/SKILL.md) to report product gaps found during maintenance.
+Use this action for an existing verification skill that has Launch and Drive instructions and a feature map. Run [Create Verification Skill](../create-verification-skill/SKILL.md) when no such skill exists. Apply [Record and Resolve Friction](../principle-record-and-resolve-friction/SKILL.md) to report product gaps found during maintenance.
 
 ## Steps
 

@@ -10,7 +10,7 @@ Investigate why code or a design has its current shape. Explain the forces that 
 
 ## When to Use
 
-Use this action for design rationale, a historical tradeoff, defensive code, a regression, a postmortem, a data-backed threshold, or before replacing an unfamiliar structure. Use [How](../how/SKILL.md) for runtime behavior and code flow. Apply [First Principle Redesign](../first-principle-redesign/SKILL.md) when the findings will guide a structural change.
+Use this action for design rationale, a historical tradeoff, defensive code, a regression, a postmortem, a data-backed threshold, or before replacing an unfamiliar structure. Use [How](../how/SKILL.md) for runtime behavior and code flow. Apply [First Principle Redesign](../principle-first-principle-redesign/SKILL.md) when the findings will guide a structural change.
 
 ## Steps
 

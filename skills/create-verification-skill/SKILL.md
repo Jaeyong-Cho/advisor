@@ -10,7 +10,7 @@ Create a project-local verification skill that drives the real application as a 
 
 ## When to Use
 
-Use this action when a project has no scripted path to prove UI, CLI, service, desktop, or mobile behavior through the real application. Apply [Closed Working Loop](../closed-working-loop/SKILL.md) to select meaningful evidence and [Build the Lever](../build-the-lever/SKILL.md) to keep the harness rerunnable.
+Use this action when a project has no scripted path to prove UI, CLI, service, desktop, or mobile behavior through the real application. Apply [Closed Working Loop](../principle-closed-working-loop/SKILL.md) to select meaningful evidence and [Build the Lever](../principle-build-the-lever/SKILL.md) to keep the harness rerunnable.
 
 ## Steps
 

@@ -20,9 +20,9 @@ Use Advisor as the orchestrator for engineering work. It turns the current situa
   - Link each step to a matching skill when one exists.
   - State a clear done condition.
   - Do not provide alternatives or bundled actions.
-  1. **Read Before Advising.** Read the current session, relevant `.context/*.md` and `adr/*.md` files, repository state, changed files, and existing verification. Apply [Guard the Context Window](../guard-the-context-window/SKILL.md).
+  1. **Read Before Advising.** Read the current session, relevant `.context/*.md` and `adr/*.md` files, repository state, changed files, and existing verification. Apply [Guard the Context Window](../principle-guard-the-context-window/SKILL.md).
   2. **Pass the Goal Gate.** Read `GOAL.md` before exploring the repository or running an Action. Confirm that it states the current state, expected state, gap, constraints, completion criteria, and next action. If the Goal is missing or not ready, recommend [Grill Me](../grill-me/SKILL.md) as the sole Next Single Action and wait for the human trigger. After user-confirmed shared understanding, recommend [To Goal](../to-goal/SKILL.md) and wait for its human trigger before continuing.
-  3. **Understand the situation.** State the goal, current state, confirmed facts, constraints, decisions, risks, and unresolved questions. Understand the code, architecture, and root cause before changing behavior. Use [Understand Through Abstraction](../understand-through-abstraction/SKILL.md), [Understand Function](../understand-func/SKILL.md), [How](../how/SKILL.md), and [Why](../why/SKILL.md) as needed.
+  3. **Understand the situation.** State the goal, current state, confirmed facts, constraints, decisions, risks, and unresolved questions. Understand the code, architecture, and root cause before changing behavior. Use [Understand Through Abstraction](../principle-understand-through-abstraction/SKILL.md), [Understand Function](../understand-func/SKILL.md), [How](../how/SKILL.md), and [Why](../why/SKILL.md) as needed.
   4. **Identify the work stage.** Classify the immediate need as clarification, goal definition, code understanding, cause investigation, design, implementation, verification, review, or context handoff. Separate confirmed facts from assumptions.
   5. **Select principles.** Choose only the principles that constrain the immediate decision. Explain why each selected principle applies. Do not list principles that do not change the recommended flow.
   6. **Recommend the Action flow.** Order the shortest set of Actions needed now. For each Action, link a matching skill and state its purpose, required input, expected output, behavior impact when relevant, and transition condition. For a flow that changes observable behavior, include [Build Loop](../build-loop/SKILL.md) before the first change-making Action. After the human triggers the change flow, establish the current input, observation, pass condition, and next-action rule in `./loop`. If no skill matches, state the concrete Action without forcing a skill.
@@ -56,35 +56,35 @@ Read the relevant principles first. Then select one or more actions that fit the
 
 **Core**
 
-- **[Define Goal](../define-goal/SKILL.md)**. The expected outcome is unclear, you cannot explain the gap between current and expected state, or the definition of done is unknown.
-- **[Guard the Context Window](../guard-the-context-window/SKILL.md)**. Long files, large output, screenshots, or repeated reading are expanding the working context.
-- **[Understand Through Abstraction](../understand-through-abstraction/SKILL.md)**. Understanding a high-level flow, starting review or change, exploring unfamiliar code, or explaining unexpected behavior.
-- **[Subtract Before You Add](../subtract-before-you-add/SKILL.md)**. Adding code or structure during feature work, modification, or refactoring.
-- **[Laziness Protocol](../laziness-protocol/SKILL.md)**. Reviewing a refactor, change scope, new abstraction, layer, or value propagation.
-- **[Minimize Reader Load](../minimize-reader-load/SKILL.md)**. Code is difficult to trace, has one-caller wrappers, pass-through layers, or widely shared mutable state.
+- **[Define Goal](../principle-define-goal/SKILL.md)**. The expected outcome is unclear, you cannot explain the gap between current and expected state, or the definition of done is unknown.
+- **[Guard the Context Window](../principle-guard-the-context-window/SKILL.md)**. Long files, large output, screenshots, or repeated reading are expanding the working context.
+- **[Understand Through Abstraction](../principle-understand-through-abstraction/SKILL.md)**. Understanding a high-level flow, starting review or change, exploring unfamiliar code, or explaining unexpected behavior.
+- **[Subtract Before You Add](../principle-subtract-before-you-add/SKILL.md)**. Adding code or structure during feature work, modification, or refactoring.
+- **[Laziness Protocol](../principle-laziness-protocol/SKILL.md)**. Reviewing a refactor, change scope, new abstraction, layer, or value propagation.
+- **[Minimize Reader Load](../principle-minimize-reader-load/SKILL.md)**. Code is difficult to trace, has one-caller wrappers, pass-through layers, or widely shared mutable state.
 - **[Experience First](../principle-experience-first/SKILL.md)**. A product, UX, or feature-scope decision must prioritize the experience of end users and maintainers.
 
 **Architecture**
 
 - **[Foundational Thinking](../principle-foundational-thinking/SKILL.md)**. Choosing core types or data structures, sequencing foundations before features, or deciding whether concurrent actors can share state.
-- **[Abstraction Levels](../abstraction-levels/SKILL.md)**. Designing, implementing, or reviewing code that must separate intent, domain rules, and technical mechanisms.
-- **[First Principle Redesign](../first-principle-redesign/SKILL.md)**. Reviewing an implementation or considering a structural design change.
-- **[Model the Domain](../model-the-domain/SKILL.md)**. Writing stateful logic, repeated rule checks, coordinated flags, or repeated domain knowledge.
-- **[Boundary Discipline](../boundary-discipline/SKILL.md)**. Implementing external-input validation, error handling, or framework integration.
-- **[Type System Discipline](../type-system-discipline/SKILL.md)**. Designing or reviewing types and signatures in a statically typed language.
-- **[Deep Module](../deep-module/SKILL.md)**. Designing or reviewing module boundaries and interfaces.
+- **[Abstraction Levels](../principle-abstraction-levels/SKILL.md)**. Designing, implementing, or reviewing code that must separate intent, domain rules, and technical mechanisms.
+- **[First Principle Redesign](../principle-first-principle-redesign/SKILL.md)**. Reviewing an implementation or considering a structural design change.
+- **[Model the Domain](../principle-model-the-domain/SKILL.md)**. Writing stateful logic, repeated rule checks, coordinated flags, or repeated domain knowledge.
+- **[Boundary Discipline](../principle-boundary-discipline/SKILL.md)**. Implementing external-input validation, error handling, or framework integration.
+- **[Type System Discipline](../principle-type-system-discipline/SKILL.md)**. Designing or reviewing types and signatures in a statically typed language.
+- **[Deep Module](../principle-deep-module/SKILL.md)**. Designing or reviewing module boundaries and interfaces.
 
 **Verification**
 
-- **[Fix Root Causes](../fix-root-causes/SKILL.md)**. Fixing a bug, considering a symptom-only workaround, handling a repeated problem, or investigating a failure after restart.
-- **[Closed Working Loop](../closed-working-loop/SKILL.md)**. Starting feature work, a fix, or refactoring without an execution path that can show progress or provide timely feedback.
-- **[Build the Lever](../build-the-lever/SKILL.md)**. Repeating a change, analysis, or check, or when a result is hard to verify manually.
-- **[Record and Resolve Friction](../record-and-resolve-friction/SKILL.md)**. You find friction such as a code, structure, or interface smell, edge-case concern, or workaround.
-- **[Encode Lessons in Structure](../encode-lessons-in-structure/SKILL.md)**. The same instruction, review finding, test failure, or user correction repeats.
+- **[Fix Root Causes](../principle-fix-root-causes/SKILL.md)**. Fixing a bug, considering a symptom-only workaround, handling a repeated problem, or investigating a failure after restart.
+- **[Closed Working Loop](../principle-closed-working-loop/SKILL.md)**. Starting feature work, a fix, or refactoring without an execution path that can show progress or provide timely feedback.
+- **[Build the Lever](../principle-build-the-lever/SKILL.md)**. Repeating a change, analysis, or check, or when a result is hard to verify manually.
+- **[Record and Resolve Friction](../principle-record-and-resolve-friction/SKILL.md)**. You find friction such as a code, structure, or interface smell, edge-case concern, or workaround.
+- **[Encode Lessons in Structure](../principle-encode-lessons-in-structure/SKILL.md)**. The same instruction, review finding, test failure, or user correction repeats.
 
 **Communication**
 
-- **[Technical Writing](../technical-writing/SKILL.md)**. Writing or reviewing documentation, a README, design document, usage guide, PR description, or commit message.
+- **[Technical Writing](../principle-technical-writing/SKILL.md)**. Writing or reviewing documentation, a README, design document, usage guide, PR description, or commit message.
 
 ## Actions
 

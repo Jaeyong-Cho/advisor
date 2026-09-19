@@ -10,7 +10,7 @@ Explore code to answer how it works. Build the mental model a senior engineer ne
 
 ## When to Use
 
-Use this action for questions such as `How does X work?`, code walkthroughs before a change, ownership and placement questions, or subsystem onboarding. Use [Why](../why/SKILL.md) for motivation and historical rationale. Apply [Understand Through Abstraction](../understand-through-abstraction/SKILL.md) to choose how deeply to inspect functions.
+Use this action for questions such as `How does X work?`, code walkthroughs before a change, ownership and placement questions, or subsystem onboarding. Use [Why](../why/SKILL.md) for motivation and historical rationale. Apply [Understand Through Abstraction](../principle-understand-through-abstraction/SKILL.md) to choose how deeply to inspect functions.
 
 ## Steps
 

@@ -16,11 +16,11 @@ Use this skill when you notice a possible code smell, design concern, missing va
 
 1. Gather concrete evidence for the candidate: its location or situation, observed behavior, impact, and the work it makes harder.
 2. Select the principles that apply and judge the candidate against them. For example:
-   - Use [Understand Through Abstraction](../understand-through-abstraction/SKILL.md) before calling unfamiliar code a smell.
-   - Use [Fix Root Causes](../fix-root-causes/SKILL.md) when a workaround hides a causal problem.
-   - Use [Closed Working Loop](../closed-working-loop/SKILL.md) when missing feedback or verification blocks confidence.
-   - Use [Minimize Reader Load](../minimize-reader-load/SKILL.md), [Deep Module](../deep-module/SKILL.md), or [Boundary Discipline](../boundary-discipline/SKILL.md) for structure and interface concerns.
-   - Use [Build the Lever](../build-the-lever/SKILL.md) for repeated manual work.
+   - Use [Understand Through Abstraction](../principle-understand-through-abstraction/SKILL.md) before calling unfamiliar code a smell.
+   - Use [Fix Root Causes](../principle-fix-root-causes/SKILL.md) when a workaround hides a causal problem.
+   - Use [Closed Working Loop](../principle-closed-working-loop/SKILL.md) when missing feedback or verification blocks confidence.
+   - Use [Minimize Reader Load](../principle-minimize-reader-load/SKILL.md), [Deep Module](../principle-deep-module/SKILL.md), or [Boundary Discipline](../principle-boundary-discipline/SKILL.md) for structure and interface concerns.
+   - Use [Build the Lever](../principle-build-the-lever/SKILL.md) for repeated manual work.
 3. Propose the candidate to the user. State the evidence, the principle-based judgment, the impact, and the smallest next Chill Mode action. Ask whether to add it to `FRICTION.md`.
 4. Append an entry to the end of `FRICTION.md` at the repository root only after the user confirms. Do not reorder entries or rewrite an entry unrelated to the current work.
 5. State the current disposition: `open`, `deferred`, `blocked`, `not-actionable`, or `done`. Record why an item is deferred, blocked, or not actionable.

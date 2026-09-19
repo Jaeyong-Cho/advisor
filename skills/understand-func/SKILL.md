@@ -12,7 +12,7 @@ Understand one function deeply enough to predict its observable behavior without
 
 Use this action when a concrete function's contract does not answer the current question, or when review or root-cause work requires its actual behavior. Provide a file path, function symbol, and the behavior to explain.
 
-[Understand Through Abstraction](../understand-through-abstraction/SKILL.md) owns choosing which function to inspect and how far to descend through dependencies. [How](../how/SKILL.md) owns subsystem-level explanations.
+[Understand Through Abstraction](../principle-understand-through-abstraction/SKILL.md) owns choosing which function to inspect and how far to descend through dependencies. [How](../how/SKILL.md) owns subsystem-level explanations.
 
 ## Steps
 

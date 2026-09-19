@@ -10,7 +10,7 @@ Produce a short goal record that separates the desired outcome from a chosen imp
 
 ## When to Use
 
-Use this action when a request is ambiguous, the current state is uncertain, completion is unclear, or implementation is about to begin. Apply [Define Goal](../define-goal/SKILL.md) to judge the result.
+Use this action when a request is ambiguous, the current state is uncertain, completion is unclear, or implementation is about to begin. Apply [Define Goal](../principle-define-goal/SKILL.md) to judge the result.
 
 ## Steps
 
