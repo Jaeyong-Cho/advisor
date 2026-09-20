@@ -63,6 +63,8 @@ do
   configure_context_window "$model"
 done
 cp "$REPO_DIR/config/open-tui.json" "$PI_AGENT_DIR/open-tui.json"
+mkdir -p "$PI_AGENT_DIR/themes"
+cp "$REPO_DIR/themes/token-light.json" "$PI_AGENT_DIR/themes/token-light.json"
 
 packages=(
   "npm:pi-open-tui"
@@ -78,4 +80,5 @@ for package in "${packages[@]}"; do
 done
 
 echo "Pi advisor runtime installed: $PI_MODEL"
+echo "Installed theme: token-light"
 echo "Run ./bin/install-pi-subagent separately to install advisor subagents."
