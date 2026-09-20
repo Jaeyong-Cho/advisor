@@ -123,5 +123,7 @@ Read the relevant principles first. Then select one or more actions that fit the
 **Reporting and Continuity**
 
 - **[Bug Report](../bug-report/SKILL.md)**. A reported bug requires an evidence-backed root-cause investigation record before a fix.
+- **[Learn](../learn/SKILL.md)**. The current session contains durable decisions, constraints, discoveries, failures, or conventions that a fresh agent should reuse.
+- **[Archive](../archive/SKILL.md)**. Supplied files, directories, or qualified session knowledge must become deduplicated, provenance-preserving OKF concepts in a target archive directory.
 - **[Friction](../friction/SKILL.md)**. A code, design, tool, environment, or verification friction is found and needs immediate durable recording.
 - **[To Context](../to-context/SKILL.md)**. A session's relevant state, decisions, evidence, limits, and open questions must remain usable later.
