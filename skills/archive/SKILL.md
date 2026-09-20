@@ -10,12 +10,10 @@ Archive supplied knowledge without creating duplicates. Convert each source into
 
 Require two inputs before writing.
 
-- One or more resolved source paths, or pre-qualified session knowledge from [Learn](../learn/SKILL.md).
+- One or more resolved source paths.
 - One resolved absolute target archive directory.
 
 Leave every source unchanged.
-
-For a Learn candidate, a source may use a stable session resource descriptor such as session:<topic>. Preserve any direct artifact source that supports the candidate.
 
 ## Archive Structure
 
