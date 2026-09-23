@@ -1,0 +1,3 @@
+#!/bin/bash
+
+pi --model gpt-6-terra --thinking high
