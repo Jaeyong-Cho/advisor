@@ -108,15 +108,15 @@ Read the relevant principles first. Then select one or more actions that fit the
 
 **Implementation**
 
-- **[Build Loop](../build-loop/SKILL.md)**. Required before the first observable behavior change in a bug fix, feature, refactor, configuration change, or data change.
-- **[Write Code](../write-code/SKILL.md)**. A bounded implementation can begin because the goal, affected flow, and verification path are clear.
-- **[TDD Bug Fix](../tdd/SKILL.md)**. A bug has a clear, cheap local test path, or a failing or regression test is required.
+- **[Build Loop](../build-loop/SKILL.md)**. Required before the first observable behavior change in a bug fix, feature, refactor, configuration change, or data change. (Plan with main agent and **MUST** Dispatch worker sub-agent to write loop)
+- **[Write Code](../write-code/SKILL.md)**. A bounded implementation can begin because the goal, affected flow, and verification path are clear. (Plan with main agent and **MUST** Dispatch worker sub-agent to write code)
+- **[TDD Bug Fix](../tdd/SKILL.md)**. A bug has a clear, cheap local test path, or a failing or regression test is required. (Plan with main agent and **MUST** Dispatch worker sub-agent to write code)
 
 **Verification**
 
-- **[Experiment](../experiment/SKILL.md)**. A consequential question cannot be answered by inspection and needs a minimal, reproducible run to produce evidence.
+- **[Experiment](../experiment/SKILL.md)**. A consequential question cannot be answered by inspection and needs a minimal, reproducible run to produce evidence. (Plan with main agent and **MUST** Dispatch worker sub-agent to write code and execution)
 - **[Create Verification Skill](../create-verification-skill/SKILL.md)**. A project needs a project-local skill to launch, drive, observe, and clean up real application verification.
-- **[No Comments](../no-comments/SKILL.md)**. A specified code scope or diff has comments, suppressions, or warnings whose value and enforceability need review.
+- **[No Comments](../no-comments/SKILL.md)**. A specified code scope or diff has comments, suppressions, or warnings whose value and enforceability need review. (Plan with main agent and **MUST** Dispatch worker sub-agent to edit code)
 - **[Review](../review/SKILL.md)**. A completed implementation or diff needs a strict maintainability and structural-quality review.
 - **[Maintain Verification Skill](../maintain-verification-skill/SKILL.md)**. An existing verification skill or feature map must stay accurate as the application changes.
 
