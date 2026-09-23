@@ -97,9 +97,9 @@ Read the relevant principles first. Then select one or more actions that fit the
 
 **Understanding**
 
-- **[Why](../why/SKILL.md)**. The motivation, constraints, tradeoffs, or history behind code or a design decision must be understood before changing it.
-- **[How](../how/SKILL.md)**. A code flow, subsystem, ownership boundary, or placement decision needs an architectural explanation before a safe change.
-- **[Understand Function](../understand-func/SKILL.md)**. One function's actual behavior, branches, state changes, effects, or failures need focused causal analysis.
+- **[Why](../why/SKILL.md)**. The motivation, constraints, tradeoffs, or history behind code or a design decision must be understood before changing it. (Plan with main agent and **MUST** Dispatch worker or scout sub-agent explore)
+- **[How](../how/SKILL.md)**. A code flow, subsystem, ownership boundary, or placement decision needs an architectural explanation before a safe change. (Plan with main agent and **MUST** Dispatch worker or scout sub-agent explore)
+- **[Understand Function](../understand-func/SKILL.md)**. One function's actual behavior, branches, state changes, effects, or failures need focused causal analysis. (Plan with main agent and **MUST** Dispatch worker or scout sub-agent explore)
 
 **Design**
 
