@@ -1,9 +1,10 @@
 # Grill Impact Level and Uncertainty
 
-## Mode
-**MUST ASK** the user once, before round 1: **Fast** mode (skip Low, Medium impact questions, state the decision and move on) or **Default** mode (ask every question, whatever its impact level). No answer given -> **Default**, since asking is the safe default and skipping is the opt-in. Carry the choice for the rest of the session — don't re-ask each round.
+## Decision authority
 
-**MUST MARK** each question's impact level. 
+Do not ask the user to choose a questioning mode by default. The user sets direction, outcomes, and rules; the worker owns methods inside those boundaries. Ask only when the answer could change an outcome, scope, safety or authorized boundary, or requires the user's judgment. Explicitly honor a request for more interactive discussion or manual approval.
+
+Mark the impact and uncertainty of questions you do ask. Impact indicates how widely a decision affects the system, not who owns it.
 
 ### Low Level (0)
 - Constant value
@@ -44,9 +45,8 @@
 For every High uncertainty question, recommend the smallest experiment (spike, prototype, one-off script, manual probe) that would turn it into Low uncertainty before committing to an answer.
 
 ## Action
-- **Default mode** — ask every question and confirm, whatever the impact/uncertainty combination below. High uncertainty still gets an assertion-point mark and a recommended experiment.
-- **Fast mode**:
-  - Low, Medium impact level + Low uncertainty = Skip the question; just show the decisions.
-  - Low, Medium impact level + High uncertainty = Skip the question; just show the decisions. Mark to add assertion point (like assert in c++ or something). Recommend an experiment.
-  - High impact level + Low uncertainty = Ask question and confirm.
-  - High impact level + High uncertainty = Ask question and confirm. Mark to add assertion point. Recommend an experiment.
+
+- For factual uncertainty, inspect existing evidence or run the smallest safe experiment before asking the user. Record an assumption and a check for non-blocking uncertainty.
+- For method choices within the goal and rules, make a reasoned choice and verify its result, regardless of impact level. Surface trade-offs when they affect the outcome or future rule ownership.
+- For user-owned choices or a conflict with the existing rules, ask a focused question with the evidence, options, and consequences. Keep the existing rule in force while the owner decides. Continue independent work when possible.
+- For high uncertainty, recommend the smallest safe experiment that could resolve it before committing to an answer.

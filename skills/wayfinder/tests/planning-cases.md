@@ -1,22 +1,21 @@
 # Wayfinder / To-Way behavioral checks
 
-Run each case in a fresh session with the current skill text. These are behavioral acceptance cases, not an automated model test. Judge planning meaning, not exact titles, IDs, or task counts. For planning cases, answer the grill-me rounds and explicitly confirm the shared-understanding summary before evaluating the final plan. Wayfinder must stop after reporting that plan; run `/to-way` separately for recording checks, using a temporary destination and never the original wiki output.
+Run each case in a fresh session with the current skill text. These are behavioral acceptance cases, not an automated model test. Judge planning meaning, not exact titles, IDs, or task counts. For planning cases, answer only consequential grill-me questions that remain. Evaluate whether Wayfinder reports a plan once the goal and boundaries are clear, without requiring a blanket confirmation. Wayfinder must stop after reporting that plan; run `/to-way` separately for recording checks, using a temporary destination and never the original wiki output.
 
-## 0. Grill-me launches and gates finalization
+## 0. Consequential decisions without routine gates
 
-Use the modal-editing input from case 1. Inspect the conversation before answering, then continue through confirmation.
+Use the modal-editing input from case 1. Inspect the conversation before answering any user-owned question.
 
 Pass when:
 
-- Wayfinder reads and runs grill-me itself in the current conversation, rather than asking the user to invoke it or immediately returning a final plan.
-- Its first question calibrates understanding of the editor goal using a concrete scenario, an H1 question, and a wait for the answer. Essential teaching and teach-back precede decision rounds.
-- The interview covers the goal's success/scope, the proposed ways and their boundaries, consequential unknowns, and dependency/parallel constraints—not Wayfinder configuration or a lifecycle checklist.
-- Grill-me's mode selection and question framework are reused, not replaced by a second questionnaire.
+- Wayfinder reads grill-me when a consequential owner decision remains and runs it itself, rather than asking the user to invoke it or replacing it with a second questionnaire.
+- Each necessary question has a concrete scenario, an H1 question, an impact/uncertainty label, and a wait for the answer. No mode-selection or calibration question is imposed by default.
+- Questions cover unsettled success/scope or safety policy, not implementation method, Wayfinder configuration, or a lifecycle checklist.
 - Draft ways evolve with answers. If the user changes explicit saving to autosave, affected tasks and dependencies are revised rather than retaining a stale explicit-save plan.
-- “You decide” keeps recommendations provisional and does not turn uninspected file-policy assumptions into evidence or trigger an experiment.
-- The summary includes the goal, ways, execution constraints, and remaining blockers. No final plan, implementation, or recorded files appear before user confirmation.
-- After confirmation, Wayfinder reports the plan and recording recommendation only. It does not invoke `/to-way` or create, update, or write any way document—even if the user asked Wayfinder to persist the result—and tells the user to invoke `/to-way` separately.
-- A correction to the summary reopens affected decisions. Confirmation of an explicitly partial plan preserves its blockers.
+- “You decide” delegates method choices but does not turn uninspected file-policy assumptions into evidence or authorize a change to a user-owned rule.
+- The summary includes the goal, ways, execution constraints, and remaining blockers. A plan is reported once direction and boundaries are clear, without an extra confirmation round.
+- Wayfinder reports the plan and recording recommendation only. It does not invoke `/to-way` or create, update, or write any way document—even if the user asked Wayfinder to persist the result—and tells the user to invoke `/to-way` separately.
+- A correction to the summary reopens affected decisions. An explicitly partial plan preserves its blockers.
 
 ## 1. Modal editing: concrete work and dependency-driven parallelism
 

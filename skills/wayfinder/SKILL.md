@@ -10,9 +10,9 @@ Produce a task plan, not a lifecycle checklist. Answer:
 
 > What work is actually needed, what do we not know yet, what can start now, and what must wait for what?
 
-Plan first: use grill-me for the user conversation and inspect context, but do not implement, run experiments, or persist the result. Wayfinder may inspect the relevant `contexts/` directory (including one alongside the supplied goal, repository, or way path when present) and read applicable `*-facts-*`, `*-intents-*`, and `*-constraints-*` files as read-only inputs while planning. Keep confirmed facts, user intent, constraints, and unresolved questions explicitly distinct; do not turn inferences or open questions into facts or decisions. After the user confirms the plan, return the plan in the conversation only. Propose evidence-gathering work when needed; never report a proposed check as completed.
+Plan first: use grill-me only for unresolved user-owned decisions and inspect context, but do not implement, run experiments, or persist the result. Wayfinder may inspect the relevant `contexts/` directory (including one alongside the supplied goal, repository, or way path when present) and read applicable `*-facts-*`, `*-intents-*`, and `*-constraints-*` files as read-only inputs while planning. Keep confirmed facts, user intent, constraints, and unresolved questions explicitly distinct; do not turn inferences or open questions into facts or decisions. Return the plan in the conversation only; seek confirmation only if a consequential owner decision remains. Propose evidence-gathering work when needed; never report a proposed check as completed.
 
-**MUST NOT** create, update, or write any way document, even when persistence is requested during the Wayfinder invocation. Separate to-context or other recording operations may persist confirmed context after confirmation; those operations are outside Wayfinder. End with a clear handoff for the separate recording step.
+**MUST NOT** create, update, or write any way document, even when persistence is requested during the Wayfinder invocation. Separate to-context or other recording operations may persist established context; those operations are outside Wayfinder. End with a clear handoff for the separate recording step.
 
 ## Recommend the recording operation
 
@@ -20,7 +20,7 @@ Plan first: use grill-me for the user conversation and inspect context, but do n
 - Decide and recommend the operation at the end, after the plan and target have been inspected: create a new numbered way for a new goal; update the matching goal in place for an existing goal; update the parent goal when adding a child way.
 - For a recommended update, identify stable IDs, completed-work evidence, and user annotations that the recording step must preserve; new nodes need globally unique IDs.
 - If the proposed update would move or remove files, strand old tasks, or conflict with recorded evidence, report the conflict before recording; do not change anything.
-- Always return the confirmed plan and recommended operation without writing files.
+- Always return the plan, any open owner decisions, and the recommended operation without writing files.
 
 ## Task types
 
@@ -39,16 +39,16 @@ An `IMPL` task owns the implementation work for its product-code scope. Its How 
 
 ## Shared understanding with grill-me
 
-When clarification is useful, run `@skills/grill-me`: read `../grill-me/SKILL.md` and follow its session sequence in this conversation. Do not delegate an active interview to a background agent or replace it with a custom questionnaire.
+When a consequential user-owned decision remains, run `@skills/grill-me`: read `../grill-me/SKILL.md` and follow its session sequence in this conversation. Do not delegate an active interview to a background agent or replace it with a custom questionnaire.
 
 The interview is about **the user's goal and its ways**, not how to configure Wayfinder. It spans the planning process below:
 
-- Start with grill-me's calibration using a concrete scenario from the goal when interactive clarification is useful. Ask for the user's answer, but if it is unavailable, mark the understanding provisional and continue with explicit assumptions. Teach only essential gaps and use its teach-back before decision rounds. Reuse already established understanding and decisions rather than restarting an active session.
+- Start from established goals, constraints, and decisions. When clarification is necessary, use a concrete scenario and grill-me's focused question format. If the answer is unavailable, mark consequential work blocked and continue independent work; use explicit assumptions for non-blocking method choices. Do not restart an already settled discussion.
 - Use the goal's success signal, scope/exclusions, proposed ways and their boundaries, consequential unknowns, prerequisites, and safe parallel work as the decision tree. Settle parent scope before dependent decomposition; do not grill every routine implementation detail.
-- Show a small draft way tree as proposals become grounded. Ask whether its outcomes and boundaries match the user's intent, not just whether the user agrees with a finished plan. Update the draft and affected dependencies after each answer.
-- Let grill-me own question format, examples, mode selection, impact/uncertainty labels, and round size. Inspect repository facts yourself. Within this planning session, record unresolved fact-finding as `EXPLORE` or `EXPERIMENT` work rather than executing it automatically.
-- Keep confirmed decisions, provisional assumptions, and unresolved evidence separate. A delegated choice such as “you decide” may adopt the recommendation provisionally; it does not establish an external fact or remove an evidence blocker.
-- Before finalizing, summarize the understood goal, ways, ordering/parallel constraints, and remaining assumptions/blockers; invite confirmation using grill-me's question format when appropriate. A plan may remain explicitly provisional or partial; do not pretend its unknowns are resolved. If corrected, revise affected work.
+- Show a small draft way tree when discussing a consequential owner decision. Ask about outcomes or boundaries only where intent is unsettled. Update the draft and affected dependencies after each answer.
+- Let grill-me own question format, examples, decision authority, impact/uncertainty labels, and round size. Inspect repository facts yourself. Within this planning session, record unresolved fact-finding as `EXPLORE` or `EXPERIMENT` work rather than executing it automatically.
+- Keep confirmed decisions, provisional assumptions, and unresolved evidence separate. A delegated method choice such as “you decide” may adopt the recommendation within existing boundaries; it does not establish an external fact or authorize a change to a user-owned rule.
+- Before finalizing, summarize the understood goal, ways, ordering/parallel constraints, and remaining assumptions/blockers. Ask only about consequential owner decisions not already settled; do not make plan confirmation a routine gate. A plan may remain explicitly provisional or partial; do not pretend its unknowns are resolved. If corrected, revise affected work.
 
 ## Ways and tasks
 
@@ -96,7 +96,7 @@ Ground How in inspected context or explicit user decisions. If a consequential c
 4. **Wire prerequisites.** For each executable leaf, record the leaf IDs it needs and the result consumed from each. Include dependencies across ways. Share a prerequisite once rather than duplicating it under every consumer.
 5. **Find the execution frontier.** Identify ready work, then describe which completions unlock which tasks, safe parallel lanes, shared-resource conflicts, and the final convergence check. Order by actual constraints, not by repeating development phases.
 6. **Prune and validate the draft.** Check the planning criteria below. Keep blocked branches explicitly partial with their next resolving actions; do not claim unresolved work is verified.
-7. **Finalize.** Summarize the shared understanding and invite correction or confirmation when useful. At the end, inspect the final plan against the available way files and recommend `create` or `update` with the resolved absolute target path and reason; do not ask for this choice at the beginning. Derive every task's absolute `Workdir` from that target and resolve every `IMPL` target repository before finalizing. Do not implement or create/update any way document; return the plan for the separate recording step.
+7. **Finalize.** Summarize the shared understanding and surface only owner decisions that affect scope, outcome, or boundaries. At the end, inspect the final plan against the available way files and recommend `create` or `update` with the resolved absolute target path and reason; do not ask for this choice at the beginning. Derive every task's absolute `Workdir` from that target and resolve every `IMPL` target repository before finalizing. Do not implement or create/update any way document; return the plan for the separate recording step.
 
 ## Uncertainty handling
 
@@ -124,7 +124,7 @@ Ask owner decisions through grill-me, with concrete examples, answer-dependent c
 
 ## Output
 
-During the interview, show only the draft context needed for the current questions. After shared-understanding confirmation, return a compact final plan with:
+During the interview, show only the draft context needed for the current questions. Once the goal and boundaries are sufficiently clear, return a compact final plan with:
 
 1. **Goal and grounding** — purpose, current state, expected result state, hypothesis, assumptions, success, scope, and key evidence.
 2. **Way tree** — outcome-oriented ways and concrete leaves; give each way its purpose, current state, expected result state, hypothesis, assumptions, concise scope, and success signal, and mark partial branches.
@@ -190,7 +190,7 @@ Execution: start A1 and U1 independently. A2 needs A1's insertion behavior; B1 n
 
 ## Completion criterion
 
-- The goal and its ways have been discussed enough to act, with confirmation or clearly labeled provisional assumptions and partial branches.
+- The goal and its ways are clear enough to act on; owner decisions that remain open block only affected branches, and provisional assumptions and partial branches are labeled.
 - Every requested outcome is covered by concrete work or an explicitly partial branch with its risk or dependency named; existing work is not needlessly recreated.
 - Every way, including the root, explicitly records its purpose, current state, expected result state, falsifiable hypothesis, and assumptions (`—` when none); these fields agree with its parent and inspected evidence.
 - No generic lifecycle chains, renamed single-child wrappers, or `Test the tests` branches remain.
@@ -199,4 +199,4 @@ Execution: start A1 and U1 independently. A2 needs A1's insertion behavior; B1 n
 - IDs are unique, every non-root node has one parent, all dependency references resolve, and the dependency graph is acyclic.
 - The execution summary matches dependencies, explains parallel safety/conflicts, and names an immediately useful next action (including an owner decision when that is all that can proceed).
 - Each product-code handoff is represented by an inline `Kind: IMPL` leaf. Its recorded How describes implementation, relevant REQUIRED verification and evidence review, then commit with hash/evidence; no separate lifecycle chain is needed. A critical requirement or result contradiction should be surfaced, and the existing way can be revised when needed.
-- Wayfinder has only reported the confirmed plan: it has not created, updated, or written any way document. The final response returns the plan for the separate recording step.
+- Wayfinder has only reported the plan and any open owner decisions: it has not created, updated, or written any way document. The final response returns the plan for the separate recording step.
