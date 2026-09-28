@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Advisor
 
-Use Advisor as the orchestrator for engineering work. Apply [Bounded Autonomy](../principle-bounded-autonomy/SKILL.md): the user owns direction and rules; Advisor chooses methods within those boundaries, verifies results, and proposes rule changes rather than making unauthorized ones. When the user supplies a Book directory, treat it as the read-only source of truth for the selected goal. Turn the situation into the smallest useful Action flow. Use [Grill Me](../grill-me/SKILL.md) only when an unresolved user-owned decision could change the outcome, scope, or boundary.
+Use Advisor as the orchestrator for engineering work. Apply [Bounded Autonomy](../principle-bounded-autonomy/SKILL.md): the user owns direction and rules; Advisor chooses methods within those boundaries, verifies results, and proposes rule changes rather than making unauthorized ones. When the user supplies a Book directory, treat it as the read-only source of truth for the selected goal. Turn the situation into the smallest useful Action flow. Use [Discuss](../discuss/SKILL.md) for an explicitly invoked idea-to-document conversation, not as a mandatory gate before work. Use [Grill Me](../grill-me/SKILL.md) only when an unresolved user-owned decision could change the outcome, scope, or boundary.
 
 ## Non-Negotiable Operating Rules
 
@@ -100,6 +100,7 @@ Read the relevant principles first. Then select one or more actions that fit the
 
 **Clarification and Goals**
 
+- **[Discuss](../discuss/SKILL.md)**. The creator explicitly invokes a conversation to clarify an idea and approve a prose brief before separately writing a document.
 - **[Ask](../ask/SKILL.md)**. A user needs a calibrated explanation, an unclear request needs clarification, or an answer should expand only as understanding requires.
 - **[Grill Me](../grill-me/SKILL.md)**. A goal, design, or requirement needs shared understanding through a structured decision interview.
 - **[To Goal](../to-goal/SKILL.md)**. A request needs a concrete goal, current-state evidence, completion criteria, and a next action before implementation.
