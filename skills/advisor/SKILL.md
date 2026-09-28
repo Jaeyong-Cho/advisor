@@ -6,29 +6,33 @@ disable-model-invocation: true
 
 # Advisor
 
-Use Advisor as the orchestrator for engineering work. It turns the current situation into the smallest useful, ordered flow of Actions, recommends repository exploration and Action execution, and synthesizes the evidence and next Action after the human triggers an Action. Advisor conducts [Grill Me](../grill-me/SKILL.md) directly with the user after the human triggers it.
+Use Advisor as the orchestrator for engineering work. It turns the current situation into the smallest useful, ordered flow of Actions, recommends repository exploration and Action execution, and synthesizes evidence and the next Action. Advisor conducts [Grill Me](../grill-me/SKILL.md) directly with the user when the selected mode permits questions.
 
-## Non-Negotiable Operating Rule
+## Non-Negotiable Operating Rules
 
-- Wait for an explicit human trigger before performing any Action.
-- Do not write or modify code before the human triggers an Action.
-- Do not run an Action or skill directly without that human trigger.
+Select the mode from the user's instruction. Use Manual mode when no mode is specified.
+
+- **Manual mode** preserves the human-triggered workflow. Present the shortest Recommended Action Flow and exactly one Next Single Action, then wait for an explicit trigger before performing it. Do not modify code before its trigger.
+- **Auto mode** performs the shortest safe Action flow through completion and verification of the goal without asking the human questions or waiting for per-Action triggers. Do not stop to confirm the goal, plan, assumptions, or intermediate results. Resolve uncertainty from repository evidence where possible. For non-blocking unknowns, choose the safest reasonable assumption and record it. Do not perform irreversible or externally consequential actions without authorization; avoid or defer them and state the constraint rather than asking mid-flow.
+- In Auto mode, once the goal is complete and verified, stop before archiving it. Present the completed goal and its evidence, then ask the human whether to archive it and for any missing archive destination or required input. Archive only after explicit approval. Do not ask about archival before the goal is complete.
 - Report an Action as complete only when its requested evidence is available.
-- Follow this workflow for every request:
-  - Provide the shortest Recommended Action Flow.
-  - Provide exactly one Next Single Action.
-  - Link each step to a matching skill when one exists.
-  - State a clear done condition.
-  - Do not provide alternatives or bundled actions.
-  1. **Read Before Advising.** Read the current session, relevant `.context/*.md` and `adr/*.md` files, repository state, changed files, and existing verification. Apply [Guard the Context Window](../principle-guard-the-context-window/SKILL.md).
-  2. **Pass the Goal Gate.** Read `GOAL.md` before exploring the repository or running an Action. Confirm that it states the current state, expected state, gap, constraints, completion criteria, and next action. If the Goal is missing or not ready, recommend [Grill Me](../grill-me/SKILL.md) as the sole Next Single Action and wait for the human trigger. After user-confirmed shared understanding, recommend [To Goal](../to-goal/SKILL.md) and wait for its human trigger before continuing.
+- In Manual mode, do not perform an Action or modify code before its explicit human trigger.
+- In Auto mode, do not ask questions or wait for per-Action triggers before goal completion. Stop after verification and ask before archiving the goal.
+- Do not perform irreversible or externally consequential actions without authorization. Avoid or defer them rather than asking mid-flow.
+- Skills used in Auto mode must not introduce intermediate human-confirmation gates. Choose a safe alternative or defer work that cannot proceed without one.
+
+Resolve the workspace root from the user's workspace or task context. If none is specified, use the parent directory containing the target repository. Keep session artifacts that may span repositories outside the repository, directly under the workspace root: `GOAL.md`, `.context/`, and `loop/`. Keep repository-owned artifacts, including source code, tests, and `adr/`, in the target repository. Read and write each artifact using its workspace-root path, not a path relative to the repository working directory.
+
+Follow this workflow for every request. In Manual mode, provide the shortest Recommended Action Flow and exactly one Next Single Action, link steps to matching skills, state the done condition, and wait for the human trigger. In Auto mode, use the same flow internally and execute each safe Action without waiting; report progress and evidence as useful, but do not stop for confirmation. Do not provide alternatives or bundle unrelated actions.
+  1. **Read Before Advising.** Read the current session, relevant workspace-root `.context/*.md` files, target-repository `adr/*.md` files, repository state, changed files, and existing verification. Apply [Guard the Context Window](../principle-guard-the-context-window/SKILL.md).
+  2. **Pass the Goal Gate.** Read the workspace-root `GOAL.md` before exploring the repository or running an Action. Confirm that it states the current state, expected state, gap, constraints, completion criteria, and next action. If the Goal is missing or not ready, use [Grill Me](../grill-me/SKILL.md) and [To Goal](../to-goal/SKILL.md) to establish it. In Manual mode, recommend Grill Me as the sole Next Single Action and wait for the trigger, then wait for a trigger on To Goal after shared understanding. In Auto mode, infer the goal from the request and repository evidence, record material assumptions, and create or update the goal without asking for confirmation.
   3. **Understand the situation.** State the goal, current state, confirmed facts, constraints, decisions, risks, and unresolved questions. Understand the code, architecture, and root cause before changing behavior. Use [Understand Through Abstraction](../principle-understand-through-abstraction/SKILL.md), [Understand Function](../understand-func/SKILL.md), [How](../how/SKILL.md), and [Why](../why/SKILL.md) as needed.
   4. **Identify the work stage.** Classify the immediate need as clarification, goal definition, code understanding, cause investigation, design, implementation, verification, review, or context handoff. Separate confirmed facts from assumptions.
   5. **Select principles.** Choose only the principles that constrain the immediate decision. Explain why each selected principle applies. Do not list principles that do not change the recommended flow.
-  6. **Recommend the Action flow.** Order the shortest set of Actions needed now. For each Action, link a matching skill and state its purpose, required input, expected output, behavior impact when relevant, and transition condition. For a flow that changes observable behavior, include [Build Loop](../build-loop/SKILL.md) before the first change-making Action. After the human triggers the change flow, establish the current input, observation, pass condition, and next-action rule in `./loop`. If no skill matches, state the concrete Action without forcing a skill.
-  7. **Identify the Next Single Action.** Choose exactly one Action whose prerequisites are satisfied. Wait for its explicit human trigger. After the trigger, perform the Action. If the flow is blocked, perform the smallest fact-finding or clarification Action, or a plain investigation Action when no skill matches.
-  8. **Expose uncertainty.** Mention only unknowns that can change the flow or prevent the Next Single Action. Do not turn non-blocking uncertainty into extra work.
-  9. **Synthesize the completed Action.** After the human-triggered Action completes, report the evidence and update the flow. Recommend only the next Action whose prerequisites are satisfied, then wait for its human trigger.
+  6. **Set the Action flow.** Order the shortest set of Actions needed now. In Manual mode, recommend the flow. In Auto mode, use it internally. For each Action, link a matching skill and state its purpose, required input, expected output, behavior impact when relevant, and transition condition. For a flow that changes observable behavior, include [Build Loop](../build-loop/SKILL.md) before the first change-making Action. In Manual mode, establish the current input, observation, pass condition, and next-action rule in the workspace-root `loop/` after the human triggers the change flow. In Auto mode, establish and use that loop without waiting for a trigger. If no skill matches, state the concrete Action without forcing a skill.
+  7. **Advance the flow.** In Manual mode, choose exactly one Action whose prerequisites are satisfied and wait for its explicit trigger before performing it. In Auto mode, perform the next safe Action immediately. If blocked, do the smallest fact-finding or investigation Action that does not require human input; defer work that cannot safely proceed.
+  8. **Expose uncertainty.** Mention only unknowns that can change the flow or prevent progress. In Auto mode, make and record a reasonable assumption for non-blocking uncertainty instead of asking.
+  9. **Synthesize progress and completion.** In Manual mode, report evidence after each triggered Action, update the flow, and wait for the next trigger. In Auto mode, report the completed goal and verification evidence, then request approval and any missing inputs before archiving the goal.
 
 ## Writing the reply
 

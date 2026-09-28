@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # To Goal
 
-Produce a short goal record that separates the desired outcome from a chosen implementation.
+Produce a short goal record that separates the desired outcome from a chosen implementation. Resolve the workspace root from the user's workspace or task context. If none is specified, use the parent directory containing the target repository. Keep this session-level goal outside the repository at `<workspace-root>/GOAL.md`.
 
 ## When to Use
 
@@ -23,7 +23,7 @@ Use this action when a request is ambiguous, the current state is uncertain, com
 
 ## Output
 
-Write the goal record to `GOAL.md` with these fields:
+Write the goal record to `<workspace-root>/GOAL.md` with these fields. Do not place it in the target repository.
 
 ```md
 # Goal: <outcome>
