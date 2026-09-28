@@ -20,7 +20,7 @@ Use this skill when someone explicitly wants to think through a software idea wi
 
 Write a concise prose brief in the conversation. Explain why the software exists, whom it serves, what it should do, and the important agreed boundaries and observable success conditions. Add a short note for meaningful unresolved decisions, distinguishing them from agreed requirements. Prefer an intelligible explanation over a rigid template.
 
-Ask the creator whether the brief accurately represents their intent. Revise it if corrected. Treat it as approved only after the creator confirms it. This brief is input for a later document-writing action, not a change to any source document or a substitute for existing requirements. Do not write files, plan implementation, or change code in this skill. If the creator wants a document next, use a separate explicitly requested writing action; changing user-owned source documents remains the creator's responsibility.
+Ask the creator whether the brief accurately represents their intent. Revise it if corrected. Treat it as approved only after the creator confirms it. This brief is input for a later document-writing action, not a change to any source document or a substitute for existing requirements. Do not write files, plan implementation, or change code in this skill. If the creator wants to create or update a document in an existing logical Book next, they can directly invoke [To Docs](../to-docs/SKILL.md) with the operation, approved brief, target directory, and document path. This skill itself never writes documents; the creator decides when to delegate a separate writing action.
 
 ## Done when
 
