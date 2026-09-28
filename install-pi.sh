@@ -55,9 +55,9 @@ NODE
 configure_settings
 for model in \
   "$PI_MODEL" \
-  openai-codex/gpt-5.6-sol \
+  openai-codex/gpt-6-sol \
   openai-codex/gpt-5.6-terra \
-  openai-codex/gpt-5.6-luna \
+  openai-codex/gpt-6-luna \
   openai-codex/gpt-6-astra
 do
   configure_context_window "$model"
