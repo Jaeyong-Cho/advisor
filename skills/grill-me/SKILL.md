@@ -113,3 +113,5 @@ Each round's answers reshape the remaining user-owned decisions. Recompute the f
 ## Done
 
 The session is done when consequential user-owned decisions are settled or explicitly blocked, with material assumptions and evidence checks visible. Do not add a blanket confirmation gate.
+After grill-me session done, summaries the grill-me session decisions. 
+Do not start implementation before confirm.
