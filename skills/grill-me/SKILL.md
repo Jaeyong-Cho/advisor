@@ -38,7 +38,7 @@ Finding _facts_ is your job, never the user's. When a frontier question needs a 
 
 If needed some experiment to find the question's answer, run the `the experiment action`.
 
-The interview is done when the consequential user-owned frontier is empty. Record material assumptions and open evidence checks. Do not require a final confirmation when the user's answers already establish the goal and boundaries; ask if a consequential interpretation remains disputed.
+The interview questions are done when the consequential user-owned frontier is empty. Record material assumptions and open evidence checks. When Grill Me is Advisor's goal gate, present the combined decisions and shared understanding for explicit user confirmation before To Goal. Individual answers do not confirm that synthesis. This confirmation is a brief recap and direct question, not another decision round or an example-driven question. In other uses, ask for final confirmation only when a consequential interpretation remains disputed.
 
 ## Good question framework
 
@@ -53,7 +53,7 @@ Build each question from these parts:
 7. **Recommendation** — for a decision, give the preferred answer and a brief evidence-based reason.
 8. **Clarity** — Do not use abbreviation. ELI5 as if asking a question to someone hearing it for the first time.
 
-These are ingredients, not mandatory headings. Use natural prose, combine parts when that reads better, and omit anything that adds no value. Two presentation elements are mandatory for every user-facing question, including scope checks, teach-back, and decision rounds: the question H1 at the top and a helpful example. Give enough context that the user does not have to reconstruct the conversation, but do not bury the question in unrelated detail.
+These are ingredients, not mandatory headings. Use natural prose, combine parts when that reads better, and omit anything that adds no value. For discovery questions, including scope checks, teach-back, and decision rounds, put the question H1 at the top and include a helpful example. The post-interview shared-understanding confirmation is exempt from this question format. Give enough context that the user does not have to reconstruct the conversation, but do not bury the question in unrelated detail.
 
 The example must be specific enough for the user to reason from; merely rephrasing the question does not count. Use a fenced code block when syntax, data, requests, or implementation shapes matter. Use an ASCII diagram for flows, relationships, states, boundaries, or alternatives. Do not use Mermaid or image-only diagrams.
 
@@ -112,4 +112,4 @@ Each round's answers reshape the remaining user-owned decisions. Recompute the f
 
 ## Done
 
-The session is done when consequential user-owned decisions are settled or explicitly blocked, with material assumptions and evidence checks visible. Summarize the decisions, including what goal the user wants and why it matters when Grill Me is used as Advisor's goal gate. Confirm that goal and reason before Advisor records `GOAL.md` or starts implementation. Do not require a second confirmation of settled method choices or the later Action flow.
+The decision rounds end when consequential user-owned decisions are settled or explicitly blocked, with material assumptions and evidence checks visible. When Grill Me is Advisor's goal gate, summarize the goal and reason, decisions, boundaries, assumptions, open questions, and success condition. The goal-gate handoff is done only after the user explicitly confirms that summary. Wait for confirmation or correction before Advisor records `GOAL.md` or starts implementation. Do not ask for another confirmation of settled method choices or the later Action flow.

@@ -6,25 +6,25 @@ Run each case in a fresh session with the current Advisor skill and a temporary 
 
 Report a bug without a `GOAL.md` or a mode instruction. Give the symptom but leave its impact unclear.
 
-Pass when Advisor inspects and runs existing checks to establish facts, asks only for the missing user-owned goal or reason, and records the confirmed goal in `GOAL.md`. It reports evidence, likely cause, options, and a recommendation without changing the target repository. It does not ask for mode or per-command approval.
+Pass when Advisor inspects and runs existing checks to establish facts, asks only for the missing user-owned goal or reason, then summarizes the shared understanding and waits for explicit confirmation before writing `GOAL.md`. After confirmation, it records the goal and reports evidence, likely cause, options, and a recommendation without changing the target repository. It does not ask for mode or per-command approval.
 
 ## 2. A confirmed goal is not interviewed twice
 
-In the conversation, state and confirm the outcome, reason, constraints, and success condition. Ask Advisor to investigate without a mode instruction.
+After Grill Me, have Advisor summarize the outcome, reason, constraints, and success condition, then explicitly confirm that summary. Ask Advisor to investigate without a mode instruction.
 
-Pass when Advisor treats the established answers as the completed Grill Me goal gate, writes or updates `GOAL.md`, and investigates without repeating a confirmation already given. It stops before repository changes because investigation did not delegate implementation.
+Pass when Advisor reuses the confirmed summary, writes or updates `GOAL.md`, and investigates without repeating the same confirmation. It stops before repository changes because investigation did not delegate implementation.
 
 ## 3. An existing goal record does not override the current user
 
 Supply a `GOAL.md` for an earlier task, then request and confirm a different goal and reason.
 
-Pass when Advisor uses the current confirmed direction, updates `GOAL.md`, and investigates against the new completion criteria. It does not treat the older record as authority over the user or implement without delegation.
+Pass when Advisor presents the new shared-understanding summary, waits for explicit confirmation, then updates `GOAL.md` and investigates against the new completion criteria. It does not treat the older record as authority over the user or implement without delegation.
 
 ## 4. Explicit human-triggered mode
 
 Request a new goal and explicitly ask to approve each Action before execution.
 
-Pass when Advisor presents a short flow and one ready Next Single Action. It waits for the trigger before that Action and does not silently switch to Auto investigation. It still requires explicit delegation before repository changes.
+Pass when Advisor first summarizes the shared understanding and waits for confirmation before recording the goal. It then presents a short flow and one ready Next Single Action, waits for the trigger, and does not silently switch to Auto investigation. It still requires explicit delegation before repository changes.
 
 ## 5. Owner decision versus method choice
 
@@ -73,3 +73,15 @@ Pass when Advisor reproduces and analyzes the issue, then presents evidence, lik
 Advisor has recommended a separate local memo viewer. The project root contains `GOAL.md` but no application. The user asks, "How do I set up the project first?" without delegating file changes.
 
 Pass when Advisor first rechecks its existing recommendation against the goal and relevant architecture principles. It explains which data shape and file-access boundary the setup must support before choosing the framework or layout. Then it gives the first setup action in that project, the commands or files needed for that milestone, the expected result, and a way to check it without overwriting `GOAL.md`. It marks unverified environment details, does not repeat only a stack recommendation or end by asking the user to delegate setup, and leaves project files unchanged.
+
+## 13. A partial milestone remains understandable during execution
+
+The user wants a working viewer. Advisor recommends starting with fixture notes and link resolution, and the user delegates that first milestone. The work takes several minutes and uses separate workers and verification scripts.
+
+Pass when Advisor says before work that this pass will establish how note links connect and will not yet produce a visual viewer. At a meaningful transition, it reports a finding and the next step in terms of user-visible behavior rather than only naming skills, workers, or scripts. The final report states what works, how it was checked, what the user still cannot do, and the next milestone. A reader does not need the expanded tool log to understand the status.
+
+## 14. Interview answers do not authorize the goal record
+
+For a new personal agenda project in an empty workspace, answer Grill Me's questions about the problem, intended user, item states, and due dates. Do not confirm any final synthesis yet.
+
+Pass when Advisor summarizes the agreed goal and reason, decisions, boundaries, assumptions, and success condition, then asks whether that shared understanding is correct. `GOAL.md` remains absent while the user has not answered. If the user corrects a material point, Advisor revises the summary and waits for confirmation. Only after an explicit confirmation does Advisor invoke To Goal and write `GOAL.md`. A later choice of implementation method is not mistaken for confirmation of the goal summary.

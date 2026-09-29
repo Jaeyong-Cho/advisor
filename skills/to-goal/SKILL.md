@@ -10,7 +10,7 @@ Produce a short goal record that states what outcome the user wants and why it m
 
 ## When to Use
 
-In an Advisor execution flow, use this action after Grill Me establishes the user-confirmed goal and reason, and before implementation. For other flows, use it when a consequential ambiguity needs a durable goal record or a multi-session effort needs continuity. Apply [Define Goal](../principle-define-goal/SKILL.md) to judge the result.
+In an Advisor execution flow, use this action only after the user explicitly confirms Advisor's post-Grill Me summary of the shared understanding, and before implementation. The individual interview answers or an existing `GOAL.md` are not that confirmation for a new goal. For other flows, use it when a consequential ambiguity needs a durable goal record or a multi-session effort needs continuity. Apply [Define Goal](../principle-define-goal/SKILL.md) to judge the result.
 
 ## Steps
 
