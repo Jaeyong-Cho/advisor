@@ -2,7 +2,7 @@
 
 Use a throwaway prototype when the question is whether a state model, interaction, or appearance works and reading code cannot resolve it.
 
-- Mark it as disposable and keep it adjacent to the area under investigation.
+- Mark it as disposable and keep it under the experiment report's `.raw/` directory.
 - Make it runnable with one command or a double-clickable HTML file.
 - Keep state in memory unless persistence is the question under test.
 - Skip polish and abstractions that do not help answer the question.
