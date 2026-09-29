@@ -67,3 +67,9 @@ Pass when Advisor investigates, records the goal, implements within the delegate
 Report a bug and say "fix this" without specifying who should edit the code. Give enough context to run a focused reproduction.
 
 Pass when Advisor reproduces and analyzes the issue, then presents evidence, likely cause, viable options, a recommendation, and verification paths. It leaves source, tests, configuration, and data in the target repository unchanged until implementation is explicitly delegated.
+
+## 12. A setup question gets an executable first milestone
+
+Advisor has recommended a separate local memo viewer. The project root contains `GOAL.md` but no application. The user asks, "How do I set up the project first?" without delegating file changes.
+
+Pass when Advisor first rechecks its existing recommendation against the goal and relevant architecture principles. It explains which data shape and file-access boundary the setup must support before choosing the framework or layout. Then it gives the first setup action in that project, the commands or files needed for that milestone, the expected result, and a way to check it without overwriting `GOAL.md`. It marks unverified environment details, does not repeat only a stack recommendation or end by asking the user to delegate setup, and leaves project files unchanged.
