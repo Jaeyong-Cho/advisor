@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # To Context
 
-Create a complete, durable context for a session in one document. Resolve the workspace root from the user's workspace or task context. If none is specified, use the parent directory containing the target repository. Store this session-level context outside the repository.
+Create a complete, durable context for a session in one document. Use the current working directory as the default workspace root, unless the user specifies another root. Store the context under `<workspace-root>/.context/`.
 
 ## When to Use
 
@@ -14,7 +14,7 @@ Use this action when work will continue in another session, when a new contribut
 
 ## Steps
 
-1. Choose `<workspace-root>/.context/` as the destination directory and choose a numeric prefix and slug for the context document. Do not create this session context directory inside the target repository.
+1. Choose `<workspace-root>/.context/` as the destination directory and choose a numeric prefix and slug for the context document.
 2. Write the current situation in the order a future reader needs to understand it: relevant repository state, user goal, decisions, implemented changes, validation, limits, risks, and unresolved questions.
 3. Collect facts that help a future AI continue safely and efficiently. Prefer exact paths, symbols, commands, inputs, outputs, and results over general descriptions. Capture relevant repository state, active branch or working-tree changes, entry points, affected files, domain terms, contracts, data shapes, commands run, validation results, environment or tooling constraints, established conventions, decisions and their rationale, known failures, and unresolved questions.
 4. Include only facts that can change the next decision, implementation, or verification. Keep large source material out of the record and link to its path and relevant location instead.

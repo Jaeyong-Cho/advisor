@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # To Goal
 
-Produce a short goal record that states what outcome the user wants and why it matters, separate from a chosen implementation. Resolve the workspace root from the user's workspace or task context. If none is specified, use the parent directory containing the target repository. Keep this session-level goal outside the repository at `<workspace-root>/GOAL.md`.
+Produce a short goal record that states what outcome the user wants and why it matters, separate from a chosen implementation. Use the current working directory as the default workspace root, unless the user specifies another root. Write the goal at `<workspace-root>/GOAL.md`.
 
 ## When to Use
 
@@ -23,7 +23,7 @@ In an Advisor execution flow, use this action after Grill Me establishes the use
 
 ## Output
 
-Write the goal record to `<workspace-root>/GOAL.md` with these fields. Do not place it in the target repository.
+Write the goal record to `<workspace-root>/GOAL.md` with these fields.
 
 ```md
 # Goal: <outcome>

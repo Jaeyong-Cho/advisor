@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Build Loop
 
-Set up an ordered feedback loop before making a sequence of changes. The loop must make the target behavior observable, compare the result with an explicit expectation, and return feedback that selects the next code change. Resolve the workspace root from the user's workspace or task context. If none is specified, use the parent directory containing the target repository. Create the loop at `<workspace-root>/loop`, outside the target repository. In this skill, `./loop` means that workspace-root directory, and run the listed loop commands with the workspace root as the working directory. Make source changes in the target repository.
+Set up an ordered feedback loop before making a sequence of changes. The loop must make the target behavior observable, compare the result with an explicit expectation, and return feedback that selects the next code change. Use the current working directory as the default workspace root, unless the user specifies another root. Create the loop at `<workspace-root>/loop`. In this skill, `./loop` means that workspace-root directory, and run the listed loop commands with the workspace root as the working directory. Make source changes in the target repository.
 
 ## When to Use
 
