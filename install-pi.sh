@@ -73,7 +73,6 @@ packages=(
   "npm:pi-must-have-extension"
   "npm:pi-vimmode"
   "npm:@juicesharp/rpiv-ask-user-question"
-  "npm:pi-notify"
 )
 for package in "${packages[@]}"; do
   pi install "$package"
