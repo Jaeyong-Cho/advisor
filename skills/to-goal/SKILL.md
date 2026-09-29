@@ -1,21 +1,21 @@
 ---
 name: to-goal
-description: Turn a request and observed current state into a concrete, verifiable goal before implementation.
+description: Record a confirmed goal, its reason, boundaries, and verification criteria in GOAL.md before implementation.
 disable-model-invocation: true
 ---
 
 # To Goal
 
-Produce a short goal record that separates the desired outcome from a chosen implementation. Resolve the workspace root from the user's workspace or task context. If none is specified, use the parent directory containing the target repository. Keep this session-level goal outside the repository at `<workspace-root>/GOAL.md`.
+Produce a short goal record that states what outcome the user wants and why it matters, separate from a chosen implementation. Resolve the workspace root from the user's workspace or task context. If none is specified, use the parent directory containing the target repository. Keep this session-level goal outside the repository at `<workspace-root>/GOAL.md`.
 
 ## When to Use
 
-Use this action when a consequential ambiguity needs a durable goal record or a multi-session effort needs continuity. A clear, scoped implementation request does not require a `GOAL.md` merely to begin. Apply [Define Goal](../principle-define-goal/SKILL.md) to judge the result.
+In an Advisor execution flow, use this action after Grill Me establishes the user-confirmed goal and reason, and before implementation. For other flows, use it when a consequential ambiguity needs a durable goal record or a multi-session effort needs continuity. Apply [Define Goal](../principle-define-goal/SKILL.md) to judge the result.
 
 ## Steps
 
 1. Inspect the relevant current behavior and collect evidence.
-2. State the expected observable behavior or state.
+2. State the expected observable behavior or state and why achieving it matters to the user.
 3. Describe the gap between the current and expected states, including the conditions where it appears.
 4. List constraints, preserved behavior, and assumptions. Mark assumptions that could change the goal.
 5. Define completion criteria and the smallest check that will verify them.
@@ -27,6 +27,8 @@ Write the goal record to `<workspace-root>/GOAL.md` with these fields. Do not pl
 
 ```md
 # Goal: <outcome>
+
+## Why
 
 ## Current State
 
@@ -43,4 +45,4 @@ Write the goal record to `<workspace-root>/GOAL.md` with these fields. Do not pl
 
 ## Done When
 
-The current state, expected state, gap, constraints, completion criteria, and next action are explicit. A reader can tell whether the goal is complete without knowing the proposed implementation.
+The confirmed outcome, reason, current state, expected state, gap, constraints, completion criteria, and next action are explicit. A reader can tell whether the goal is complete without knowing the proposed implementation.

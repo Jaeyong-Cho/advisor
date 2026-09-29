@@ -1,6 +1,6 @@
 ---
 name: grill-me
-description: Interview the user about consequential decisions they own; leave routine method choices to the worker. Invoke as /grill-me when clarification is needed.
+description: Establish user-owned goals, reasons, and consequential decisions through focused questions; leave routine method choices to the worker.
 disable-model-invocation: true
 ---
 
@@ -112,6 +112,4 @@ Each round's answers reshape the remaining user-owned decisions. Recompute the f
 
 ## Done
 
-The session is done when consequential user-owned decisions are settled or explicitly blocked, with material assumptions and evidence checks visible. Do not add a blanket confirmation gate.
-After grill-me session done, summaries the grill-me session decisions. 
-Do not start implementation before confirm.
+The session is done when consequential user-owned decisions are settled or explicitly blocked, with material assumptions and evidence checks visible. Summarize the decisions, including what goal the user wants and why it matters when Grill Me is used as Advisor's goal gate. Confirm that goal and reason before Advisor records `GOAL.md` or starts implementation. Do not require a second confirmation of settled method choices or the later Action flow.
