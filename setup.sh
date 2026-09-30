@@ -7,6 +7,7 @@ usage() {
 Usage: ./setup.sh [pi|claude|copilot|agents] [skills-directory]
 
 Install every bundled skill into a flat skill directory.
+Copy AGENTS.md to the agent configuration directory containing that skill directory.
 
 Agent directories:
   pi       ~/.pi/agent/skills
@@ -50,6 +51,7 @@ case "$agent" in
 esac
 
 target_dir="${2:-${SKILLS_DIR:-$default_target}}"
+agent_config_dir="$(dirname "$target_dir")"
 
 if [[ ! -d "$source_dir" ]]; then
   echo "Skill source directory not found: $source_dir" >&2
@@ -86,6 +88,9 @@ if [[ "$installed" -eq 0 ]]; then
   echo "No skills were installed." >&2
   exit 1
 fi
+
+cp "$script_dir/AGENTS.md" "$agent_config_dir/AGENTS.md"
+echo "Installed AGENTS.md -> $agent_config_dir/AGENTS.md"
 
 setup_bin() {
   local bin_src="$script_dir/bin"
