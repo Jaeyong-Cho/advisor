@@ -39,6 +39,9 @@ case "$agent" in
   agents)
     default_target="$HOME/.agents/skills"
     ;;
+  kiro)
+    default_target="$HOME/.kiro/skills"
+    ;;
   -h|--help)
     usage
     exit 0
