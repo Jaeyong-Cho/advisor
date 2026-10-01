@@ -4,6 +4,8 @@ Every function or method sits at one of three levels. Code reads top-to-bottom a
 
 This file is self-contained: table, dependency direction, agent questions, smells, then the full 15-rule set with Good/Bad code examples below.
 
+L2/L3 examples illustrate internal implementations. Apply the project's private or internal visibility convention when using them; exposing a capability requires an L1 contract under Abstract Code.
+
 **Related docs, different scale of the same idea:** `meta-pattern.md`'s Abstractness axis (use cases / domain logic / infrastructure) is this same vertical split, but at the system/module-decomposition scale rather than per-function — read it when the question is "does this need a new module or service," not "what level is this function." `deep-modules.md` is how to shape the interface at an L1→L2 or L2→L3 boundary once it exists — small interface, hidden complexity, dependencies accepted not created.
 
 ## Levels recurse across scale
@@ -35,14 +37,14 @@ The rule is **never call upward** — L3 never calls L2 or L1, L2 never calls L1
 
 L2 may depend on an L3 *interface* (e.g. `PaymentGateway`), never a concrete L3 implementation (`StripeClient`) — that keeps L2 swappable and testable without infrastructure. A dependency pointing the other way (L3 or L2 code deciding business outcomes) is a design error.
 
-## Public/private is a different axis
+## Exposed functions are L1
 
-Public vs. private answers "who can call this." L1/L2/L3 answers "what kind of concept is this." A public method can legitimately be L2 (`order.calculate_total()`, `order.can_cancel()`) — it's a real domain operation callers need, not system-level orchestration. Don't force every public method to L1, and don't assume every private method is L2/L3 — a private method that hides a meaningful domain rule (`_calculate_discount`) is still L2 in substance; hide *mechanics*, not *meaning*.
+For Abstract Code, every entry point and public/exported function is L1 at the unit being examined. Apply exposure before classifying internal behavior. Public domain operations retain meaningful names and contracts while delegating their rules to internal L2 functions; mechanisms belong in internal L3 functions. Private orchestration helpers can still be L1. Do not change required visibility merely to change a function's classification or length limit.
 
 ## Agent questions
 
 - **One-sentence test** — can this function be explained in one clear sentence without "and"? If explaining it needs a list of unrelated steps, it mixes levels — split it.
-- **Three-level test**, in order: Does it describe overall workflow → L1. Does it express a business rule/state transition → L2. Does it describe a technical mechanism → L3.
+- **Three-level test**, in order: Is it an entry point or public/exported function → L1. Otherwise, does it describe overall workflow → L1; a business rule/state transition → L2; or a technical mechanism → L3?
 - **Decomposition check** (for a new or changed L1 flow): which L2 domain functions does this orchestration need — and for each, is there truly no business rule involved, in which case it calls L3 directly instead? Which L3 mechanism functions do those L2 functions (or the direct-L3 steps) need? Do they already exist, or must they be created? Naming this before writing the L1 function is what tells a real level-skip apart from the Missing L2 smell.
 
 ## Testing by level
@@ -254,38 +256,13 @@ class StripePaymentGateway:
 
 ---
 
-## 4. Public / Private Is a Different Axis
+## 4. Classify Exposure Before Internal Behavior
 
-Do **not** equate:
+An entry point or public/exported function is always L1 under this skill's convention. Make its body express the caller's operation and keep detailed domain rules or mechanisms in internal L2/L3 functions. A function is not sufficiently abstract merely because its body has been labeled L1.
 
-```text
-public = L1
-private = L2/L3
-```
+For internal functions, classify by behavior: orchestration is L1, domain rules are L2, and mechanisms are L3. Visibility alone does not make every private function L2 or L3.
 
-Public/private and L1/L2/L3 describe different things.
-
-**Access modifier answers:** Who can use this?
-
-**Abstraction level answers:** What kind of concept does this code represent?
-
-Therefore, a public method can be L1 **or L2**.
-
-```python
-class Order:
-
-    # Public L2 domain behavior
-    def calculate_total(self):
-        ...
-
-    # Public L2 domain behavior
-    def can_checkout(self):
-        ...
-```
-
-These methods may be public because callers legitimately need them, but they still represent domain behavior rather than high-level system intent.
-
-Conversely, an L1 operation may internally use private L2/L3 methods.
+Place exposed L1 functions before internal functions in a file, after required imports and declarations. Within a class, place exposed methods before internal methods while preserving required declaration and initialization order. See the skill entrypoint for the exact function limits and measurement rules.
 
 ---
 
@@ -495,44 +472,17 @@ Names should help the reader understand the system without opening the function 
 
 ---
 
-## 12. Allow Public L2 Methods When They Represent Real Domain Behavior
+## 12. Expose Domain Operations through L1 Contracts
 
-Do not force every public method into L1.
+Operations such as `Order.calculate_total`, `Order.can_cancel`, and `Order.cancel` may remain public because callers need those domain capabilities. Under this skill, their exposed functions are L1. Keep the detailed calculation, eligibility policy, or state-transition rule in internal L2 functions with meaningful domain names.
 
-```python
-class Order:
-
-    def calculate_total(self):
-        ...
-
-    def can_cancel(self):
-        ...
-
-    def cancel(self):
-        ...
-```
-
-These can all be public because they are legitimate operations on an `Order`. However, their abstraction level is L2 because they express domain behavior.
-
-A higher-level L1 operation might be:
-
-```python
-class OrderService:
-
-    def checkout(self, order):
-        order.validate()
-        order.calculate_total()
-        self.payment_gateway.pay(order)
-        order.complete()
-```
-
-This distinction should be preserved.
+Judge the exposed contract by what callers need to know and the internal implementation by the rules it owns. Preserve behavior and avoid adding layers solely to satisfy a metric.
 
 ---
 
 ## 13. Hide Mechanics, Not Meaning
 
-Private methods should primarily hide **implementation mechanics**, not meaningful domain behavior.
+Internal methods may own domain rules or technical mechanisms. Their names must preserve domain meaning even when the implementation is private. Expose the needed capability through an L1 contract rather than hiding it from callers.
 
 **Good**
 
@@ -566,10 +516,10 @@ The question is not "Is this private?" The question is "Is this a meaningful con
 
 When creating or modifying a function, ask these questions in order:
 
-1. Does this describe the overall purpose or workflow? → **L1**
-2. Does this express a business rule, domain concept, or state transition? → **L2**
-3. Does this describe a technical mechanism or interaction with infrastructure? → **L3**
-4. Is the method public or private? Treat this as a **separate decision** — public/private determines accessibility, L1/L2/L3 determines abstraction. Do not use one classification as a substitute for the other.
+1. Is this an entry point or public/exported function? → **L1**; keep its implementation at the level of the caller's operation.
+2. For an internal function, does this describe the overall purpose or workflow? → **L1**
+3. Does this internal function express a business rule, domain concept, or state transition? → **L2**
+4. Does this internal function describe a technical mechanism or interaction with infrastructure? → **L3**
 
 ---
 
@@ -604,11 +554,12 @@ L2 → Business Meaning
 L3 → Technical Mechanism
 ```
 
-while independently managing:
+with these conventions:
 
 ```text
-Public / Private → Accessibility
+Entry point / Public / Exported → L1 contract
+Internal → L1, L2, or L3 according to behavior
 Interface / Implementation → Contract vs Mechanism
 ```
 
-Do not optimize primarily for the number of functions or lines per function. Optimize for: **clear intent → clear business behavior → isolated implementation details.**
+Meet the function limits in the skill entrypoint while preserving **clear intent → clear business behavior → isolated implementation details**. Do not satisfy the limits through meaningless extraction or hidden behavior changes.
