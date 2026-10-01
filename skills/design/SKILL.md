@@ -47,23 +47,37 @@ Read these principles before designing. Apply their decision rules where relevan
 
 ## Output
 
-Provide the feature contract and a short explanation of how the feature works. Show a compact mapping from the explanation's subjects and actions to files or classes and functions, then provide the execution tree, ASCII relationships, and necessary contracts. End with the consequential design choices, open questions, and acceptance criteria. Scale detail to the feature.
+Start with a brief feature contract and a one-line summary of the successful path, then show the execution tree. Follow it with the explanation, subject/action mapping, ASCII relationships, and necessary contracts. End with the consequential design choices, open questions, and acceptance criteria. Scale the supporting detail to the feature; always include the execution tree and relationship diagram.
 
-The execution tree must distinguish ordered steps from mutually exclusive branches. Number sequential steps, label branch conditions, and name continuations. For shared continuations, loops, or asynchronous work, use references rather than pretending the flow is a strict call tree. For example:
+### Execution Tree
+
+Show the tree directly in the response under an **Execution tree** label, inside a fenced `text` block. A link to a saved artifact does not replace the visible tree.
+
+- Use connected tree characters (`├──`, `└──`, `│`) and consistent indentation so branches remain visible in monospaced text.
+- Start with the entry point. Number operations in execution order and show the owner and function on each operation node.
+- Label alternatives with explicit conditions such as `[valid]` or `[invalid]`. Nest the next operation under the branch that reaches it, and mark terminal outcomes with `[END]`.
+- Distinguish an operation's internal steps from its conditional branches through numbered operation labels and bracketed conditions. Sibling operations run in numbered order; sibling conditions are alternatives.
+- Keep node labels short. Put argument details, contracts, and explanations outside the tree. Keep lines within roughly 80 columns so the tree is readable in a chat panel.
+- Use references for shared continuations, loops, or asynchronous handoffs when expanding them would duplicate a large subtree. Define the destination and continuation condition explicitly. Keep ordinary branch continuations inline.
+- For a large flow, show the major branches in an overview first, then expand relevant subtrees in separate labeled blocks.
+
+Example successful path: receive request -> validate -> decide transition -> persist -> respond.
 
 ```text
 EntryAdapter.handle(request) [entry point]
-+-- 1. EntryAdapter.parseAndValidate(request)
-|   +-- invalid -> rejected response [end]
-|   `-- valid -> domain input; continue at 2
-`-- 2. FeatureWorkflow.execute(input)
-    +-- 2.1. DomainModel.decideTransition(input)
-    |   +-- disallowed -> EntryAdapter returns domain rejection [end]
-    |   `-- allowed -> planned transition; continue at 2.2
-    `-- 2.2. StorageContract.persist(transition)
-        +-- failure -> EntryAdapter returns error response [end]
-        `-- success -> EntryAdapter returns completed response [end]
+└── 1. EntryAdapter.parseAndValidate
+    ├── [invalid] Return rejected response [END]
+    └── [valid] 2. FeatureWorkflow.execute
+        └── 3. DomainModel.decideTransition
+            ├── [disallowed] Return domain rejection [END]
+            └── [allowed] 4. StorageContract.persist
+                ├── [failure] Return error response [END]
+                └── [success] Return completed response [END]
 ```
+
+The response outcomes above are translated by EntryAdapter. The tree shows the paths that reach those outcomes; the contract describes the failure propagation.
+
+### Class or File Relationships
 
 Use a separate ASCII diagram for class or file relationships. Label actual relationships rather than implying that every execution branch creates a dependency. For example:
 
@@ -92,5 +106,6 @@ The user can trace the explanation's subjects to files or classes, actions to fu
 - Splitting shared domain knowledge into files merely to mirror execution stages.
 - Mixing workflow intent with low-level mechanisms in one view.
 - Drawing unlabeled branches, dependencies, or implicit continuations.
+- Burying the execution tree after long prose or replacing it with a diagram link, prose, or only a class relationship diagram.
 - Enumerating speculative edge cases or creating abstractions without a required responsibility.
 - Treating an execution walkthrough as permission to run or implement the feature.
