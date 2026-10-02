@@ -9,7 +9,7 @@ Explain how a feature works from its entry point, then derive its architecture f
 
 Work in two stages: **explain the behavior -> establish shared understanding -> interpret it into architecture**. Present the explanation before proposing files, classes, functions, or data structures. Let the user correct the behavior before structural choices become the premise.
 
-Produce design artifacts only. Do not implement, create executable scaffolding, or run the proposed flow. Inspect existing code when needed; label proposed behavior separately from observed behavior.
+Present the design only in the conversation. Do not write or modify files, save design artifacts, implement, create executable scaffolding, or run the proposed flow. Inspect existing code when needed; distinguish proposed behavior from observed behavior in the explanation.
 
 ## Derive Architecture from the Explanation
 
@@ -83,31 +83,37 @@ Read these principles before designing. Apply their decision rules where relevan
 
 ### Execution Tree
 
-Show the tree directly in the response under an **Execution tree** label, inside a fenced `text` block. A link to a saved artifact does not replace the visible tree.
+Show the tree directly in the response inside a fenced `text` block.
 
 - Use connected tree characters (`├──`, `└──`, `│`) and consistent indentation so branches remain visible in monospaced text.
-- Start with the entry point. Number operations in execution order and show the owner and function on each operation node.
-- Label alternatives with explicit conditions such as `[valid]` or `[invalid]`. Nest the next operation under the branch that reaches it, and mark terminal outcomes with `[END]`.
-- Distinguish an operation's internal steps from its conditional branches through numbered operation labels and bracketed conditions. Sibling operations run in numbered order; sibling conditions are alternatives.
-- Keep node labels short. Put argument details, contracts, and explanations outside the tree. Keep lines within roughly 80 columns so the tree is readable in a chat panel.
-- Use references for shared continuations, loops, or asynchronous handoffs when expanding them would duplicate a large subtree. Define the destination and continuation condition explicitly. Keep ordinary branch continuations inline.
-- For a large flow, show the major branches in an overview first, then expand relevant subtrees in separate labeled blocks.
+- Start with the entry-point function. Show its direct calls as siblings in execution order, at the same tree depth and a consistent abstraction level. Keep each function's call tree as flat as possible; sequential calls do not become children of the previous call.
+- Nest only for actual control flow or an expanded callee's own calls. Prefer guard clauses and early returns where they preserve the behavior and simplify the flow. Do not flatten away a real call relationship or mix low-level mechanisms into an orchestration view.
+- Express conditions and repetition as code-like `if condition`, `else if condition`, `else`, and `for item in items`. Show terminal outcomes with `return` or `throw`. Do not use operation numbers, branch labels such as `[valid]`, or markers such as `[END]`.
+- Use owner-qualified function calls and short code-like statements. Put argument details, contracts, and explanations outside the tree. Keep lines within roughly 80 columns so the tree is readable in a chat panel.
+- Show a loop body once under its `for` statement. Keep a shared continuation once after the branches that reach it. Express an asynchronous handoff as the relevant function call and explain its continuation outside the tree.
+- Expand a callee in a separate tree rooted at that function when inline expansion would make the overview deep or repetitive. Use the same function name in both trees, without reference labels.
 
 Example successful path: receive request -> validate -> decide transition -> persist -> respond.
 
 ```text
-EntryAdapter.handle(request) [entry point]
-└── 1. EntryAdapter.parseAndValidate
-    ├── [invalid] Return rejected response [END]
-    └── [valid] 2. FeatureWorkflow.execute
-        └── 3. DomainModel.decideTransition
-            ├── [disallowed] Return domain rejection [END]
-            └── [allowed] 4. StorageContract.persist
-                ├── [failure] Return error response [END]
-                └── [success] Return completed response [END]
+EntryAdapter.handle(request)
+├── input = EntryAdapter.parseAndValidate(request)
+├── if input.isInvalid
+│   └── return EntryAdapter.rejectedResponse(input.error)
+├── result = FeatureWorkflow.execute(input.value)
+└── return EntryAdapter.response(result)
+
+FeatureWorkflow.execute(input)
+├── transition = DomainModel.decideTransition(input)
+├── if transition.isDisallowed
+│   └── return transition.rejection
+├── saved = StorageContract.persist(transition)
+├── if saved.failed
+│   └── return saved.error
+└── return saved.value
 ```
 
-The response outcomes above are translated by EntryAdapter. The tree shows the paths that reach those outcomes; the contract describes the failure propagation.
+EntryAdapter translates the workflow result into a response. Its direct calls remain siblings; the separate workflow tree exposes domain decisions and persistence without deepening the entry-point tree. The contracts describe the result cases and failure propagation.
 
 ### Class or File Relationships
 
@@ -143,7 +149,7 @@ The user can trace concepts to model representations, constraints to enforced ru
 - Turning every event into messaging infrastructure or inventing lifecycle rules absent from the requirements.
 - Splitting shared domain knowledge into files merely to mirror execution stages.
 - Mixing workflow intent with low-level mechanisms in one view.
-- Drawing unlabeled branches, dependencies, or implicit continuations.
+- Using branch labels instead of explicit code-like conditions, or leaving dependencies and continuations implicit.
 - Burying the execution tree after long prose or replacing it with a diagram link, prose, or only a class relationship diagram.
 - Enumerating speculative edge cases or creating abstractions without a required responsibility.
-- Treating an execution walkthrough as permission to run or implement the feature.
+- Treating an execution walkthrough as permission to run, implement, or write the design to files.
