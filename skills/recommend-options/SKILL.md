@@ -1,6 +1,7 @@
 ---
 name: recommend-options
 description: Recommend distinct, feasible options for a user-stated purpose or goal using the relevant principle-* decision rules. Use when the user asks which approach, design, tool, or strategy to choose before taking action.
+disable-model-invocation: true
 ---
 
 # Recommend Options

@@ -1,6 +1,7 @@
 ---
 name: root-cause
 description: Trace a reported symptom backward to an evidence-supported root cause. Use when the user asks why a specific failure or unexpected behavior occurs; investigate with subagents and targeted experiments, or identify the exact observations needed when the causal chain cannot yet be proven.
+disable-model-invocation: true
 ---
 
 # Root Cause

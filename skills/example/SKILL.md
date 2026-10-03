@@ -1,6 +1,7 @@
 ---
 name: example
 description: Give a concrete example when the user does not understand an explanation or asks for an example. Use the current conversation or named concept to show a specific starting situation, what happens, and the result.
+disable-model-invocation: true
 ---
 
 # Example

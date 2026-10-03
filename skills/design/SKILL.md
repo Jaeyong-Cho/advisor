@@ -1,6 +1,7 @@
 ---
 name: design
 description: First explain a feature's behavior in plain language and establish shared understanding, then interpret that explanation into architecture, domain models, an execution tree, and ASCII relationships without implementation.
+disable-model-invocation: true
 ---
 
 # Design

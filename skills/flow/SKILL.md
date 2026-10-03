@@ -1,6 +1,7 @@
 ---
 name: flow
 description: Explain a specific feature's execution flow from its real entry point to its observable result. Use when the user wants a step-by-step trace of calls, data, state, branches, side effects, and failure paths for one feature or scenario.
+disable-model-invocation: true
 ---
 
 # Flow

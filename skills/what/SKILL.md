@@ -1,6 +1,7 @@
 ---
 name: what
 description: Identify what an existing code element, feature, or domain concept is and what contract it provides. Use for questions such as "What is X?" or "What does X do?" when the user needs responsibilities, observable behavior, and boundaries rather than execution flow or design history.
+disable-model-invocation: true
 ---
 
 # What

@@ -1,6 +1,7 @@
 ---
 name: grill-goal
 description: Interview the user in rounds to settle a goal and strategic direction. Use for a focused Grill Me discussion about outcomes, priorities, boundaries, and success criteria while leaving implementation details to the AI.
+disable-model-invocation: true
 ---
 
 # Grill Goal

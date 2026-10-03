@@ -1,6 +1,7 @@
 ---
 name: organize
 description: Organize context documents into category and subcategory directories with an index in each directory, then compact them and replace stale values with the latest supported state. Use when context records have become duplicated, outdated, or hard to find.
+disable-model-invocation: true
 ---
 
 # Organize

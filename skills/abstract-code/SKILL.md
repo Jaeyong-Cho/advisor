@@ -1,6 +1,7 @@
 ---
 name: abstract-code
 description: Implement a complete use case across intent (L1), domain behavior (L2), and technical mechanisms (L3) from a plain-language request. Reuse existing code and finish required functions and interfaces without leaving implementation stubs.
+disable-model-invocation: true
 ---
 
 # Abstract Code
