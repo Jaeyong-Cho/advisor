@@ -4,7 +4,7 @@ set -euo pipefail
 
 usage() {
   cat <<'USAGE'
-Usage: ./setup.sh [pi|claude|copilot|agents] [skills-directory]
+Usage: ./setup.sh [pi|claude|copilot|agents|codex] [skills-directory]
 
 Install every bundled skill into a flat skill directory.
 Copy AGENTS.md to the agent configuration directory containing that skill directory.
@@ -14,6 +14,7 @@ Agent directories:
   claude   ~/.claude/skills
   copilot  ~/.copilot/skills
   agents   ~/.agents/skills
+  codex    ~/.codex/skills
 
 The second argument overrides the selected agent directory.
 SKILLS_DIR also overrides the selected agent directory when no second argument is given.
@@ -38,6 +39,9 @@ case "$agent" in
     ;;
   agents)
     default_target="$HOME/.agents/skills"
+    ;;
+  codex)
+    default_target="$HOME/.codex/skills"
     ;;
   kiro)
     default_target="$HOME/.kiro/skills"
