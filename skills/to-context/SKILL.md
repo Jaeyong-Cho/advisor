@@ -1,12 +1,12 @@
 ---
 name: to-context
-description: Preserve current session context in a dated Google OKF document, checking and cleaning stale information before handoff.
+description: Preserve current session context in a dated Google OKF document under .context/ by default, checking and cleaning stale information before handoff.
 disable-model-invocation: true
 ---
 
 # To Context
 
-Create a complete, durable context for a session in one document. Write it directly in the current working directory unless the user specifies another destination. Use [Google Open Knowledge Format (OKF) frontmatter](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md) for the document type, topics, and generation time.
+Create a complete, durable context for a session in one document. Write it in `.context/` under the current working directory unless the user specifies another destination. Create the destination directory if it does not exist. Use [Google Open Knowledge Format (OKF) frontmatter](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md) for the document type, topics, and generation time.
 
 ## When to Use
 
@@ -14,7 +14,7 @@ Use this action when work will continue in another session, when a new contribut
 
 ## Steps
 
-1. Use the current working directory as the destination and choose a numeric prefix and slug for the context document. Record the current time with an explicit UTC offset.
+1. Use `<current-directory>/.context/` as the default destination, or the destination specified by the user. Create the destination directory if needed and choose a numeric prefix and slug for the context document. Record the current time with an explicit UTC offset.
 2. Read relevant earlier context documents and their OKF frontmatter, if any. Treat `status: deprecated` as historical. Inspect `generated.at` and dates attached to claims. Check old time-sensitive claims against current evidence; a recent `generated.at` alone does not prove the claims are current.
 3. Recheck flagged claims against current repository state, source files, or other authoritative evidence. Replace superseded facts with the latest supported state and remove obsolete details that no longer help the next decision. Preserve durable goals and decisions unless newer evidence or the user has changed them. If a claim cannot be checked, label it as an as-of observation or unresolved question instead of presenting it as current.
 4. Write the current situation in the order a future reader needs to understand it: relevant repository state, user goal, decisions, implemented changes, validation, limits, risks, and unresolved questions.
@@ -25,10 +25,10 @@ Use this action when work will continue in another session, when a new contribut
 
 ## Output
 
-Create one file:
+Create one file in the default destination, unless the user specifies another destination:
 
 ```text
-<current-directory>/{NN}-context-{slug}.md
+<current-directory>/.context/{NN}-context-{slug}.md
 ```
 
 Write a coherent context record. Use headings only when they make the record easier to navigate; do not force fixed categories. Replace the example values below with actual values. Omit optional fields when their values are unknown or inapplicable.
