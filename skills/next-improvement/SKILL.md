@@ -1,19 +1,21 @@
 ---
 name: next-improvement
-description: Recommend the next small, verifiable improvement from the user's friction, goal, and preferred direction. Use when the user wants to decide what to improve next in development or a working process.
+description: Recommend the next small, verifiable improvement from the user's friction, goal, and preferred direction. Use when deciding what to improve next in development, a working process, or codebase maintainability through the Boy Scout Rule.
 ---
 
 # Next Improvement
 
 Recommend one next improvement that reduces the user's friction and advances their goal in their preferred direction. Use [Incremental Progress](../principle-incremental-progress/SKILL.md) as the main decision rule. Deliver a bounded recommendation and a way to judge its effect.
 
+The improvement may also be a Boy Scout change: leave code already touched by a task easier to understand and maintain. Use observed maintenance burden as evidence; an explicit complaint or new feature is not required. Respect the selected scope and do not turn a general quality goal into a full-codebase audit.
+
 This skill selects the next change. [Recommend Options](../recommend-options/SKILL.md) compares approaches to an already selected task; [Bottleneck](../bottleneck/SKILL.md) investigates constraints in an AI-assisted workflow. Do not require a broad audit, session-history analysis, or a complete redesign to make a useful recommendation here.
 
 ## Workflow
 
 1. **Understand the friction, goal, and direction.** Reuse facts and preferences established in the conversation. Identify a concrete situation in which the user experiences friction, what repeats or costs effort, the desired outcome, and the trade-offs they prefer. Separate the goal from a suggested solution. Ask only about missing information that could change the recommendation; use a recent example when the friction is vague. Do not invent frequency, impact, or priorities.
-2. **Inspect enough to support the recommendation.** Read the relevant code, document, workflow description, or results when accessible. Keep inspection limited to the reported situation and its immediate dependencies. Distinguish observed facts, user reports, and causal hypotheses. If the cause is uncertain enough to change the choice, make the next step a small discriminating observation or experiment.
-3. **Find feasible increments.** Consider removal, reuse, simplification, and a focused structural change where warranted. Each candidate must address a specific friction, serve the goal, fit the user's direction, and have an observable outcome. Do not invent alternatives to reach a fixed count or propose new tools merely because they exist.
+2. **Inspect enough to support the recommendation.** Read the relevant code, document, workflow description, or results when accessible. Keep inspection limited to the reported situation and its immediate dependencies. For codebase quality, start with code being changed or a user-selected responsibility; choose a bounded area if none is specified and state that choice. Distinguish observed facts, user reports, and causal hypotheses. If the cause is uncertain enough to change the choice, make the next step a small discriminating observation or experiment.
+3. **Find feasible increments.** Consider removal, reuse, simplification, and a focused structural change where warranted. Include Boy Scout improvements that remove a demonstrated maintenance burden in the selected code. Each candidate must address a specific friction, serve the goal, fit the user's direction, and have an observable outcome. Do not invent alternatives to reach a fixed count or propose new tools merely because they exist.
 4. **Choose the next improvement.** Compare credible candidates by goal impact, recurring benefit, effort, change scope, reversibility, and ease of verification. Prefer the smallest complete increment that offers a supported benefit. Explain decisive trade-offs and the evidence that could change the ranking. Avoid arbitrary scores and unsupported estimates. When useful, show a compact comparison of distinct alternatives.
 5. **Make the recommendation reviewable.** State the behavior or responsibility to change, required adjacent changes, preserved contracts, and work outside this increment. Explain how the change addresses the friction and advances the goal. Apply abstraction, modeling, or Deep Module only when relevant to that scope. Make the recommended next action concrete without implementing it.
 6. **Define feedback and continuation.** Specify what to observe before and after the change, how to check success, and what would justify continuing, adjusting, or stopping. Use the user's existing evidence and measures where available. If no baseline exists, identify the smallest observation needed to establish it; do not manufacture numerical thresholds. Later improvements depend on this result.
@@ -29,6 +31,8 @@ Lead with the recommended next improvement and why it fits the user's goal. Incl
 - The smallest complete scope, preserved behavior, and work outside the increment.
 - The expected benefit, effort or trade-off, and limits of confidence.
 - The before-and-after check and evidence that determines the following step.
+
+For a Boy Scout recommendation, identify the touched code, the concrete maintenance burden, and what becomes easier after the change. Verify preserved behavior through the existing interface tests; compare the actual structure to support claims about clarity or fewer responsibilities. Do not equate fewer lines with improved maintainability.
 
 Scale detail to the decision. Ask a focused question only when an unresolved user preference or requirement prevents a grounded choice. Otherwise give the recommendation with explicit assumptions.
 

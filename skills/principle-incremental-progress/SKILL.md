@@ -1,6 +1,6 @@
 ---
 name: principle-incremental-progress
-description: Choose a clear improvement direction and advance through small, complete, verifiable changes when planning development, refactoring, or workflow improvements.
+description: Choose a clear improvement direction and advance through small, complete, verifiable changes when planning development, refactoring, or workflow improvements. Apply the Boy Scout Rule to improve touched code incrementally.
 ---
 
 # Incremental Progress
@@ -20,6 +20,15 @@ A broad redesign delays feedback and combines changes whose effects are hard to 
 5. **Verify and learn.** Use [Closed Working Loop](../principle-closed-working-loop/SKILL.md) to compare the result with the starting state under relevant conditions. Check both the intended improvement and preserved behavior. A passing test proves the behavior it covers; claims about speed, effort, or usability need corresponding observations.
 6. **Choose the next increment from evidence.** Continue, adjust, or undo the approach based on the observed result. Treat later steps as conditional possibilities rather than committing to a full roadmap before feedback.
 
+## Leave Touched Code Better
+
+Apply the [Boy Scout Rule](https://www.informit.com/articles/article.aspx?p=1235624&seqNum=6) during ordinary development: leave the code you work on a little easier to understand, change, or verify than you found it. Improving maintainability is a valid direction even when no new feature or explicit user complaint drives the change.
+
+- Start with code already touched by the task or an explicitly selected responsibility. Look for a concrete local improvement, such as a clearer name, confirmed dead-code removal, a simpler branch, or removal of a redundant pass-through call.
+- Choose an improvement that reduces a demonstrated reading, maintenance, or verification burden. Do not force cosmetic changes or extra abstractions merely to say that cleanup happened.
+- Preserve observable behavior and required contracts. Refactor while relevant tests are green and rerun them afterward. Describe the structural improvement separately from the evidence that behavior was preserved.
+- Keep the cleanup small enough to review and verify within the current increment. If it requires broader ownership changes or unrelated files, treat it as a separate proposed increment. Repeated local improvements can accumulate across future visits without requiring a full-codebase cleanup now.
+
 ## Stop When
 
 During planning, the direction, smallest complete increment, and way to judge its effect are explicit. After execution, the increment has a verified outcome and its required contracts remain intact. State what improved, what remains uncertain, and which evidence supports the next step. If no useful change is supported, choose a small observation or experiment before proposing a redesign.
@@ -31,3 +40,4 @@ During planning, the direction, smallest complete increment, and way to judge it
 - Combining unrelated improvements so their effects cannot be judged separately.
 - Promising that every small change will have a large immediate benefit.
 - Repeating the same approach when observations show no progress toward the goal.
+- Using the Boy Scout Rule to justify unbounded cleanup or changes to unfamiliar code.
