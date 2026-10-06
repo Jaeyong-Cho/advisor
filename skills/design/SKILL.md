@@ -47,6 +47,8 @@ Use the following mapping during the architecture stage, after the explanation i
 
 These are candidates to refine with the principles below. A data object or external actor mentioned in the explanation is not automatically a new class. Repeated subjects can share an existing owner, and related actions can belong to one deep module. Keep each proposed file, class, and function traceable to the behavior it supports.
 
+**Keep interfaces narrow and few.** Expose only the public operations, parameters, and options callers need. Each operation should complete meaningful work and provide substantial value while keeping related rules, state, and mechanisms inside a cohesive module. Keep internal steps private so callers do not have to assemble the behavior or coordinate intermediate state. At representative call sites, check that the contract reduces required knowledge and coordination. Preserve explicit failure conditions and side effects; shrinking the interface must not conceal required behavior or combine unrelated responsibilities.
+
 ## Derive Models and Data Structures
 
 Refine the explanation through **concepts -> relationships -> constraints -> behavior -> representation**. Use the execution walkthrough to discover requirements, then establish the model before refining function signatures.
@@ -67,7 +69,7 @@ Set scope using the rules above before choosing structure. Read the principles r
 - [Subtract Before You Add](../principle-subtract-before-you-add/SKILL.md): within the selected scope, identify existing responsibilities to reuse, merge, or remove before proposing new structure.
 - [Laziness Protocol](../principle-laziness-protocol/SKILL.md): choose the smallest maintainable solution that meets the goal without omitting required behavior.
 - [Abstraction Levels](../principle-abstraction-levels/SKILL.md): keep orchestration at the level of intent, domain decisions separate, and technical mechanisms behind meaningful operations.
-- [Deep Module](../principle-deep-module/SKILL.md): group related complexity behind contracts that reduce caller knowledge and coordination.
+- [Deep Module](../principle-deep-module/SKILL.md): expose few meaningful operations through narrow interfaces that provide substantial value. Keep related complexity inside cohesive modules and reduce caller knowledge and coordination.
 - [Boundary Discipline](../principle-boundary-discipline/SKILL.md): validate and convert external inputs at entry boundaries, and assign responsibility for translating failures at exit boundaries.
 - [First Principle Redesign](../principle-first-principle-redesign/SKILL.md): derive the selected change from purpose and required outcomes; reconsider existing structure within that scope without assuming a full redesign is needed.
 - [Foundational Thinking](../principle-foundational-thinking/SKILL.md): establish core data shapes and ownership before detailing operations; identify shared state when concurrency matters.

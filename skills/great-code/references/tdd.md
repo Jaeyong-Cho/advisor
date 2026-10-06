@@ -2,11 +2,7 @@
 
 Implementation always follows TDD: one behavior at a time, RED → GREEN → REFACTOR.
 
-For test writing examples, read `tdd-tests.md`.
-For mocking guidelines, read `tdd-mocking.md`.
-For refactoring after green, read `tdd-refactoring.md` and `meta-pattern.md`.
-For interface design for testability, read `deep-modules.md`.
-For which kind of test each abstraction level needs (L1/L2/L3), read `abstraction-levels.md`'s Testing by level section.
+Use the test setup and commands discovered in the project. For interface design for testability, read [Deep Modules](deep-modules.md). For test boundaries and scope, read [Testing by level](abstraction-levels.md#testing-by-level).
 
 ---
 
@@ -16,7 +12,7 @@ For which kind of test each abstraction level needs (L1/L2/L3), read `abstractio
 
 **Good tests** are integration-style: exercise real code paths through public APIs. Describe *what* system does, not *how*. Good test reads like specification — "user can checkout with valid cart" tells exactly what capability exists. Survive refactors because they don't care about internal structure.
 
-**Bad tests** coupled to implementation: mock internal collaborators, test private methods, or verify through external means. Warning sign: test breaks when you refactor, but behavior hasn't changed.
+**Bad tests** coupled to implementation: mock internal collaborators, test private methods by default, or assert internal call order. Warning sign: test breaks when you refactor, but behavior hasn't changed.
 
 ---
 
@@ -49,12 +45,12 @@ RIGHT (vertical):
 
 ### 1. Before writing any code
 
-From ADR's Step-by-Step Plan, extract behavior list:
+From the confirmed request or design, extract the required behavior list:
 
 - [ ] Which value-layer entry points are being added or changed?
 - [ ] Which entity actions or behaviors need verification?
 - [ ] Which behaviors are most critical? (test those first)
-- [ ] Confirm with user before starting
+- [ ] Resolve only missing requirements that could change expected outcomes
 
 **Can't test everything.** Focus on critical paths and complex logic, not every edge case.
 
@@ -83,7 +79,7 @@ Rules:
 
 ### 4. Refactor
 
-After all tests are green, check for deep module opportunities (see `deep-modules.md`):
+After each behavior's tests are green, check for simplifications within the change scope (see [Deep Modules](deep-modules.md)):
 
 - [ ] Can any interface be narrowed?
 - [ ] Is complexity hidden or exposed?

@@ -4,7 +4,7 @@ Every function or method sits at one of three levels. Code reads top-to-bottom a
 
 This file is self-contained: table, dependency direction, agent questions, smells, then the full 15-rule set with Good/Bad code examples below.
 
-L2/L3 examples illustrate internal implementations. Apply the project's private or internal visibility convention when using them; exposing a capability requires an L1 contract under Abstract Code.
+L2/L3 examples illustrate internal implementations. Apply the project's private or internal visibility convention when using them; exposing a capability requires an L1 contract under Great Code.
 
 **Related docs, different scale of the same idea:** `meta-pattern.md`'s Abstractness axis (use cases / domain logic / infrastructure) is this same vertical split, but at the system/module-decomposition scale rather than per-function — read it when the question is "does this need a new module or service," not "what level is this function." `deep-modules.md` is how to shape the interface at an L1→L2 or L2→L3 boundary once it exists — small interface, hidden complexity, dependencies accepted not created.
 
@@ -39,7 +39,7 @@ L2 may depend on an L3 *interface* (e.g. `PaymentGateway`), never a concrete L3 
 
 ## Exposed functions are L1
 
-For Abstract Code, every entry point and public/exported function is L1 at the unit being examined. Apply exposure before classifying internal behavior. Public domain operations retain meaningful names and contracts while delegating their rules to internal L2 functions; mechanisms belong in internal L3 functions. Private orchestration helpers can still be L1. Do not change required visibility merely to change a function's classification or length limit.
+For Great Code, every entry point and public/exported function is L1 at the unit being examined. Apply exposure before classifying internal behavior. Public domain operations retain meaningful names and contracts while delegating their rules to internal L2 functions; mechanisms belong in internal L3 functions. Private orchestration helpers can still be L1. Do not change required visibility merely to change a function's classification or length limit.
 
 ## Agent questions
 
@@ -49,13 +49,13 @@ For Abstract Code, every entry point and public/exported function is L1 at the u
 
 ## Testing by level
 
-Choose tests by behavior and failure risk under `testing-guidelines.md`, not mechanically by function or abstraction level.
+Test primarily through caller-facing interfaces and their concrete implementations. Choose the smallest interface that exposes the changed behavior and failure risk; do not assign a test to every function or abstraction level. Verify contract outcomes rather than internal structure or call sequencing.
 
-- **L1** — usually verify the observable workflow with an integration or E2E test only when that workflow is important enough to warrant one; do not add a unit test merely for call sequencing.
-- **L2** — prefer a unit test for meaningful business rules, calculations, validation, state transitions, branches, and regressions. Test public behavior; mock only a genuine L3 boundary when isolation adds value.
-- **L3** — use an integration or contract test when correctness depends on the real database, HTTP service, filesystem, SDK, framework, or serialization behavior. Do not claim real integration confidence from a mock.
+- **L1** — exercise the exposed operation and assert its observable outcomes, including meaningful rejection or failure cases. Run real internal L2/L3 logic where practical, isolating external boundaries when needed. Use integration or E2E scope when the workflow or wiring requires it; do not assert internal call sequencing.
+- **L2** — verify rules, calculations, validation, and transitions through the owning module's interface by default. Add a focused internal rule test only when interface tests cannot practically verify a consequential rule or regression. Do not change visibility solely for testing.
+- **L3** — exercise the concrete adapter through its infrastructure contract. Use an integration or contract test with real infrastructure when correctness depends on database, HTTP, filesystem, SDK, framework, or serialization behavior. Tests of a mocked interface do not verify its implementation.
 
-TDD is optional. For bug fixes, whenever practical add a failing regression test before the fix at the lowest sufficient level.
+Use [TDD](tdd.md) for new or changed behavior. Demonstrate a failing test through the smallest interface that exposes the requirement, implement enough to pass it, and refactor while tests remain green. For bug fixes, make the observed failure a regression test before fixing it.
 
 ## Smells
 
