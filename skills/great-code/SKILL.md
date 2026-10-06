@@ -10,6 +10,8 @@ Implement one coherent use case as working code across the abstraction levels it
 
 Use [TDD](references/tdd.md) for new or changed behavior: one behavior at a time, **RED → GREEN → REFACTOR**, primarily through caller-facing interfaces. Read that reference before changing production behavior. Do not implement the entire use case first and add tests afterward.
 
+Apply [Incremental Progress](../principle-incremental-progress/SKILL.md) when selecting the use-case slice. Keep each increment small and complete, verify its required behavior through TDD, and observe the intended improvement before expanding to another change.
+
 ## Exposure and File Order
 
 Every entry point (`main`, API handler, or framework entry) and every public or exported function is L1 at the unit being examined. Apply this exposure rule before classifying internal behavior. Exposed functions express the caller's operation; delegate domain rules to internal L2 functions and technical mechanisms to internal L3 functions. Internal orchestration helpers may also be L1. Preserve required public contracts and visibility rather than making a function private merely to obtain a larger length allowance.

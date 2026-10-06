@@ -66,6 +66,7 @@ For example, "adding the same product increases its quantity" suggests one CartI
 Set scope using the rules above before choosing structure. Read the principles relevant to that scope and name the rules that explain consequential choices. Read their supporting references only when needed.
 
 - [Define Goal](../principle-define-goal/SKILL.md): make the current-to-expected gap and completion criteria explicit before setting the change boundary.
+- [Incremental Progress](../principle-incremental-progress/SKILL.md): select one small, complete improvement aligned with the goal; define how to observe its effect before choosing later changes.
 - [Subtract Before You Add](../principle-subtract-before-you-add/SKILL.md): within the selected scope, identify existing responsibilities to reuse, merge, or remove before proposing new structure.
 - [Laziness Protocol](../principle-laziness-protocol/SKILL.md): choose the smallest maintainable solution that meets the goal without omitting required behavior.
 - [Abstraction Levels](../principle-abstraction-levels/SKILL.md): keep orchestration at the level of intent, domain decisions separate, and technical mechanisms behind meaningful operations.
