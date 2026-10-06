@@ -21,10 +21,21 @@ Keep each function at one level so code reads as a description of the system and
 
 Read the [full rules and examples](references/abstraction-levels.md) when classifying ambiguous code, reviewing dependency direction, or choosing a decomposition. The reference is preserved from the supplied document; its mentions of other source documents are background references, not bundled dependencies.
 
+## Shape Boundaries as Deep Modules
+
+Apply [Deep Module](../principle-deep-module/SKILL.md) when shaping boundaries between abstraction levels. A deep module provides substantial useful behavior through a narrow interface and owns the related complexity behind that interface. Separating levels should reduce what callers must know and coordinate.
+
+- **High cohesion:** Keep rules, state, and implementation decisions that serve one responsibility and change together inside the same module. Do not collect unrelated responsibilities merely to increase functionality.
+- **Loose coupling:** Let callers depend on a stable contract without knowing internal data structures, processing order, or intermediate state. Keep implementation changes local to the module whenever its contract stays the same.
+- **Narrow interface:** Expose the few meaningful operations and options callers need to complete their work. Keep internal steps private. Count required concepts, configuration, and call-order constraints as part of the interface, not only methods and parameters.
+- **Large value behind the interface:** Make each exposed operation complete meaningful work and take responsibility for the related rules and mechanisms. Prefer a cohesive operation that removes caller coordination over many small methods that make callers assemble the behavior themselves. Keep each internal function at one abstraction level.
+
+Judge the boundary at real call sites: callers should accomplish substantial work with little knowledge of the implementation. A smaller interface is useful only when it reduces caller burden; preserve visible domain meaning, failure conditions, and side effects in the contract.
+
 ## Verification
 
 Choose verification by behavior and failure risk. Use workflow checks for consequential L1 behavior, unit tests for meaningful L2 rules, and integration or contract tests for L3 behavior that depends on real infrastructure. Avoid tests that only assert orchestration call order. TDD is optional; add a failing regression before a bug fix when practical.
 
 ## Stop When
 
-The flow communicates intent, domain rules remain visible, mechanisms are isolated, and dependencies respect the levels at the chosen scale. Use [Deep Module](../principle-deep-module/SKILL.md) to judge whether the resulting interfaces reduce caller burden.
+The flow communicates intent, domain rules remain visible, mechanisms are isolated, and dependencies respect the levels at the chosen scale. Resulting modules have cohesive responsibilities, depend on stable contracts, and provide substantial value through narrow interfaces that reduce caller burden.

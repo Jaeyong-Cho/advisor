@@ -8,9 +8,22 @@ disable-model-invocation: true
 
 Explain how a feature works from its entry point, then derive its architecture from that explanation. Actions reveal execution flow, nouns suggest domain concepts, and relationships and constraints guide data structures. Subjects identify who owns the work; events reveal state changes. Design the code so its orchestration can read in the same order as the explanation.
 
+Default to a small, complete change. Define the minimum scope that achieves the required behavior first, then apply abstraction, modeling, and other design principles inside that scope.
+
 Work in two stages: **explain the behavior -> establish shared understanding -> interpret it into architecture**. Present the explanation before proposing files, classes, functions, or data structures. Let the user correct the behavior before structural choices become the premise.
 
 Present the design only in the conversation. Do not write or modify files, save design artifacts, implement, create executable scaffolding, or run the proposed flow. Inspect existing code when needed; distinguish proposed behavior from observed behavior in the explanation.
+
+## Set the Smallest Complete Scope First
+
+- **YAGNI:** Design for confirmed current requirements. Exclude speculative features, extension points, configuration, and infrastructure for possible future needs.
+- **KISS:** Prefer the simplest understandable structure that satisfies the behavior and constraints. Reuse existing owners and representations when they fit. Minimize new concepts, dependencies, and coordination rather than merely counting changed lines.
+- **[Ponytail](https://github.com/DietrichGebert/ponytail/blob/main/skills/ponytail/SKILL.md):** Understand the affected flow, then check necessity, existing code, standard-library features, native platform capabilities, and installed dependencies before proposing custom structure. Stop at the first option that meets the requirements; otherwise propose the minimum new logic. Preserve readability and required validation, failure handling, and behavior.
+- **Bound the change:** State the current-to-expected behavior gap, the operations and contracts that must change, what must be preserved, and the observable completion criteria. Include only changes necessary to close that gap; keep unrelated cleanup and broader redesign outside this increment.
+- **Apply design principles locally:** Use abstraction levels, cohesive modules with narrow interfaces, domain models, and types to clarify the selected change. Introduce a boundary or representation only when it owns a required rule, prevents an actual invalid state, hides necessary complexity, or reduces caller burden. A principle is not a reason to restructure unaffected code.
+- **Expand only for demonstrated necessity:** Inspect adjacent callers and shared state to understand the impact. Widen the proposed scope when the smaller design cannot satisfy a required behavior, invariant, or contract, and explain the concrete reason. A small change must still be complete and correct.
+
+For example, adding an optional sort order to an existing list operation may require a parameter, boundary validation, and query ordering. It does not by itself require a sorting strategy hierarchy or a redesign of the repository. Apply abstraction and modeling to the changed operation and its necessary boundaries.
 
 ## Derive Architecture from the Explanation
 
@@ -48,39 +61,42 @@ For example, "adding the same product increases its quantity" suggests one CartI
 
 ## Principles
 
-Read these principles before designing. Apply their decision rules where relevant and name the rules that explain consequential choices. Read their supporting references only when needed.
+Set scope using the rules above before choosing structure. Read the principles relevant to that scope and name the rules that explain consequential choices. Read their supporting references only when needed.
 
+- [Define Goal](../principle-define-goal/SKILL.md): make the current-to-expected gap and completion criteria explicit before setting the change boundary.
+- [Subtract Before You Add](../principle-subtract-before-you-add/SKILL.md): within the selected scope, identify existing responsibilities to reuse, merge, or remove before proposing new structure.
+- [Laziness Protocol](../principle-laziness-protocol/SKILL.md): choose the smallest maintainable solution that meets the goal without omitting required behavior.
 - [Abstraction Levels](../principle-abstraction-levels/SKILL.md): keep orchestration at the level of intent, domain decisions separate, and technical mechanisms behind meaningful operations.
 - [Deep Module](../principle-deep-module/SKILL.md): group related complexity behind contracts that reduce caller knowledge and coordination.
 - [Boundary Discipline](../principle-boundary-discipline/SKILL.md): validate and convert external inputs at entry boundaries, and assign responsibility for translating failures at exit boundaries.
-- [First Principle Redesign](../principle-first-principle-redesign/SKILL.md): derive the flow from purpose and required outcomes rather than assuming current classes and layers must remain.
+- [First Principle Redesign](../principle-first-principle-redesign/SKILL.md): derive the selected change from purpose and required outcomes; reconsider existing structure within that scope without assuming a full redesign is needed.
 - [Foundational Thinking](../principle-foundational-thinking/SKILL.md): establish core data shapes and ownership before detailing operations; identify shared state when concurrency matters.
 - [Model the Domain](../principle-model-the-domain/SKILL.md): express states and transitions explicitly, and keep the same domain knowledge together even when it is used at different execution stages.
 - [Type System Discipline](../principle-type-system-discipline/SKILL.md): in statically typed systems, make inputs, outcomes, and branch cases explicit in types without unsafe escapes.
-- [Subtract Before You Add](../principle-subtract-before-you-add/SKILL.md): identify existing responsibilities to reuse, merge, or remove before proposing new structure.
-- [Laziness Protocol](../principle-laziness-protocol/SKILL.md): minimize concepts, pass-through calls, and value propagation while preserving required behavior.
 
 ## Workflow
 
 ### Stage 1: Explain the Feature
 
-1. **Establish the behavior.** State its purpose, trigger, starting point, inputs, observable outcomes, and constraints in the user's domain language. Inspect the relevant current flow and distinguish requirements from implementation accidents. Ask only for missing information that could materially change the behavior.
+1. **Establish the behavior and scope.** State its purpose, trigger, starting point, inputs, observable outcomes, and constraints in the user's domain language. Inspect the relevant current flow and distinguish requirements from implementation accidents. Define the smallest complete scope using the rules above, including behavior to preserve and work outside this increment. Ask only for missing information that could materially change the behavior or scope.
 2. **Explain what happens.** Describe the main successful path in subject-action-outcome sentences. Say who does what, what information is needed, and what changes as a result. Use ordinary domain terms rather than proposed code symbols, type definitions, or layers.
 3. **Explain the alternatives and rules.** Describe the major conditions, alternate outcomes, constraints, and state changes as part of the story. Include consequential failure paths. Explain required repetition or concurrency in behavioral terms rather than choosing technical mechanisms.
 4. **Establish shared understanding.** Present the explanation and ask whether it matches the intended behavior. Resolve corrections and material ambiguities before interpreting it into architecture. Proceed when the user indicates that the explanation is understood and correct, or asks to translate an already agreed explanation. Do not infer agreement from silence or the agent's own confidence. Reuse an explanation already confirmed in the conversation without repeating the checkpoint.
 
 ### Stage 2: Interpret the Explanation into Architecture
 
-1. **Derive the domain model.** Extract concepts from nouns, relationships and invariants from constraints, and lifecycle from events in the agreed explanation. Follow the model and data-structure guidance above. Choose core states and representations, assign invariant and transition owners, and explain what the types enforce versus what needs runtime checks. Separate external representations from domain values.
+1. **Derive the domain model within scope.** Extract concepts from nouns, relationships and invariants from constraints, and lifecycle from events in the agreed explanation. Follow the model and data-structure guidance above. Reuse adequate existing models; refine only representations and owners needed by the selected change. Choose core states and representations, assign invariant and transition owners, and explain what the types enforce versus what needs runtime checks. Separate external representations from domain values.
 2. **Extract subjects and actions into architecture.** Use the explanation, model, and branches to identify candidate files or classes from responsible subjects and candidate functions from actions. Reuse or consolidate owners where they share domain knowledge. Refine signatures and contracts around the chosen data shapes and valid transitions. A sentence's separate verbs may become one operation when the same owner must enforce a rule, such as Cart.add handling both a new product and an existing quantity. Execution order determines orchestration order; it does not require a separate class, file, or layer for each step.
 3. **Show the structure behind the flow.** Map each responsible subject to its existing or proposed file or class, and each action to its function. Use those same owners and functions in the execution tree. Draw relationships between owners in ASCII and label arrows as calls, dependencies, or ownership. Distinguish runtime call direction from type dependency direction when they differ. Justify each new boundary by the complexity it hides or the rule it owns.
 4. **Walk through the design.** Follow a representative input and each major branch on paper, including operations at constraint limits and invalid transitions where relevant. Check that every branch has an outcome or continuation, data is available before use, invariants survive mutations, state changes have owners, and failures reach the right boundary. Revise unnecessary layers and repeated decisions. If interpretation exposes a missing or conflicting behavior rule, return to the affected explanation instead of inventing a requirement. List observable acceptance criteria and unresolved assumptions; do not implement or execute verification code.
 
 ## Output
 
-**Stage 1:** Start with the plain-language explanation of how the feature works. Include its successful path, major alternatives, rules, and observable outcomes. End with any material open questions and the shared-understanding checkpoint. Do not include architecture proposals or model-to-code mappings in this stage.
+**Stage 1:** Start with the plain-language explanation of how the feature works. Include its successful path, major alternatives, rules, and observable outcomes. State the minimum change scope, behavior to preserve, and work outside this increment. End with any material open questions and the shared-understanding checkpoint. Do not include architecture proposals or model-to-code mappings in this stage.
 
 **Stage 2:** Briefly recall the agreed behavior, then show the execution tree near the top. Follow it with the concept and subject/action mapping, ASCII relationships, and necessary contracts. For consequential domain rules, show a compact mapping of requirement -> invariant or precondition -> representation -> enforcement owner. Explain the decisive data-structure choices and state transitions when relevant. End with the consequential design choices, open questions, and acceptance criteria. Scale the supporting detail to the feature; always include the execution tree and relationship diagram in this stage.
+
+Focus Stage 2 on the selected change and show unchanged collaborators only as necessary context. Distinguish reused, changed, and new elements. Explain any necessary scope expansion and connect each proposed change to a current requirement.
 
 ### Execution Tree
 
@@ -138,10 +154,15 @@ Identify whether diagram nodes represent files, classes, or modules. Use real pa
 
 Stage 1 is ready for interpretation when the user understands the explanation and it matches the intended behavior. Delivering that explanation alone does not complete the architecture design.
 
+The design closes the stated behavior gap with the smallest complete scope. Each new abstraction or model has a current responsibility, required contracts remain intact, and unrelated improvements have not entered the change.
+
 The user can trace concepts to model representations, constraints to enforced rules, responsible subjects to files or classes, actions to functions, and order and branches to the execution tree. Consequential invariants and state transitions have owners, and each data-structure choice follows from actual rules and access patterns. Each operation has a contract, and the proposed code would read in that execution order. The explanation, domain model, extracted architecture, execution tree, and relationship diagram agree, acceptance criteria are observable, and no implementation has been made.
 
 ## Avoid
 
+- Expanding a small change into a system redesign merely to apply design principles everywhere.
+- Adding speculative abstractions or unrelated cleanup to the selected scope.
+- Minimizing the diff by leaving required behavior incomplete or moving repeated coordination into callers.
 - Starting with a class diagram and inventing a flow to justify it.
 - Proposing architecture before establishing shared understanding of the feature explanation.
 - Mechanically creating a class for every noun or a function for every verb without a meaningful responsibility.

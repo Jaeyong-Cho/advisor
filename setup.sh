@@ -4,10 +4,11 @@ set -euo pipefail
 
 usage() {
   cat <<'USAGE'
-Usage: ./setup.sh [pi|claude|copilot|agents|codex] [skills-directory]
+Usage: ./setup.sh [pi|claude|copilot|agents|codex|kiro] [skills-directory]
 
-Install every bundled skill into a flat skill directory.
+Install every bundled skill and Ponytail into a flat skill directory.
 Copy AGENTS.md to the agent configuration directory containing that skill directory.
+Ponytail is downloaded from DietrichGebert/ponytail on GitHub; curl and network access are required.
 
 Agent directories:
   pi       ~/.pi/agent/skills
@@ -15,6 +16,7 @@ Agent directories:
   copilot  ~/.copilot/skills
   agents   ~/.agents/skills
   codex    ~/.codex/skills
+  kiro     ~/.kiro/skills
 
 The second argument overrides the selected agent directory.
 SKILLS_DIR also overrides the selected agent directory when no second argument is given.
@@ -65,10 +67,16 @@ if [[ ! -d "$source_dir" ]]; then
   exit 1
 fi
 
-mkdir -p "$target_dir"
+external_skills="$(mktemp -d)"
+trap 'rm -rf "$external_skills"' EXIT
+mkdir -p "$external_skills/ponytail"
+curl --fail --silent --show-error --location \
+  "https://raw.githubusercontent.com/DietrichGebert/ponytail/main/skills/ponytail/SKILL.md" \
+  --output "$external_skills/ponytail/SKILL.md"
 
+mkdir -p "$target_dir"
 installed=0
-for source_skill in "$source_dir"/*; do
+for source_skill in "$source_dir"/* "$external_skills/ponytail"; do
   [[ -d "$source_skill" ]] || continue
 
   skill_name="$(basename "$source_skill")"
