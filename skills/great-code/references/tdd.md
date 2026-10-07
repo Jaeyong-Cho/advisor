@@ -2,6 +2,8 @@
 
 Implementation always follows TDD: one behavior at a time, RED → GREEN → REFACTOR.
 
+Behavior includes application code and engineering systems such as Makefiles, build definitions, CI workflows, scripts, and configuration. Their interfaces may be commands, targets, jobs, or validated configuration contracts. Use executable acceptance checks for required outcomes, artifacts, exit statuses, and dependency behavior rather than requiring a function test for every change. Apply the active skill's explicit rules for behavior-preserving operations and implementation whose dependencies remain pending.
+
 Use the test setup and commands discovered in the project. For interface design for testability, read [Deep Modules](deep-modules.md). For test boundaries and scope, read [Testing by level](abstraction-levels.md#testing-by-level).
 Read good and bad test examples [Tests](tests.md) and mocking methodology [Mocking](mocking.md).
 
