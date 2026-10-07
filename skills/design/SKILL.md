@@ -76,6 +76,7 @@ Set scope using the rules above before choosing structure. Read the principles r
 - [Foundational Thinking](../principle-foundational-thinking/SKILL.md): establish core data shapes and ownership before detailing operations; identify shared state when concurrency matters.
 - [Model the Domain](../principle-model-the-domain/SKILL.md): express states and transitions explicitly, and keep the same domain knowledge together even when it is used at different execution stages.
 - [Type System Discipline](../principle-type-system-discipline/SKILL.md): in statically typed systems, make inputs, outcomes, and branch cases explicit in types without unsafe escapes.
+- [Assert Invariants](../principle-assert-invariants/SKILL.md): identify which internal preconditions, postconditions, and state invariants should become executable assertions; keep legitimate rejection and external failure paths explicit.
 
 ## Workflow
 

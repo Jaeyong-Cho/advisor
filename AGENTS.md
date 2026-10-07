@@ -26,6 +26,7 @@ Read the relevant principles first.
 
 **Verification**
 
+- [**Assert Invariants**](skills/principle-assert-invariants/SKILL.md). Writing or reviewing internal preconditions, state mutations, postconditions, or supposedly unreachable branches; actively encode guaranteed conditions as assertions and handle expected failures normally.
 - [**Fix Root Causes**](https://github.com/Jaeyong-Cho/advisor/blob/645be080aa0bd92f8aad0f78c3835f9271f49667/skills/principle-fix-root-causes/SKILL.md). Fixing a bug, considering a symptom-only workaround, handling a repeated problem, or investigating a failure after restart.
 - [**Closed Working Loop**](https://github.com/Jaeyong-Cho/advisor/blob/645be080aa0bd92f8aad0f78c3835f9271f49667/skills/principle-closed-working-loop/SKILL.md). Starting feature work, a fix, or refactoring without an execution path that can show progress or provide timely feedback.
 - [**Build the Lever**](https://github.com/Jaeyong-Cho/advisor/blob/645be080aa0bd92f8aad0f78c3835f9271f49667/skills/principle-build-the-lever/SKILL.md). Repeating a change, analysis, or check, or when a result is hard to verify manually.
