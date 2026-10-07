@@ -17,7 +17,7 @@ Ask about a choice only when its answer changes one of these:
 - The strategic direction, scope, or priority among competing outcomes.
 - A hard constraint, preserved behavior, risk tolerance, or delegation boundary.
 
-Choose routine methods yourself: tools, architecture, file layout, algorithms, implementation order, and verification mechanics. Bring a method choice to the user only if it changes a user-owned outcome or crosses a stated boundary. Investigate facts available in the environment instead of asking the user to supply them; use subagents for independent fact-finding when useful.
+Choose routine methods yourself: tools, architecture, algorithms, implementation order, and verification mechanics. Bring a method choice to the user only if it changes a user-owned outcome or crosses a stated boundary. Investigate facts available in the environment instead of asking the user to supply them; use subagents for independent fact-finding when useful.
 
 ## Rounds
 
