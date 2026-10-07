@@ -22,7 +22,7 @@ A broad redesign delays feedback and combines changes whose effects are hard to 
 
 ## Leave Touched Code Better
 
-Apply the [Boy Scout Rule](https://www.informit.com/articles/article.aspx?p=1235624&seqNum=6) during ordinary development: leave the code you work on a little easier to understand, change, or verify than you found it. Improving maintainability is a valid direction even when no new feature or explicit user complaint drives the change.
+Apply the Boy Scout Rule during ordinary development: leave the code you work on a little easier to understand, change, or verify than you found it. Improving maintainability is a valid direction even when no new feature or explicit user complaint drives the change.
 
 - Start with code already touched by the task or an explicitly selected responsibility. Look for a concrete local improvement, such as a clearer name, confirmed dead-code removal, a simpler branch, or removal of a redundant pass-through call.
 - Choose an improvement that reduces a demonstrated reading, maintenance, or verification burden. Do not force cosmetic changes or extra abstractions merely to say that cleanup happened.
