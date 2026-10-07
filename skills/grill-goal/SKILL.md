@@ -37,3 +37,4 @@ Format each decision question as:
 ## Done When
 
 The user has confirmed a goal and direction that can guide action without further interviews about routine methods. Leave implementation, detailed design, and execution to the AI within the confirmed boundaries; do not start them as part of this discussion skill unless the user separately asks.
+**MUST NOT** start any implementation or take any action before the user requests it.
