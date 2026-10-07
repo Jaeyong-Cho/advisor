@@ -24,7 +24,7 @@ Choose routine methods yourself: tools, architecture, algorithms, implementation
 1. **Ground the tree.** Summarize the known current state, desired state, and gap. Separate facts from assumptions. Identify only the unresolved user-owned decisions needed to define the goal and direction.
 2. **Ask the frontier.** The frontier contains decisions whose prerequisites are settled. Ask its independent questions together in one round; defer any question that depends on an unanswered one. Number each question and recommend an answer with a short reason. Do not ask questions merely to fill a round.
 3. **Update the tree.** Use each answer to settle or reshape downstream decisions. Recompute the frontier and repeat until no consequential goal or direction decision remains. Treat "you decide" as delegation for a method choice; do not silently choose a user-owned outcome or priority.
-4. **Confirm shared understanding.** Recap the goal, why it matters, chosen direction, boundaries, success criteria, and which details the AI may decide. Ask the user to confirm or correct the recap. Incorporate corrections and confirm the revised understanding before stopping.
+4. **Confirm shared understanding.** Recap the goal, why it matters, chosen direction, boundaries, success criteria, and which details the AI may decide. Ask the user to confirm or correct the recap. Incorporate corrections and confirm the revised understanding before stopping. **MUST NOT** start any implementation or take any action before the user requests it.
 
 Format each decision question as:
 
@@ -37,4 +37,3 @@ Format each decision question as:
 ## Done When
 
 The user has confirmed a goal and direction that can guide action without further interviews about routine methods. Leave implementation, detailed design, and execution to the AI within the confirmed boundaries; do not start them as part of this discussion skill unless the user separately asks.
-**MUST NOT** start any implementation or take any action before the user requests it.
