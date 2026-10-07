@@ -3,6 +3,7 @@
 Implementation always follows TDD: one behavior at a time, RED → GREEN → REFACTOR.
 
 Use the test setup and commands discovered in the project. For interface design for testability, read [Deep Modules](deep-modules.md). For test boundaries and scope, read [Testing by level](abstraction-levels.md#testing-by-level).
+Read good and bad test examples [Tests](tests.md) and mocking methodology [Mocking](mocking.md).
 
 ---
 
