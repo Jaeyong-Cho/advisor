@@ -2,7 +2,7 @@
 
 Read this reference before implementation through either `great-code` or `great-one-code`. It is their single source of shared development rules. Resolve links relative to this directory. If these rules are already loaded in the current task, use them without rereading; do not load the other skill's entrypoint to obtain shared rules.
 
-Apply these standards within the active skill's selected scope. Scope-specific limits take precedence over instructions to complete dependencies, extract helpers, split files, reorder definitions, or clean up code. If a required correction cannot fit that scope, follow the active skill's blocker handling rather than widening the task silently.
+Apply these standards within the active skill's selected scope. Scope-specific limits and completion rules take precedence over instructions to complete dependencies, extract helpers, split files, reorder definitions, or clean up code. If required work cannot fit that scope, follow the active skill's rules for proceeding and reporting remaining work rather than widening the task silently.
 
 Use [TDD](tdd.md) for new or changed behavior: one behavior at a time, **RED → GREEN → REFACTOR**, primarily through caller-facing interfaces. Read that reference before changing production behavior. Do not implement the whole change first and add tests afterward.
 
@@ -52,7 +52,7 @@ L1 expresses the caller's workflow without inline infrastructure or reimplemente
 
 Read the finished functions and relevant call sites for leaking mechanisms, missing or hidden domain rules, shallow orchestration, and mechanical extraction. Check exposure and file order within the selected scope. Measure the full physical line count of every created or modified source file. Measure complexity, maximum line width, and maximum indentation depth for every created or modified function; measure function length only for L1 functions. Correct violations within the active skill's scope and remeasure. If a correction requires broader work, follow that skill's scope rules. Report unavailable measurements as unverified rather than estimating a pass or claiming completion.
 
-Check that syntax is understandable to a junior developer, unnecessary duplication is removed within scope, and required contracts have concrete implementations. Finish the selected unit without TODO bodies, temporary production stubs, broken callers, or unwired interfaces.
+Check that syntax is understandable to a junior developer and unnecessary duplication is removed within scope. Implement the selected unit without TODO bodies or temporary production stubs. Apply the active skill's completion rules to dependency implementations, callers, and interface wiring; explicitly report any implementation it permits deferring.
 
 ## Build and Basic Tests
 
