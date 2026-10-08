@@ -12,6 +12,8 @@ Default to a small, complete change. Define the minimum scope that achieves the 
 
 Work in two stages: **explain the behavior -> establish shared understanding -> interpret it into architecture**. Present the explanation before proposing files, classes, functions, or data structures. Let the user correct the behavior before structural choices become the premise.
 
+When a mature, long-lived software system has a relevant design precedent, research it before recommending a structure. Name the system, point to the concrete architectural choice or mechanism, and explain which part transfers to this design and which context differs. Use authoritative documentation or source code for claims and link to it. A precedent informs the trade-off; it does not replace reasoning from this feature's requirements. If no relevant precedent is known or useful, proceed from the requirements without inventing one.
+
 Present the design only in the conversation. Do not write or modify files, save design artifacts, implement, create executable scaffolding, or run the proposed flow. Inspect existing code, build definitions, scripts, and configuration when needed; distinguish proposed behavior from observed behavior in the explanation.
 
 ## Design Code and Engineering Systems
@@ -34,6 +36,8 @@ Separate intent, policy, and mechanism at the chosen scale. For example, a verif
 For example, adding an optional sort order to an existing list operation may require a parameter, boundary validation, and query ordering. It does not by itself require a sorting strategy hierarchy or a redesign of the repository. Apply abstraction and modeling to the changed operation and its necessary boundaries.
 
 ## Derive Architecture from the Explanation
+
+Before presenting a consequential structural choice, briefly state any relevant precedent and its fit. Compare the precedent with the current requirements, constraints, and scale; do not copy its entire architecture or cite a well-known project as decoration.
 
 Write each meaningful step as **subject -> action -> outcome**, including the input or condition when needed. Make the subject explicit rather than hiding responsibility in passive descriptions.
 
@@ -171,6 +175,8 @@ Stage 1 is ready for interpretation when the user understands the explanation an
 The design closes the stated behavior gap with the smallest complete scope. Each new abstraction or model has a current responsibility, required contracts remain intact, and unrelated improvements have not entered the change.
 
 The user can trace concepts to representations, constraints to enforced rules, responsible subjects to native owners, and actions to operations. Order, branches, and dependencies appear in the execution or workflow view. Consequential invariants and state transitions have owners, and representation choices follow from actual rules and access patterns. Each operation has a contract. The explanation, model, architecture, execution or dependency view, and relationship diagram agree, acceptance criteria are observable, and no implementation has been made.
+
+Any cited precedent directly supports the design choice, and the explanation identifies its applicable lesson and the limits of transferring it.
 
 ## Avoid
 
