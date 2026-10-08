@@ -1,6 +1,6 @@
 ---
 name: great-one-code
-description: Implement one function, build target, CI job, cohesive configuration block, or small uniform operation using shared development standards and a dedicated Git worktree. Proceed with the selected unit even when full behavior needs more implementation, and report remaining dependencies, wiring, and verification.
+description: Implement one function, build target, CI job, cohesive configuration block, or small uniform operation using shared development standards. Proceed with the selected unit even when full behavior needs more implementation, and report remaining dependencies, wiring, and verification.
 ---
 
 # Great One Code
@@ -29,7 +29,7 @@ For one-operation mode, define the transformation by its semantic target and rul
 ## Workflow
 
 1. **Inspect and bound the task.** Read the relevant contracts, callers, and dependencies, identify the selected unit or transformation, and reuse existing mechanisms. Define its responsibility separately from the full behavior. Identify implementation outside this unit that full behavior will need, then proceed with the selected unit. Keep other implementation changes outside the task.
-2. **Prepare the workspace.** Follow the shared dedicated Git worktree rules before source or test edits. Use the selected worktree for all edits and verification. Outside Git, use the target directory directly.
+2. **Prepare the workspace.** Work in the current workspace. If the user requests a dedicated worktree, use the `worktree` skill before source or test edits. Outside Git, use the target directory directly.
 3. **Verify the starting behavior.** Follow the shared TDD rules for behavior changes whenever the selected contract can be executed, and before/after checks for behavior-preserving operations. If missing implementation outside the unit prevents execution, attempt relevant checks, record the exact blocker, and continue implementing the unit. An unresolved import, invalid environment, or missing dependency is not behavioral RED evidence; do not claim a demonstrated TDD cycle. Keep verification edits focused on the selected unit.
 4. **Perform only the selected change.** Apply abstraction levels, narrow interfaces, clear names, and meaningful runtime assertions inside the selected scope. Use existing dependencies. Do not complete another dependency, extract a helper, reorder unrelated functions, split files, or apply Boy Scout cleanup outside the chosen unit merely to satisfy a broader rule.
 5. **Review the complete diff.** Check every changed implementation unit and edited location against the scope. In one-unit mode, confirm exactly one function, target, job, or cohesive configuration block was added or changed. In one-operation mode, confirm each edit is required by the same transformation and no independent change was included. Apply the shared diff review and applicable measurements; verify preserved contracts and reference completeness.

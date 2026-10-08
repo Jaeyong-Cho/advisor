@@ -18,16 +18,9 @@ Apply [Incremental Progress](../../principle-incremental-progress/SKILL.md). Kee
 
 Read and actively apply [Assert Invariants](../../principle-assert-invariants/SKILL.md). Identify guaranteed internal preconditions and postconditions, and assert meaningful invariants close to state changes and derived results. Keep expected failures in normal validation and error handling. Assertions supplement interface-focused TDD.
 
-## Work in a Git Worktree
+## Workspace
 
-When the target is a Git repository, perform implementation, test edits, refactoring, and verification in a dedicated Git worktree. For a directory outside Git, use the target directory directly.
-
-1. **Inspect the starting state.** Resolve the repository root and inspect its current branch, HEAD, local changes, and existing worktrees. Use a user-specified base when provided; otherwise use the target checkout's current HEAD. Preserve unrelated local changes. If the task depends on uncommitted changes, establish how those changes enter the worktree rather than silently starting from a version that omits them.
-2. **Reuse or create the worktree.** Reuse a suitable non-primary worktree already assigned to this task when its base and changes fit the work. Otherwise create a dedicated worktree with the host's worktree manager, or `git worktree add` when no manager is available. Use the repository's branch convention, defaulting to `<feature,bugfix,refactor>/<task-slug>`. Pass the intended base explicitly so a manager's remote-default behavior does not select a different starting point. Do not reset or repurpose another task's checkout.
-3. **Use the worktree consistently.** Confirm its absolute path and Git root, read its applicable project instructions, and use that path for every source/test edit, build, and test command. Read-only inspection of the original checkout is allowed. Keep artifacts with the worktree or in the project's designated output location.
-4. **Preserve the result for review.** Report the worktree path, branch, base, and verification results. Keep the changes available for review; do not merge them into the original checkout or force-remove the worktree as part of this skill.
-
-If worktree creation or selection fails, resolve that blocker before editing the Git repository. Do not silently fall back to implementation in the original checkout.
+Work in the current workspace by default. Do not create or select a worktree automatically. When the user asks for an isolated Git worktree, use the separate [Worktree](../../worktree/SKILL.md) skill to prepare it, then continue the task there. For a directory outside Git, use the target directory directly.
 
 ## Exposure and File Order
 
@@ -89,7 +82,7 @@ For new or changed behavior, if no meaningful failing test or executable asserti
 
 ## Completion Evidence
 
-Report the achieved result and the affected functions, targets, jobs, configuration blocks, interfaces, and file locations at the selected scope. For Git work, include the absolute worktree path, branch, starting commit, and any task-relevant uncommitted changes carried into it. Outside Git, include the target directory.
+Report the achieved result and the affected functions, targets, jobs, configuration blocks, interfaces, and file locations at the selected scope. For Git work, include the workspace path and branch. If a worktree was requested, also include its starting commit and any task-relevant uncommitted changes carried into it. Outside Git, include the target directory.
 
 Report the physical line count of each created or modified implementation or configuration file. For each actual function created or modified, report its abstraction level, cyclomatic complexity and analyzer, maximum line width, and maximum indentation depth; report function length for L1 functions only. For declarative units, report their responsibility, inputs, dependencies, outputs or artifacts, and relevant validation results; mark function-specific metrics as not applicable. State what was reused versus implemented and the outcome of applicable structure, readability, duplication, and metric checks. Identify scope-constrained corrections and verification limits explicitly.
 
