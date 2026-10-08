@@ -55,8 +55,6 @@ Test primarily through caller-facing interfaces and their concrete implementatio
 - **L2** — verify rules, calculations, validation, and transitions through the owning module's interface by default. Add a focused internal rule test only when interface tests cannot practically verify a consequential rule or regression. Do not change visibility solely for testing.
 - **L3** — exercise the concrete adapter through its infrastructure contract. Use an integration or contract test with real infrastructure when correctness depends on database, HTTP, filesystem, SDK, framework, or serialization behavior. Tests of a mocked interface do not verify its implementation.
 
-Use [TDD](tdd.md) for new or changed behavior. Demonstrate a failing test through the smallest interface that exposes the requirement, implement enough to pass it, and refactor while tests remain green. For bug fixes, make the observed failure a regression test before fixing it.
-
 ## Smells
 
 | Smell | What it looks like | Level |
