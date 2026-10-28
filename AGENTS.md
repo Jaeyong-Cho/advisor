@@ -1,3 +1,8 @@
+# Context
+The global context is in the `~/wiki`.
+The local context is in the `.context`.
+Read the relevant context in that location.
+
 # Principles
 A **principle** is a decision rule. It explains how to judge a situation.
 Read the relevant principles first.
