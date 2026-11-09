@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Root Cause
 
-Diagnose the cause of a user-reported symptom. Start at the observed failure and work backward through the states, decisions, and mechanisms that produced it. The deliverable is a causal explanation, not a code change. Read [Fix Root Causes](../principle-fix-root-causes/SKILL.md) and [Understand Through Abstraction](../principle-understand-through-abstraction/SKILL.md) for the relevant diagnostic principles.
+Diagnose the cause of a user-reported symptom. Start at the observed failure and work backward through the states, decisions, and mechanisms that produced it. The deliverable is a causal explanation, not a code change.
 
 ## Investigation
 

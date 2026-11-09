@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Find the constraint that most limits progress toward the user's final goal. Deliver an evidence-supported diagnosis and a solution the user understands and chooses.
 
-Before starting, check the current project root for `.context/` and read its files if present. Read [Define Goal](../principle-define-goal/SKILL.md), [Fix Root Causes](../principle-fix-root-causes/SKILL.md), and [Grill Me](../grill-me/SKILL.md). Run the interview and solution discussion using Grill Me's decision tree and rounds; do not merely recommend that the user invoke it later.
+Before starting, check the current project root for `.context/` and read its files if present. Read [Grill Me](../grill-me/SKILL.md). Run the interview and solution discussion using Grill Me's decision tree and rounds; do not merely recommend that the user invoke it later.
 
 ## 1. Interview the goal and workflow
 

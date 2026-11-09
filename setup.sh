@@ -8,6 +8,7 @@ Usage: ./setup.sh [pi|claude|copilot|agents|codex|kiro] [skills-directory]
 
 Install every bundled skill and Ponytail into a flat skill directory.
 Copy AGENTS.md to the agent configuration directory containing that skill directory.
+Move previously installed deprecated Advisor principles outside the skill directory.
 Ponytail is downloaded from DietrichGebert/ponytail on GitHub; curl and network access are required.
 
 Agent directories:
@@ -106,6 +107,20 @@ fi
 
 cp "$script_dir/AGENTS.md" "$agent_config_dir/AGENTS.md"
 echo "Installed AGENTS.md -> $agent_config_dir/AGENTS.md"
+
+archive_dir=""
+for deprecated_skill in "$script_dir"/deprecated/principle-*; do
+  [[ -f "$deprecated_skill/SKILL.md" ]] || continue
+  installed_skill="$target_dir/$(basename "$deprecated_skill")"
+  [[ -d "$installed_skill" ]] || continue
+
+  if [[ -z "$archive_dir" ]]; then
+    mkdir -p "$agent_config_dir/deprecated"
+    archive_dir="$(mktemp -d "$agent_config_dir/deprecated/advisor-principles.XXXXXX")"
+  fi
+  mv "$installed_skill" "$archive_dir/"
+  echo "Archived $installed_skill -> $archive_dir/"
+done
 
 setup_bin() {
   local bin_src="$script_dir/bin"

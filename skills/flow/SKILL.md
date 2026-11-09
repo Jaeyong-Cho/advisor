@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Flow
 
-Trace one feature forward from its trigger to its observable outcome. This is a concrete path walkthrough; use [How](../how/SKILL.md) for a broader subsystem mental model. Apply [Understand Through Abstraction](../principle-understand-through-abstraction/SKILL.md) to inspect each function's contract before reading internals, and [Understand Function](../understand-func/SKILL.md) when a specific function's branch or state change needs deeper inspection.
+Trace one feature forward from its trigger to its observable outcome. This is a concrete path walkthrough; use [How](../how/SKILL.md) for a broader subsystem mental model. Inspect each function’s contract before reading its internals. Use [Understand Function](../understand-func/SKILL.md) when a specific function's branch or state change needs deeper inspection.
 
 ## Steps
 

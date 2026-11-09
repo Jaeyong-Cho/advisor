@@ -12,9 +12,9 @@ Separate intent, policy, and mechanisms at the selected scale. A build target or
 
 Function exposure, source ordering, and function metrics apply only to actual functions. Do not apply the L1 function-length limit, cyclomatic complexity, or indentation-depth metric to YAML keys, Make recipes, job counts, or configuration blocks. Report such measurements as not applicable, not as measured passes. Preserve required syntax, including Make recipe tabs, quoting, YAML structure, and tool-specific ordering; do not wrap or rearrange declarations in ways that change their meaning.
 
-Apply [Incremental Progress](../../principle-incremental-progress/SKILL.md). Keep the selected increment small and complete, verify its required behavior, and observe the intended improvement before expanding to another change.
+Keep the selected increment small and complete, verify its required behavior, and observe the intended improvement before expanding to another change.
 
-Read and actively apply [Assert Invariants](../../principle-assert-invariants/SKILL.md). Identify guaranteed internal preconditions and postconditions, and assert meaningful invariants close to state changes and derived results. Keep expected failures in normal validation and error handling.
+Identify guaranteed internal preconditions and postconditions, and assert meaningful invariants close to state changes and derived results. Keep expected failures in normal validation and error handling.
 
 ## Workspace
 
@@ -63,7 +63,7 @@ Apply invariant checks through native mechanisms where meaningful, such as artif
 
 For a behavior-preserving rename or refactor, run relevant existing checks before and after. Add a focused characterization check only when needed to establish the preserved contract.
 
-Apply [Closed Working Loop](../../principle-closed-working-loop/SKILL.md) during implementation and final verification.
+Run the relevant checks during implementation and again after the final change.
 
 - **Discover the project's commands.** Read the relevant project instructions, scripts, manifests, and CI configuration to identify useful build and verification commands. Use the existing toolchain and runner.
 - **Run the build.** Execute the relevant build after implementation. If the project has no build step, run its type check, compilation, or syntax check when applicable and state which check substitutes for the build. If none applies, report that explicitly.

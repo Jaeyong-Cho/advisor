@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Grill Goal
 
-Use the decision-tree interview style of `grill-me` only for the user's goal and direction. Read [Define Goal](../principle-define-goal/SKILL.md) and [Bounded Autonomy](../principle-bounded-autonomy/SKILL.md) first. The user owns the desired outcome and consequential trade-offs; the AI owns methods within those boundaries.
+Use the decision-tree interview style of `grill-me` only for the user's goal and direction. The user owns the desired outcome and consequential trade-offs; the AI owns methods within those boundaries.
 
 ## Decision boundary
 

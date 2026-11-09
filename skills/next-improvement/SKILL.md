@@ -5,7 +5,7 @@ description: Recommend the next small, verifiable improvement from the user's fr
 
 # Next Improvement
 
-Recommend one next improvement that reduces the user's friction and advances their goal in their preferred direction. Use [Incremental Progress](../principle-incremental-progress/SKILL.md) as the main decision rule. Deliver a bounded recommendation and a way to judge its effect.
+Recommend one next improvement that reduces the user's friction and advances their goal in their preferred direction. Deliver a bounded recommendation and a way to judge its effect.
 
 The improvement may also be a Boy Scout change: leave code already touched by a task easier to understand and maintain. Use observed maintenance burden as evidence; an explicit complaint or new feature is not required. Respect the selected scope and do not turn a general quality goal into a full-codebase audit.
 
@@ -20,7 +20,7 @@ This skill selects the next change. [Recommend Options](../recommend-options/SKI
 5. **Make the recommendation reviewable.** State the behavior or responsibility to change, required adjacent changes, preserved contracts, and work outside this increment. Explain how the change addresses the friction and advances the goal. Apply abstraction, modeling, or Deep Module only when relevant to that scope. Make the recommended next action concrete without implementing it.
 6. **Define feedback and continuation.** Specify what to observe before and after the change, how to check success, and what would justify continuing, adjusting, or stopping. Use the user's existing evidence and measures where available. If no baseline exists, identify the smallest observation needed to establish it; do not manufacture numerical thresholds. Later improvements depend on this result.
 
-Use [Define Goal](../principle-define-goal/SKILL.md) when the outcome is unclear, [Laziness Protocol](../principle-laziness-protocol/SKILL.md) to constrain scope, and [Closed Working Loop](../principle-closed-working-loop/SKILL.md) to define verification. Read additional principles only when a consequential choice needs them.
+Clarify the outcome when it is unclear, limit the scope to one improvement, and define how to verify the result.
 
 ## Output
 

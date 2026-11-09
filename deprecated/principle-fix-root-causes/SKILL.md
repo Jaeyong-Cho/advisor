@@ -20,7 +20,7 @@ A guard, default value, or ignored exception can hide a current error while leav
 4. **Fix the cause.** Correct the responsible boundary, state transition, data validation, or domain rule. A nil check, catch-all exception handler, or default that only hides the symptom is not a root-cause fix.
 5. **Inspect the same pattern.** Check whether the same cause exists in other paths or matching code. Change only the scope where the same condition holds.
 6. **Instrument when blocked.** Observe logs, error values, state, and execution paths to test the hypothesis. For bugs that occur only after restart, inspect persisted configuration, cache, locks, and serialized values first.
-7. **Verify through the reproduction path.** Use [Closed Working Loop](../principle-closed-working-loop/SKILL.md) to check the same condition that produced the pre-fix symptom. If a clear, cheap local test path exists, run [TDD Bug Fix](../tdd/SKILL.md) before changing production code.
+7. **Verify through the reproduction path.** Use [Closed Working Loop](../principle-closed-working-loop/SKILL.md) to check the same condition that produced the pre-fix symptom. If a clear, cheap local test path exists, run [TDD Bug Fix](../../skills/tdd/SKILL.md) before changing production code.
 
 ## Stop When
 

@@ -12,8 +12,6 @@ Review comments in a bounded code scope. Remove comments that restate code, pres
 
 Use this action for a specified set of files or a current diff. When no scope is specified, use the current working-tree diff against the repository's base branch.
 
-Apply [Technical Writing](../principle-technical-writing/SKILL.md) to judge whether a comment carries necessary information. Use [Fix Root Causes](../principle-fix-root-causes/SKILL.md) when a comment hides a workaround or a design problem, [Encode Lessons in Structure](../principle-encode-lessons-in-structure/SKILL.md) when a constraint can be enforced, and [Minimize Reader Load](../principle-minimize-reader-load/SKILL.md) to reduce reading burden.
-
 ## Steps
 
 1. Define the review scope and inspect the comments and nearby code in context.
@@ -24,7 +22,7 @@ Apply [Technical Writing](../principle-technical-writing/SKILL.md) to judge whet
 3. Do not delete a keep without evidence. A comment such as `do not remove` is not evidence by itself. Find the actual constraint and decide whether it can be changed or encoded.
 4. For each accepted removal, make the smallest root-cause change in scope. Delete dead paths, use the real API, reduce a needless parameter, or correct the structure instead of adding a symptom guard.
 5. Encode an enforceable constraint with the cheapest suitable type, runtime validation, test, or CI check. Delete the comment after the encoding exists and verify it.
-6. Verify the changed behavior through [Closed Working Loop](../principle-closed-working-loop/SKILL.md). Record comments kept, removed, or left open with their evidence.
+6. Verify the changed behavior. Record comments kept, removed, or left open with their evidence.
 
 ## Output
 

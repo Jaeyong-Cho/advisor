@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # What
 
-Explain the current meaning and contract of a code element, feature, or domain concept. Give the reader a reliable answer to what it is and what it does before descending into implementation details. Use [How](../how/SKILL.md) for execution flow and [Why](../why/SKILL.md) for motivation or history. Apply [Understand Through Abstraction](../principle-understand-through-abstraction/SKILL.md) to inspect contracts before internals.
+Explain the current meaning and contract of a code element, feature, or domain concept. Give the reader a reliable answer to what it is and what it does before descending into implementation details. Use [How](../how/SKILL.md) for execution flow and [Why](../why/SKILL.md) for motivation or history.
 
 ## Steps
 

@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Organize
 
-Turn context records into a concise, current handoff organized under `<category>/<sub-category>/`. Read [Guard the Context Window](../principle-guard-the-context-window/SKILL.md) and [Technical Writing](../principle-technical-writing/SKILL.md) before editing. Context documents from [To Context](../to-context/SKILL.md) start in the current directory by default; use that directory as the organization root unless the user specifies another.
+Turn context records into a concise, current handoff organized under `<category>/<sub-category>/`. Context documents from [To Context](../to-context/SKILL.md) start in the current directory by default; use that directory as the organization root unless the user specifies another.
 
 ## Steps
 

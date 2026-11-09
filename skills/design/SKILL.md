@@ -57,7 +57,7 @@ Use the following mapping during the architecture stage, after the explanation i
 | Order of actions and branch conditions | Execution flow from the entry point |
 | Interaction between subjects | Call, dependency, or ownership relationship |
 
-These are candidates to refine with the principles below. A data object or external actor mentioned in the explanation is not automatically a new class. Repeated subjects can share an existing owner, and related actions can belong to one deep module or system operation. Keep each proposed file, function, target, job, or configuration block traceable to the behavior it supports.
+These are candidates to refine using the confirmed requirements. A data object or external actor mentioned in the explanation is not automatically a new class. Repeated subjects can share an existing owner, and related actions can belong to one deep module or system operation. Keep each proposed file, function, target, job, or configuration block traceable to the behavior it supports.
 
 **Keep interfaces narrow and few.** Expose only the public operations, parameters, and options callers need. Each operation should complete meaningful work and provide substantial value while keeping related rules, state, and mechanisms inside a cohesive module. Keep internal steps private so callers do not have to assemble the behavior or coordinate intermediate state. At representative call sites, check that the contract reduces required knowledge and coordination. Preserve explicit failure conditions and side effects; shrinking the interface must not conceal required behavior or combine unrelated responsibilities.
 
@@ -72,23 +72,6 @@ Refine the explanation through **concepts -> relationships -> constraints -> beh
 - **Use events to discover lifecycle.** Identify the state before an event, the state after it, the permitted transition, its preconditions, and the operation that owns it. An event is evidence of a meaningful change; it does not by itself require an event class, message broker, event sourcing, or asynchronous execution.
 
 For example, "adding the same product increases its quantity" suggests one CartItem per ProductId and lookup by that identity. A candidate `items: map[ProductId, CartItem]` supports that relationship. The map does not enforce "at most 20 distinct products": Cart.add must reject a new key when 20 keys already exist while still allowing an existing item's quantity to increase. The model and execution branches must express both cases. Quantity can remain an integer unless its rules justify a separate value type.
-
-## Principles
-
-Set scope using the rules above before choosing structure. Read the principles relevant to that scope and name the rules that explain consequential choices. Read their supporting references only when needed.
-
-- [Define Goal](../principle-define-goal/SKILL.md): make the current-to-expected gap and completion criteria explicit before setting the change boundary.
-- [Incremental Progress](../principle-incremental-progress/SKILL.md): select one small, complete improvement aligned with the goal; define how to observe its effect before choosing later changes.
-- [Subtract Before You Add](../principle-subtract-before-you-add/SKILL.md): within the selected scope, identify existing responsibilities to reuse, merge, or remove before proposing new structure.
-- [Laziness Protocol](../principle-laziness-protocol/SKILL.md): choose the smallest maintainable solution that meets the goal without omitting required behavior.
-- [Abstraction Levels](../principle-abstraction-levels/SKILL.md): keep orchestration at the level of intent, domain decisions separate, and technical mechanisms behind meaningful operations.
-- [Deep Module](../principle-deep-module/SKILL.md): expose few meaningful operations through narrow interfaces that provide substantial value. Keep related complexity inside cohesive modules and reduce caller knowledge and coordination.
-- [Boundary Discipline](../principle-boundary-discipline/SKILL.md): validate and convert external inputs at entry boundaries, and assign responsibility for translating failures at exit boundaries.
-- [First Principle Redesign](../principle-first-principle-redesign/SKILL.md): derive the selected change from purpose and required outcomes; reconsider existing structure within that scope without assuming a full redesign is needed.
-- [Foundational Thinking](../principle-foundational-thinking/SKILL.md): establish core data shapes and ownership before detailing operations; identify shared state when concurrency matters.
-- [Model the Domain](../principle-model-the-domain/SKILL.md): express states and transitions explicitly, and keep the same domain knowledge together even when it is used at different execution stages.
-- [Type System Discipline](../principle-type-system-discipline/SKILL.md): in statically typed systems, make inputs, outcomes, and branch cases explicit in types without unsafe escapes.
-- [Assert Invariants](../principle-assert-invariants/SKILL.md): identify which internal preconditions, postconditions, and state invariants should become executable assertions; keep legitimate rejection and external failure paths explicit.
 
 ## Workflow
 
