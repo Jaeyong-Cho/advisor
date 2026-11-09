@@ -9,7 +9,7 @@ Recommend one next improvement that reduces the user's friction and advances the
 
 The improvement may also be a Boy Scout change: leave code already touched by a task easier to understand and maintain. Use observed maintenance burden as evidence; an explicit complaint or new feature is not required. Respect the selected scope and do not turn a general quality goal into a full-codebase audit.
 
-This skill selects the next change. [Recommend Options](../recommend-options/SKILL.md) compares approaches to an already selected task; [Bottleneck](../bottleneck/SKILL.md) investigates constraints in an AI-assisted workflow. Do not require a broad audit, session-history analysis, or a complete redesign to make a useful recommendation here.
+This skill selects the next change. [Recommend Options](../recommend-options/SKILL.md) compares approaches to an already selected task. Do not require a broad audit, session-history analysis, or a complete redesign to make a useful recommendation here.
 
 ## Workflow
 
@@ -40,4 +40,4 @@ Scale detail to the decision. Ask a focused question only when an unresolved use
 
 The recommendation is complete when the user can see what to improve next, why it matters, how small the change is, and how to judge the result. Discussion does not prove that the friction has been resolved.
 
-Do not implement or run the proposed experiment unless the user has authorized that follow-up. Carry forward existing authorization without asking again. For an authorized development follow-up, use [Design](../design/SKILL.md) when behavior or structure needs agreement, or [Great Code](../great-code/SKILL.md) for implementation using interface-focused TDD.
+Do not implement or run the proposed experiment unless the user has authorized that follow-up. Carry forward existing authorization without asking again. For an authorized development follow-up, resolve material uncertainty about behavior or structure before implementing.

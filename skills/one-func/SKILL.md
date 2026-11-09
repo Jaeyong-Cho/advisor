@@ -7,7 +7,7 @@ description: Implement a complete requested behavior directly inside one functio
 
 Implement the requested behavior in one function when the user explicitly chooses this constraint. The goal is directness: a reader should be able to inspect one function and find the behavior and decisions that implement the request.
 
-This is an intentional local tradeoff. Do not apply `great-code` or `great-one-code` decomposition rules while this skill is active. Do not redesign the surrounding architecture or extract code to satisfy a preferred style. Keep the result understandable and correct within the one-function constraint.
+This is an intentional local tradeoff. Do not redesign the surrounding architecture or extract code to satisfy a preferred style. Keep the result understandable and correct within the one-function constraint.
 
 ## Workflow
 

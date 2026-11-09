@@ -45,7 +45,7 @@ Always include both diagrams directly in the response inside fenced `text` block
 
 ### Execution Tree
 
-- Use connected tree characters (`├──`, `└──`, `│`) and consistent indentation, following the presentation used by [Design](../design/SKILL.md).
+- Use connected tree characters (`├──`, `└──`, `│`) and consistent indentation.
 - Start with the confirmed entry-point function. Show its direct calls as siblings in execution order. Sequential calls do not become children of the previous call.
 - Nest only for actual control flow or an expanded callee's own calls. Preserve the implementation's nesting, early returns, and failure handling; do not rewrite it for the explanation. Keep each view at a consistent abstraction level.
 - Express conditions and repetition as code-like `if condition`, `else if condition`, `else`, and `for item in items`, or the equivalent construct used by the source. Show terminal outcomes with `return` or `throw` where applicable. Do not use operation numbers, branch labels such as `[valid]`, or markers such as `[END]`.

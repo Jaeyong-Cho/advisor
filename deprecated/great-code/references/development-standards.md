@@ -18,7 +18,7 @@ Identify guaranteed internal preconditions and postconditions, and assert meanin
 
 ## Workspace
 
-Work in the current workspace by default. Do not create or select a worktree automatically. When the user asks for an isolated Git worktree, use the separate [Worktree](../../worktree/SKILL.md) skill to prepare it, then continue the task there. For a directory outside Git, use the target directory directly.
+Work in the current workspace by default. Do not create or select a worktree automatically. When the user asks for an isolated Git worktree, use the separate [Worktree](../../../skills/worktree/SKILL.md) skill to prepare it, then continue the task there. For a directory outside Git, use the target directory directly.
 
 ## Exposure and File Order
 
