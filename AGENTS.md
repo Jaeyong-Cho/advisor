@@ -1,8 +1,3 @@
-# Context
-The global context is in the `~/wiki`.
-The local context is in the `.context`.
-Read the relevant context in that location.
-
 # AGENTS.md
 
 Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
