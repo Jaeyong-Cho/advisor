@@ -6,10 +6,10 @@ usage() {
   cat <<'USAGE'
 Usage: ./setup.sh [pi|claude|copilot|agents|codex|kiro] [skills-directory]
 
-Install every bundled skill and Ponytail into a flat skill directory.
+Install every bundled skill, Ponytail, and mattpocock/skills into a flat skill directory.
 Copy AGENTS.md to the agent configuration directory containing that skill directory.
 Move previously installed deprecated Advisor skills outside the skill directory.
-Ponytail is downloaded from DietrichGebert/ponytail on GitHub; curl and network access are required.
+External skills are downloaded from GitHub; curl, tar, and network access are required.
 
 Agent directories:
   pi       ~/.pi/agent/skills
@@ -74,10 +74,21 @@ mkdir -p "$external_skills/ponytail"
 curl --fail --silent --show-error --location \
   "https://raw.githubusercontent.com/DietrichGebert/ponytail/main/skills/ponytail/SKILL.md" \
   --output "$external_skills/ponytail/SKILL.md"
+curl --fail --silent --show-error --location \
+  "https://codeload.github.com/mattpocock/skills/tar.gz/refs/heads/main" \
+  --output "$external_skills/mattpocock.tar.gz"
+mkdir -p "$external_skills/mattpocock"
+tar -xzf "$external_skills/mattpocock.tar.gz" \
+  -C "$external_skills/mattpocock" --strip-components=1
+
+source_skills=("$source_dir"/* "$external_skills/ponytail")
+while IFS= read -r -d '' skill_file; do
+  source_skills+=("$(dirname "$skill_file")")
+done < <(find "$external_skills/mattpocock/skills" -name SKILL.md -type f -print0)
 
 mkdir -p "$target_dir"
 installed=0
-for source_skill in "$source_dir"/* "$external_skills/ponytail"; do
+for source_skill in "${source_skills[@]}"; do
   [[ -d "$source_skill" ]] || continue
 
   skill_name="$(basename "$source_skill")"
