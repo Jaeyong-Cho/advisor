@@ -72,7 +72,9 @@ For each unit, connect these points in plain prose:
 - **Mechanism:** the relevant symbols and interactions that produce that effect, with prerequisite context explained first.
 - **Evidence:** code locations and relevant tests or stated rationale; identify inference and unresolved gaps locally.
 
-Use a concrete scenario when it makes the behavioral difference clearer. Cite precise paths and symbols, with revision information when needed to distinguish old and new code. Include short code excerpts only when they materially help explain the mechanism. Describe test assertions as evidence of intended behavior; claim runtime verification only when it was actually performed.
+For each intent unit, show a short fenced excerpt of the actual code that implements it, then explain how the shown lines serve that intent. Label each excerpt with its source path and line location, plus the revision when needed. Select enough surrounding code to make the mechanism understandable; use paired before/after excerpts or a compact diff when the contrast matters. Show prerequisite code before the changed code when needed, and label it as existing context. Preserve the source faithfully and mark omissions explicitly. If source is unavailable, state that gap instead of inventing an excerpt. Mechanical or generated changes can be summarized without excerpts.
+
+Use a concrete scenario when it makes the behavioral difference clearer. Cite precise paths and symbols alongside excerpts so the reader can inspect the source. Describe test assertions as evidence of intended behavior; claim runtime verification only when it was actually performed.
 
 Account for mechanical or generated changes briefly and connect them to the intent they support. Explain a removal by the behavior or responsibility it eliminates. Keep attention on understanding the selected changes rather than expanding into a general code review or a redesign proposal.
 
