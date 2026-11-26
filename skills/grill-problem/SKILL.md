@@ -26,4 +26,4 @@ Propose a short problem statement once you can name who is affected, what they a
 
 Show the user the definition, the reason it matters, and any material uncertainty. Ask whether this captures the problem they want to address. If they correct the framing, resume the interview from that correction.
 
-After the user confirms, return one copy-ready prompt in a fenced block for manual invocation. Start it with `/grill-with-docs`, then include the confirmed problem, why it matters, relevant evidence or repo paths, and any remaining uncertainty. Ask it to explore scope, success criteria, and solution choices. Carry forward previous proposals as open options.
+After the user confirms, return one copy-ready prompt in a fenced block for manual invocation. Start it with `/ask-matt`, then include the confirmed problem, why it matters, relevant evidence or repo paths, and any remaining uncertainty. Ask which skill or flow fits the situation. Carry forward previous proposals as open options.
